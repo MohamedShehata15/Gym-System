@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,7 @@ Auth::routes();
 Route::get('/coaches', function () {
     return view('coaches.index');
 });
+
+
+Route::get('/sessions',[SessionController::class, 'index'])->name('sessions.index');
+Route::get('/sessions/create',[SessionController::class, 'create'])->name('sessions.create');

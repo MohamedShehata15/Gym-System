@@ -70,6 +70,13 @@ body {
   background-color: #fff;
 }
 
+.con{
+  background-image: url('index.jpeg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;  
+}
+
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
