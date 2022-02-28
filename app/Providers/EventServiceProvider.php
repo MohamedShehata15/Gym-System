@@ -20,6 +20,8 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
+    // ==============>> event(new Registered($user)); <<==============
+
     /**
      * Register any events for your application.
      *

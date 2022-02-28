@@ -26,6 +26,9 @@ class UserController extends Controller
         }
      
         $token = $user->createToken($request->email)->plainTextToken;
+         
+        $user->remember_token = $token;
+        $user->save();
 
         return ['token'=>$token, 'data'=>new UserResource($user)];
 
@@ -46,8 +49,33 @@ class UserController extends Controller
         $data['password']=Hash::make($data['password']);
         $user = User::create($data);
         $token = $user->createToken($request->email)->plainTextToken;
-
+        
         return ['token'=>$token, 'data'=>new UserResource($user)];
+    }
+
+    public function update(Request $request){
+        $request->validate([
+                "old_password" =>"nullable",
+                "password" =>"confirmed|nullable|different:old_password|required_with:old_password",
+                "password_confirmation" =>"nullable|required_with:password|required_with:old_password"
+              ]);
+            
+      $token = explode(' ', $request->header()['authorization'][0])[1];
+      $user = User::where('remember_token', $token)->first();
+      if (! $user) {
+        throw ValidationException::withMessages([
+            'remember_token' => ['It does not match'],
+        ]);
+    }
+    $exist = array_key_exists('old_password', $request->all());
+    if($exist) {
+        if(Hash::check($request->all()['old_password'], $user->password)){
+            // User::where('password', $request->old_password);
+            $request->all()['password']=Hash::make($request->all()['password']);
+          }
+    } 
+     $user->update($request->all());
+        return new UserResource($user);
     }
 }
 
