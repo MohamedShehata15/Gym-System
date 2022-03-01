@@ -5,7 +5,7 @@
 @section('content')
 
   
-        <form method="POST" action="#" class="mt-5">
+        <form  method="POST" action="#" class="mt-5 ">
             @csrf
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Name</label>
@@ -40,5 +40,5 @@
             <button type="submit" class="btn btn-success">Submit</button>
 
           </form>
-    
+
 @endsection

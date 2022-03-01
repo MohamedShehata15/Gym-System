@@ -21,5 +21,9 @@
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.15.2",
         "sass-loader": "^8.0.0"
+    },
+    "dependencies": {
+        "datatables.net": "^1.11.5",
+        "datatables.net-dt": "^1.11.5"
     }
 }
