@@ -15,8 +15,7 @@ class UserController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
-     
+    
         $user = User::where('email', $request->email)->first();
      
         if (! $user || ! Hash::check($request->password, $user->password)) {
@@ -33,6 +32,8 @@ class UserController extends Controller
         return ['token'=>$token, 'data'=>new UserResource($user)];
 
     }
+
+    //=========================================================================//
 
     public function register(Request $request){ 
         $request->validate([
@@ -53,13 +54,16 @@ class UserController extends Controller
         return ['token'=>$token, 'data'=>new UserResource($user)];
     }
 
+    //=========================================================================//
+
     public function update(Request $request){
         $request->validate([
-                "old_password" =>"nullable",
-                "password" =>"confirmed|nullable|different:old_password|required_with:old_password",
-                "password_confirmation" =>"nullable|required_with:password|required_with:old_password"
-              ]);
-            
+                "old_password" =>"required_with:password",
+                "password" =>"confirmed|different:old_password|required_with:old_password",
+                "password_confirmation" =>"required_with:password|required_with:old_password",
+                "email"=>"unique:users"
+              ]);    
+
       $token = explode(' ', $request->header()['authorization'][0])[1];
       $user = User::where('remember_token', $token)->first();
       if (! $user) {
@@ -67,15 +71,22 @@ class UserController extends Controller
             'remember_token' => ['It does not match'],
         ]);
     }
-    $exist = array_key_exists('old_password', $request->all());
+    $data = $request->all();
+    $exist = array_key_exists('old_password', $data);
     if($exist) {
-        if(Hash::check($request->all()['old_password'], $user->password)){
-            // User::where('password', $request->old_password);
-            $request->all()['password']=Hash::make($request->all()['password']);
+        if(Hash::check($data['old_password'], $user->password)){
+            $data['password']=Hash::make($data['password']);
           }
+        else{
+            throw ValidationException::withMessages([
+                'password' => ['The current password is invalid'],
+            ]);
+        }
     } 
-     $user->update($request->all());
+
+     $user->update($data);
         return new UserResource($user);
+
     }
 }
 
