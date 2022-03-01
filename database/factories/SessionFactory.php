@@ -18,6 +18,8 @@ class SessionFactory extends Factory
     {
         return [
             'name'=>$this->faker->name,
+            'start_at'=>$this->faker->dateTime(),
+            'finish_at'=>$this->faker->dateTime(),
             
         ];
     }

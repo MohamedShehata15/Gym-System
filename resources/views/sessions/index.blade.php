@@ -5,14 +5,54 @@
     <h1> Training Sessions</h1>
             <a href="{{route('sessions.create')}}" class="btn btn-success my-3">Add Session</a>
         </div>
-        <section>
-            <div class="container">
-                <div class="col-md-12" >
-                 {!! $dataTable->table() !!}
-                </div>
-        </div>
-</section>
+        
+        <table class="table cell-border compact stripe table-dark my-4 text-dark" id="myTable">
+            <thead>
+              <tr class="text-white">
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Start-at</th>
+                <th scope="col">Finish-at</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+        </table>
 @endsection
 @section('javascripts')
-{!! $dataTable->scripts() !!}
+<script>
+    $(document).ready(function(){
+       $('#myTable').DataTable({
+           processing:true,
+           serverSide:true,
+           ajax:{
+               url:"{{route('sessions.index')}}"    
+           },
+           columns:[
+
+            {
+                   data:'id',
+                   name:'id'
+               },
+               {
+                   data:'name',
+                   name:'name'
+               },
+               {
+                   data:'start_at',
+                   name:'start_at'
+               },
+               {
+                   data:'finish_at',
+                   name:'finish_at'
+               },
+               {
+                   data:'action',
+                   name:'action',
+                   orderable:false,
+               }
+            ]
+       });
+
+    });
+</script>
           @endsection

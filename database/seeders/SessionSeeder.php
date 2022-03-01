@@ -4,18 +4,19 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Session;  
 
-class DatabaseSeeder extends Seeder
+class SessionSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        $this->call(SessionSeeder::class);
-
-        // \App\Models\User::factory(10)->create();
+        Session::factory()
+        ->count(500)
+        ->create();
     }
 }
