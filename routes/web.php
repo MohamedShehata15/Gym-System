@@ -32,7 +32,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::get('/coaches', [CoacheController::class,'index'])->name('coaches.index');
-Route::get('/users',[UserController::class,'index'])->name('users.index');
+
+//Cities Routes
 Route::get('/cities',[CityController::class,'index'])->name('cities.index');
+Route::get('/cities/{city}/edit',[CityController::class,'edit'])->name('cities.edit');
+Route::delete('/cities/{city}',[CityController::class,'destroy'])->name('cities.destroy');
+
+
+//Coaches Routes
+Route::get('/coaches', [CoachController::class,'index'])->name('coaches.index');
+
+//Users Routes
+Route::get('/users',[UserController::class,'index'])->name('users.index');
+
+//Training Packages Routes
 Route::get('/training-package',[TrainingPackageController::class,'index'])->name('training-package.index');

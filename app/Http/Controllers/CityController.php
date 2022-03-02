@@ -15,18 +15,19 @@ class CityController extends Controller
             return datatables()->of(City::latest()->get())
                ->addColumn('action',function($data)
                {
-                   $button ='<button type="button"
-                   name="add" id="'.$data->id.'"
-                   class="btn btn-primary btn-sm">Update
-                   </button>';
-                   $button .= '<button type="button"
-                   name="add" id="'.$data->id.'"
-                   class="btn btn-danger btn-sm ">Delte
-                   </button>';
+                   $button ='<a href="'.route('cities.show',$data->id).'" class="btn btn-primary btn-sm mx-4">Update</a>';
+                   $button .='<a href="'.route('cities.delete',$data->id).'" class="btn btn-danger btn-sm mx-4">Delete</a>';
+                  
                    return $button;
                })
                ->rawColumns(['action'])->make(true);
         }
         return view('cities.index');
     }
+
+    public  function show(){
+
+        return "sayed";
+    }
+
 }
