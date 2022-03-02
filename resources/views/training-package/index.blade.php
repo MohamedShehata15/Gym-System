@@ -9,6 +9,8 @@
             <tr>
                 <th>id</th>
                 <th>name</th>
+                <th>price</th>
+                <th>Session Number</th>
                 <th></th>
             </tr>
         </thead>
@@ -37,6 +39,16 @@
                     data:'name',
                     name:'name',
                 },
+                {
+                    data:'price',
+                    name:'price',
+                },
+               
+                {
+                    data:'session_number',
+                    name:'session_number',
+                },
+               
                
                 {
                     data:'action',

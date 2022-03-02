@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('name');
             $table->bigInteger('price');
             $table->integer('session_number');
+            $table->foreignId('gym_id')->constrained()->onDelete('cascade');
         });
     }
 

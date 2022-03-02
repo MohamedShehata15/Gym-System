@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\TrainingPackage;
+use App\Models\UserSession;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TrainingPackageSeeder extends Seeder {
+class UserSessionSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-        TrainingPackage::factory()->count(50)->create();
+        UserSession::factory()->count(50)->create();
     }
 }

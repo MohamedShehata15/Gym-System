@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->timestamp('date');
             $table->bigInteger('price');
-            $table->foreignId('training_packages_id')->constrained()->onDelete('cascade');
+            $table->foreignId('training_package_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
     }

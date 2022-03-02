@@ -1,9 +1,16 @@
 <?php
 
+use App\Models\City;
+use App\Models\Gym;
+use App\Models\Session;
+use App\Models\Staff;
+use App\Models\TrainingPackage;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\TrainingPackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +36,4 @@ Route::get('/coaches', function () {
 });
 Route::get('/users',[UserController::class,'index'])->name('users.index');
 Route::get('/cities',[CityController::class,'index'])->name('cities.index');
-Route::get('/training-package',[CityController::class,'index'])->name('training-package.index');
+Route::get('/training-package',[TrainingPackageController::class,'index'])->name('training-package.index');

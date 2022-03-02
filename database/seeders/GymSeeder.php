@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\TrainingPackage;
+use App\Models\Gym;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TrainingPackageSeeder extends Seeder {
+class GymSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-        TrainingPackage::factory()->count(50)->create();
+        Gym::factory()->count(50)->create();
     }
 }
