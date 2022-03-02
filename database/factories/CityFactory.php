@@ -2,26 +2,22 @@
 
 namespace Database\Factories;
 
+use App\Models\Staff;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\City;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\City>
  */
-class CityFactory extends Factory
-{
+class CityFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition()
-    {
+    public function definition() {
         return [
-            'name' => Str::random(10),
-            'staffs_id' => 1
-            
+            'name' => $this->faker->city(),
+            'staff_id' => $this->faker->randomElement(Staff::where('role', 'city_manager')->get())['id']
         ];
     }
 }

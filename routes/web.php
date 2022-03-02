@@ -1,5 +1,11 @@
 <?php
 
+use App\Models\City;
+use App\Models\Gym;
+use App\Models\Session;
+use App\Models\Staff;
+use App\Models\TrainingPackage;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
