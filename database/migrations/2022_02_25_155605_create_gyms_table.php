@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->timestamps();
             $table->string('name');
             $table->string('image');
-            $table->integer('revenue');
-            $table->foreignId('staffs_id')->constrained()->onDelete('cascade');
+            $table->integer('revenue')->default(0);
+            $table->foreignId('city_id')->constrained()->onDelete('cascade');
         });
     }
 
