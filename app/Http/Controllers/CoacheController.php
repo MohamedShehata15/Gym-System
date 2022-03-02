@@ -3,30 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\City;
+use App\Models\Staff;
 
-class CityController extends Controller
+class CoacheController extends Controller
 {
     public function index()
     {
-        
         if(request()->ajax())
         {
-            return datatables()->of(City::latest()->get())
+            return datatables()->of(Staff::where('role','=','coach')->latest()->get())
                ->addColumn('action',function($data)
                {
                    $button ='<button type="button"
                    name="add" id="'.$data->id.'"
-                   class="btn btn-primary btn-sm">Update
-                   </button>';
-                   $button .= '<button type="button"
-                   name="add" id="'.$data->id.'"
-                   class="btn btn-danger btn-sm ">Delte
+                   class="btn btn-primary btn-sm">Add
                    </button>';
                    return $button;
                })
                ->rawColumns(['action'])->make(true);
         }
-        return view('cities.index');
+        return view('coaches.index');
     }
 }

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\TrainingPackageController;
+use App\Http\Controllers\CoacheController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +32,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::get('/coaches', function () {
-    return view('coaches.index');
-});
+Route::get('/coaches', [CoacheController::class,'index'])->name('coaches.index');
 Route::get('/users',[UserController::class,'index'])->name('users.index');
 Route::get('/cities',[CityController::class,'index'])->name('cities.index');
 Route::get('/training-package',[TrainingPackageController::class,'index'])->name('training-package.index');
