@@ -25,3 +25,8 @@ Auth::routes();
 Route::get('/coaches', function () {
     return view('coaches.index');
 });
+
+
+//city
+
+Route::get('/cities', [App\Http\Controllers\CityController::class, 'index'])->name('cities.index');
