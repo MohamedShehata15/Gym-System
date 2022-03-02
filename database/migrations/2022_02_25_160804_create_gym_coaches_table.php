@@ -13,6 +13,7 @@ return new class extends Migration {
     public function up() {
         Schema::create('gym_coaches', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
             $table->foreignId('session_id')->constrained()->onDelete('cascade');
             $table->foreignId('staffs_id')->constrained()->onDelete('cascade');

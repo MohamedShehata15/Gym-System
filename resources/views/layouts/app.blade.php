@@ -16,7 +16,7 @@
     @stack('page_css')
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed ">
+<body class="hold-transition sidebar-mini layout-fixed   bg-dark text-white">
 <div class="wrapper">
     <!-- Main Header -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -65,7 +65,7 @@
 @include('layouts.sidebar')
 
 <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper " >
+    <div class="content-wrapper con " >
 
         <section class="content">
             @yield('content')
@@ -73,7 +73,7 @@
     </div>
 
     <!-- Main Footer -->
-    <footer class="main-footer">
+    <footer class="main-footer bg-dark text-white">
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 3.0.5
         </div>

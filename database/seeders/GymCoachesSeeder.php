@@ -4,18 +4,19 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\GymCoaches;
 
-class DatabaseSeeder extends Seeder
+class GymCoachesSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        $this->call(UserSeeder::class);
-
-        // \App\Models\User::factory(10)->create();
+        GymCoaches::factory()
+        ->count(50)
+        ->create();
     }
 }

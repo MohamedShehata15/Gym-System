@@ -2,43 +2,53 @@
 
 @section('title') Create @endsection
 
-@section('content')
+@section('styles')
+<link href=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css” rel=”stylesheet”>
 
-  
-        <form  method="POST" action="#" class="mt-5 ">
+@endsection
+
+
+@section('content')  
+        <form  method="POST"  action="{{route('sessions.store')}}" class="offset-3">
+
             @csrf
-            <div class="mb-3">
+            <div class="mb-3 col-sm-7">
               <label for="exampleInputEmail1" class="form-label">Name</label>
               <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             </div>
-        <div class="mb-3">
+
+        <div class="mb-3 col-sm-7">
             <label for="Day">Day</label>
-            <input id="Day" class="form-control" type="date" />
+            <input name="day" id="Day" class="form-control" type="date" />
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 col-sm-7">
         <label for="start">Start-time</label>
-        <input type="time" class="form-control" />
+        <input name="start" type="time" class="form-control" />
         </div>     
 
-        <div class="mb-3">
+        <div class="mb-3 col-sm-7">
         <label for="finish">finish-time</label>
-        <input type="time" class="form-control" />
+        <input name="finish" type="time" class="form-control" />
         </div>        
 
-        <div class="form-group">
+        <div class="form-group col-sm-7">
         <label for="exampleFormControlSelect2">Choose Coaches</label>
-       <select multiple class="form-control" id="exampleFormControlSelect2">
-        <option>captin1</option>
-        <option>captin2</option>
-        <option>captin3</option>
-        <option>captin4</option>
-        <option>captin5</option>
+       <select name="coaches[]" multiple class="form-control" id="exampleFormControlSelect2">
+       coaches
+       @foreach($coaches as $coach)
+                  {
+                    <option value={{$coach->id}}>{{$coach->name}}</option>
+                  }
+                  @endforeach
        </select>
       </div>
                 
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success btn-lg offset-3">Add</button>
 
-          </form>
+          </form>         
+@endsection
+
+@section('javascripts')
 
 @endsection

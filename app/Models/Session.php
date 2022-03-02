@@ -14,4 +14,11 @@ class Session extends Model
         'start_at',
         'finish_at',
        ]; //array of columns which allowed to change
+
+
+       public function user()   //relationship between sessions & coaches
+       {
+           return $this->belongsToMany(User::class);
+       }
 }
+
