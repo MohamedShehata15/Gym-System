@@ -9,7 +9,8 @@
 
 
 @section('content')  
-        <form  method="POST"  action="{{route('sessions.store')}}" class="offset-3">
+<div class="mydiv">
+        <form  method="POST"  action="{{route('sessions.store')}}" class="offset-3" >
 
             @csrf
             <div class="mb-3 col-sm-7">
@@ -47,6 +48,7 @@
             <button type="submit" class="btn btn-success btn-lg offset-3">Add</button>
 
           </form>         
+          </div>
 @endsection
 
 @section('javascripts')

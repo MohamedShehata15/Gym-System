@@ -6238,6 +6238,7 @@ button.bg-danger:focus {
   background-color: #bd2130 !important;
 }
 
+
 .bg-light {
   background-color: #f8f9fa !important;
 }
@@ -43127,4 +43128,10 @@ a.text-muted:hover {
 }
 .dark-mode .dark-mode.accent-gray-dark .page-item .page-link:hover, .dark-mode .dark-mode.accent-gray-dark .page-item .page-link:focus {
   color: #3f474e;
+}
+.mydiv{
+  background-color:rgba(0, 0, 0, 0.5);
+  width:100%;
+  height:100%;
+  padding: 5%;
 }

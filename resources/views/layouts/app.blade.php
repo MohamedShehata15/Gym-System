@@ -67,9 +67,19 @@
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper con " >
 
-        <section class="content">
+    <main class="container ">
+        @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
             @yield('content')
-        </section>
+        </main>
+
     </div>
 
     <!-- Main Footer -->

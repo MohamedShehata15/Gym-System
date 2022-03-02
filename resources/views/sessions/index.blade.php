@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="text-center ">
+<div class="text-center">
     <h1 class="text-white "> Training Sessions</h1>
             <a href="{{route('sessions.create')}}" class="btn btn-success my-3">Add Session</a>
-        </div>
         
         <table class="table cell-border compact stripe table-dark my-4 text-dark" id="myTable">
             <thead>
@@ -17,7 +16,12 @@
                 <th scope="col">Actions</th>
               </tr>
             </thead>
+            <tbody>
+
+            </tbody>
         </table>
+        </div >
+
 @endsection
 @section('javascripts')
 <script>
