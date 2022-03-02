@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,4 @@ Route::get('/coaches', function () {
     return view('coaches.index');
 });
 Route::get('/users',[UserController::class,'index'])->name('users.index');
+Route::get('/cities',[CityController::class,'index'])->name('cities.index');
