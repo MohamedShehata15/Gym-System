@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,4 @@ Auth::routes();
 Route::get('/coaches', function () {
     return view('coaches.index');
 });
+Route::get('/users',[UserController::class,'index'])->name('users.index');
