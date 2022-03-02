@@ -29,3 +29,4 @@ Route::get('/coaches', function () {
 });
 Route::get('/users',[UserController::class,'index'])->name('users.index');
 Route::get('/cities',[CityController::class,'index'])->name('cities.index');
+Route::get('/training-package',[CityController::class,'index'])->name('training-package.index');
