@@ -15,18 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::GET('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::GET('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/coaches', function () {
+Route::GET('/coaches', function () {
     return view('coaches.index');
 });
 
-Route::get('/gyms',[GymController::class ,'index'])->name('gym.index');
-Route::get('/gyms/create',[GymController::class ,'create'])->name('gym.create');
-// Route::get('/gyms/create',[GymController::class ,'create'])->name('gym.create');
+Route::GET('/gyms',[GymController::class ,'index'])->name('gyms.index');
+Route::GET('/gyms/create',[GymController::class ,'create'])->name('gyms.create');
+Route::POST('/gyms',[GymController::class ,'store'])->name('gyms.store');
+Route::GET('/gyms/{id}',[GymController::class ,'show'])->name('gyms.show');
+Route::GET('/gyms/{id}/edit',[GymController::class ,'edit'])->name('gyms.edit');
+Route::PUT('/gyms/{id}',[GymController::class ,'update'])->name('gyms.update');
+Route::DELETE('/gyms/{id}',[GymController::class ,'destroy'])->name('gyms.destroy');

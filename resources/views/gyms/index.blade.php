@@ -8,77 +8,57 @@
     <table id="table_id" class="display">
         <thead>
             <tr>
-                <th>Column 1</th>
-                <th>Column 2</th>
+                <th>Name</th>
+                <th>Created at</th>
+                <th>updated time</th>
+                <th>revenue</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>cRow 1 Data 1</td>
-                <td>cRow 1 Data 2</td>
-            </tr>
-            <tr>
-                <td>ARow 2 Data 1</td>
-                <td>ARow 2 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 1 Data 1</td>
-                <td>Row 1 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 2 Data 1</td>
-                <td>Row 2 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 1 Data 1</td>
-                <td>Row 1 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 2 Data 1</td>
-                <td>Row 2 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 1 Data 1</td>
-                <td>Row 1 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 2 Data 1</td>
-                <td>Row 2 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 1 Data 1</td>
-                <td>Row 1 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 2 Data 1</td>
-                <td>Row 2 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 1 Data 1</td>
-                <td>Row 1 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 2 Data 1</td>
-                <td>Row 2 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 1 Data 1</td>
-                <td>Row 1 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 2 Data 1</td>
-                <td>Row 2 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 1 Data 1</td>
-                <td>Row 1 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 2 Data 1</td>
-                <td>Row 2 Data 2</td>
-            </tr>
-            
+            @foreach ( $gyms as $gym )
+            {{-- @dd($gym->id) --}}
+                <tr>
+                    <td>{{$gym->name}}</td>
+                    <td>2202-2-1</td>
+                    <td>2202-2-15</td>
+                    <td>{{$gym->revenue}}</td>
+                    <td>
+                        <a href="{{route('gyms.show',['id' => $gym->id])}}" class="btn btn-info">Show</a>
+                        <a href="{{route('gyms.edit',['id' => $gym->id])}}" class="btn btn-warning">Edit</a>{{-- <a href="{{route('gyms.destroy',['id' => $gym->id])}}" class="btn btn-danger">Delete</a> --}}
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Delete
+                        </button>
+                       {{-- //Model For Delete :) // --}}
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure that you want to delete this GYM? 
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">No</button>
+                                        <form action="{{route('gyms.destroy',['id' => $gym->id])}}" method="POST">
+                                            @csrf
+                                            @method('DELEtE')
+                                            <button type="submit" class="btn btn-danger">Yes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>    
+                </tr> 
+            @endforeach  
         </tbody>
     </table>
 
+
+    
   @endsection
