@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('third_party_stylesheets')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
     <br><br>
@@ -22,6 +23,7 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer></script>
     <script>
         $(document).ready( function () {
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $('#table_id').DataTable({
             processing: true,
             serverSide: true,
@@ -48,5 +50,24 @@
             ]
         });
     } );
+    function deleteFunc(id){
+        if (confirm("Delete Record?") == true) {
+        var id = id;
+        console.log(id);
+         // ajax
+        $.ajax({
+           type:"POST",
+           url: "{{ url('destroy') }}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(res){
+               $('#table_id').DataTable().ajax.reload();
+              },
+            error:function(){ 
+            alert("error!!!!");
+        }
+         });
+         
+    }}
     </script>
 @endsection

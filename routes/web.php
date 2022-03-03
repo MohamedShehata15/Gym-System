@@ -34,9 +34,9 @@ Auth::routes();
 
 
 //Cities Routes
-Route::get('/cities',[CityController::class,'index'])->name('cities.index');
+Route::get('cities',[CityController::class,'index'])->name('cities.index');
 Route::get('/cities/{city}/edit',[CityController::class,'edit'])->name('cities.edit');
-Route::delete('/cities/{city}',[CityController::class,'destroy'])->name('cities.destroy');
+Route::post('destroy',[CityController::class,'destroy'])->name('cities.destroy');
 
 
 //Coaches Routes
