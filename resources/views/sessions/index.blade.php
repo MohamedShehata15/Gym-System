@@ -23,12 +23,12 @@
         </div >
  <!--****************************************edit modal*************************************-->       
         <div id="myModal" class="modal fade " data-bs-backdrop="static" bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered col-md-6 ">
+        <div class="modal-dialog modal-dialog-centered justify-content-sm-center ">
             <div class="modal-content">
 
                 <div class="modal-header">
                 <h5 class="modal-title text-dark">Edit Session</h5>
-                <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-sm btn-danger"  data-bs-dismiss="modal" aria-label="Close">X
                 </button>    
                 </div>
 
@@ -37,28 +37,28 @@
 
             <div>
             <label for="exampleInputEmail1" class="form-label text-dark">Name</label>
-            <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input name="name" type="text" class="form-control" id="name" aria-describedby="emailHelp">
             </div>
 
             <div>
             <label class="form-label text-dark" for="Day">Day</label>
-            <input name="day" id="Day" class="form-control" type="date" />
+            <input name="day" id="day" class="form-control" type="date" />
             </div>
 
             <div>
             <label class="form-label text-dark" for="start">Start-time</label>
-            <input name="start" type="time" class="form-control" />
+            <input name="start" type="time"id="start" class="form-control" />
             </div>     
 
             <div>
             <label class="form-label text-dark" for="finish">finish-time</label>
-            <input name="finish" type="time" class="form-control" />
+            <input name="finish" type="time" id="finish" class="form-control" />
             </div>        
 
             <div class="form-group">
             <label class="form-label text-dark" for="exampleFormControlSelect2">Choose Coaches</label>
-            <select name="coaches[]" multiple class="form-control" id="exampleFormControlSelect2">
-       
+            <select name="coaches[]" multiple class="form-control" id="coaches">
+
            </select>
            </div>
             <form>
@@ -67,7 +67,6 @@
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Update</button>
-                    <button type="submit" class="btn btn-danger"  data-bs-dismiss="modal">close</button>
             </div>
 
         </div>
@@ -139,9 +138,39 @@
     }}
 
     function EditSession(id){
-    
-        var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
-         myModal.show();
+        var id = id;
+        $.ajax({
+           type:"GET",
+           url: "{{ url('edit') }}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(data){
+             //get data and put it into the modal
+               var startdate=(data.start_at).split(" ");
+               var finishdate=(data.finish_at).split(" ");
+               var day=startdate[0];
+               var StartTime=startdate[1];
+               var FinishTime=finishdate[1];
+               var coaches=data.coaches;
+               $('#name').val(data.name);
+               $('#day').val(day);
+               $('#start').val(StartTime);
+               $('#finish').val(FinishTime);
+               
+               for(var i=0 ; i<coaches.length;i++)
+               {
+                var x = document.createElement("OPTION");
+                 x.setAttribute("value", i+1);
+                 var t = document.createTextNode(coaches[i]);
+                 x.appendChild(t);
+                 document.getElementById("coaches").appendChild(x);
+               }               
+               //show the modal
+               var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+               myModal.show();
+           }
+        });   
+
     }
 </script>
           @endsection

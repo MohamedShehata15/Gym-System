@@ -26,7 +26,7 @@ class SessionController extends Controller
             })
 
             ->addColumn('action', function ($data) {
-                $button='<a type="submit"
+                $button='<a
                 onClick="EditSession('.$data->id.')"
                 class="edit btn btn-primary mx-4">Edit</a>';
 
@@ -45,8 +45,7 @@ class SessionController extends Controller
 
     public function create()
     {
-        $coaches=Staff::all()->where('role', '=', 'coach')
-        ;
+        $coaches=Staff::all()->where('role', '=', 'coach');
         return view('sessions.create', [
             'coaches' =>$coaches
         ]);
@@ -96,12 +95,17 @@ class SessionController extends Controller
     }
 
 
-    public function edit($SessionId)
+    public function edit(Request $request)
     {
-      $coaches=Staff::all()->where('role', '=', 'coach');
-      $session = Session::find($SessionId);
-      return view('sessions.edit', [ 'session' => $session ,'coaches' =>$coaches]);
-
+      $coaches=Staff::select('name')->where('role', '=', 'coach')->pluck('name');
+      $session=Session::find($request->id);
+      $output=array(
+        'name' => $session->name,
+        'start_at' => $session->start_at,
+        'finish_at' => $session->finish_at,
+        'coaches' => $coaches
+      );
+        echo json_encode($output);
     }
 
 
