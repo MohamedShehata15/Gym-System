@@ -1,11 +1,6 @@
 <?php
 
-use App\Models\City;
-use App\Models\Gym;
-use App\Models\Session;
-use App\Models\Staff;
-use App\Models\TrainingPackage;
-use App\Models\User;
+use App\Http\Controllers\CoachController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +23,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::get('/coaches', function () {
-    return view('coaches.index');
-});
+/* ======================= Coaches Routes ========================= */
+Route::get('/coaches', [CoachController::class, 'index'])->name('coaches.index');
+
+Route::get('/coaches/profile/show', [CoachController::class, 'profile'])->name('coaches.profile');
+
+Route::get("/coaches/profile/edit", [CoachController::class, 'edit'])->name('coaches.edit');
+
+Route::get('/coaches/sessions', [CoachController::class, 'sessions'])->name('coaches.sessions');
+
+Route::get("/coaches/password", [CoachController::class, 'password'])->name('coaches.password');
+
+/* ===================================================================== */

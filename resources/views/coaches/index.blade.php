@@ -2,25 +2,22 @@
 
 @section('content')
 
-<div class="card card-primary">
-    <div class="card-header">
-      <h3 class="card-title">Coaches </h3>
-  
-      <div class="card-tools">
-        <!-- This will cause the card to maximize when clicked -->
-        <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
-        <!-- This will cause the card to collapse when clicked -->
-        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-        <!-- This will cause the card to be removed when clicked -->
-        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-      </div>
-      <!-- /.card-tools -->
+<div class="card-body text-center">
+  <div class="text-center mb-2">
+    <img class="profile-user-img img-fluid img-circle" src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg" alt="User profile picture">
     </div>
-    <!-- /.card-header -->
-    <div class="card-body">
-      Coaches
-    </div>
-    <!-- /.card-body -->
-  </div>
-  <!-- /.card -->
-  @endsection
+    <p class="mb-4">{{$name}}</p>
+    <a class="btn btn-app" href="{{route('coaches.profile')}}">
+        <i class="fas fa-user"></i> Profile
+    </a>
+    <a class="btn btn-app" href="{{route('coaches.edit')}}">
+        <i class="fas fa-edit"></i> Edit Profile
+    </a>
+    <a class="btn btn-app" href="{{route('coaches.password')}}">
+      <i class="fas fa-lock"></i> Change Password
+    </a>
+    <a class="btn btn-app" href="{{route('coaches.sessions')}}">
+        <i class="fas fa-calendar-check"></i> Sessions
+    </a>
+</div>
+@endsection
