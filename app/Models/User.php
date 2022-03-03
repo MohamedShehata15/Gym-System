@@ -43,8 +43,5 @@ class User extends Authenticatable
     ];
 
 
-    public function session()
-    {
-        return $this->belongsToMany(Session::class);
-    }
+
 }

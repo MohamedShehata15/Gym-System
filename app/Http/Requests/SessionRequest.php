@@ -29,7 +29,7 @@ class SessionRequest extends FormRequest
             'start' => ['required'], 
             'day' => ['required'], 
             'finish' => ['required','after:start'], 
-            'coaches'=>['required','exists:users,id'],//prevent from inspects hacks
+            'coaches'=>['required','exists:staff,id'],//prevent from inspects hacks
 
         ];
 

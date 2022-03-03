@@ -45,7 +45,7 @@
        </select>
       </div>
                 
-            <button type="submit" class="btn btn-success btn-lg offset-4">Add</button>
+            <button type="submit" class="btn btn-success btn-lg offset-4">Update</button>
 
           </form>         
           </div>

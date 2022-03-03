@@ -1,9 +1,8 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="text-center">
-    <h1 class="text-white "> Training Sessions</h1>
-            <a href="{{route('sessions.create')}}" class="btn btn-success my-3">Add Session</a>
+<div class="text-center mydiv">
+    <h1> Training Sessions</h1>
+            <a href="{{route('sessions.create')}}" class="btn btn-success btn-lg my-2">Add Session</a>
         
         <table class="table cell-border compact stripe table-dark my-4 text-dark" id="myTable">
             <thead>
@@ -20,12 +19,70 @@
 
             </tbody>
         </table>
+
         </div >
+ <!--****************************************edit modal*************************************-->       
+        <div id="myModal" class="modal fade " data-bs-backdrop="static" bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered col-md-6 ">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                <h5 class="modal-title text-dark">Edit Session</h5>
+                <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close">
+                </button>    
+                </div>
+
+            <div class="modal-body">
+                <form>
+
+            <div>
+            <label for="exampleInputEmail1" class="form-label text-dark">Name</label>
+            <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+
+            <div>
+            <label class="form-label text-dark" for="Day">Day</label>
+            <input name="day" id="Day" class="form-control" type="date" />
+            </div>
+
+            <div>
+            <label class="form-label text-dark" for="start">Start-time</label>
+            <input name="start" type="time" class="form-control" />
+            </div>     
+
+            <div>
+            <label class="form-label text-dark" for="finish">finish-time</label>
+            <input name="finish" type="time" class="form-control" />
+            </div>        
+
+            <div class="form-group">
+            <label class="form-label text-dark" for="exampleFormControlSelect2">Choose Coaches</label>
+            <select name="coaches[]" multiple class="form-control" id="exampleFormControlSelect2">
+       
+           </select>
+           </div>
+            <form>
+            </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Update</button>
+                    <button type="submit" class="btn btn-danger"  data-bs-dismiss="modal">close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @endsection
+
+
+
+
 @section('javascripts')
 <script>
     $(document).ready(function(){
+       $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
        $('#myTable').DataTable({
            processing:true,
            serverSide:true,
@@ -57,11 +114,34 @@
                {
                    data:'action',
                    name:'action',
-                   orderable:false
+                   orderable:false,
+                   searchable:false
                }
             ]
        });
-
     });
+
+    function DeleteSession(id){
+        if (confirm("Do you want to delete this session?") == true) {
+        var id = id;
+        $.ajax({
+           type:"POST",
+           url: "{{ url('destroy') }}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(res){
+               $('#myTable').DataTable().ajax.reload();
+              },
+            error:function(){ 
+            alert("There are people will attend this session:(");
+        }
+         });   
+    }}
+
+    function EditSession(id){
+    
+        var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+         myModal.show();
+    }
 </script>
           @endsection
