@@ -16,14 +16,14 @@ class Session extends Model
        ]; //array of columns which allowed to change
 
 
-       public function staff()   //relationship between sessions & coaches
-       {
-           return $this->belongsToMany(Staff::class);
-       }
-
        public function user()   //relationship between sessions & users
        {
            return $this->belongsToMany(User::class);
        }
+
+       public function coaches() {
+        return $this->belongsToMany(Staff::class, 'session_staff', 'session_id', 'staff_id');
+    }
+
 }
 

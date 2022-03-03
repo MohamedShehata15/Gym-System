@@ -33,7 +33,12 @@
                 </div>
 
             <div class="modal-body">
-                <form>
+                <form method="POST" action="{{route('sessions.update')}}">
+                @csrf
+                @method('PUT')
+            <div>
+            <input name="id" type="hidden" class="form-control" id="id" aria-describedby="emailHelp">
+            </div>
 
             <div>
             <label for="exampleInputEmail1" class="form-label text-dark">Name</label>
@@ -152,6 +157,8 @@
                var StartTime=startdate[1];
                var FinishTime=finishdate[1];
                var coaches=data.coaches;
+               var coachesid=data.coachesid;
+               $('#id').val(id);
                $('#name').val(data.name);
                $('#day').val(day);
                $('#start').val(StartTime);
@@ -160,7 +167,7 @@
                for(var i=0 ; i<coaches.length;i++)
                {
                 var x = document.createElement("OPTION");
-                 x.setAttribute("value", i+1);
+                 x.setAttribute("value", coachesid[i]);
                  var t = document.createTextNode(coaches[i]);
                  x.appendChild(t);
                  document.getElementById("coaches").appendChild(x);

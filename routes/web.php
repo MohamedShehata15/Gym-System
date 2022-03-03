@@ -32,4 +32,6 @@ Route::get('/sessions',[SessionController::class, 'index'])->name('sessions.inde
 Route::get('/sessions/create',[SessionController::class, 'create'])->name('sessions.create');
 Route::post('/sessions',[SessionController::class, 'store'])->name('sessions.store');
 Route::post('destroy', [SessionController::class, 'destroy'])->name('sessions.destroy'); 
-Route::get('edit', [SessionController::class, 'edit'])->name('sessions.edit'); 
+Route::get('edit', [SessionController::class, 'edit'])->name('sessions.edit');
+Route::put('/sessions', [SessionController::class, 'update'])->name('sessions.update');
+
