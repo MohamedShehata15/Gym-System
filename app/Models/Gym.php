@@ -15,8 +15,7 @@ class Gym extends Model {
         'name',
         'image',
         'revenue',
-        'city_id',
-        'staff_id',
+        'city_id',   
     ];
 
     // Managers

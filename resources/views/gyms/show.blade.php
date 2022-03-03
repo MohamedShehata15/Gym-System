@@ -2,17 +2,26 @@
 
 @section('content')
 
-    <div class="card card-primary mt-3 card-outline">
-        <div class="card-header">
+    <div class="container card card-primary mt-3  card-outline w-50 ">
+        <div class="card-header ">
           <h3 class="card-title">Gym Name:- {{$gym->name}}</h3>
           <div class="card-tools">
             <a href="{{route('gyms.index')}}"" class="badge badge-primary">Back</a>
           </div>
         </div>
-        <div class="card-body">
-          <h3>Gym image:- {{$gym->name}}</h3>
+        <div class="card-body d-flex justify-content-center align-items-center flex-column">
+          <img src="../uploads/gyms/{{$gym->image}}" alt="notFounded" class="w-25 rounded-circle shadow">
+          <h3>Gym Name:- {{$gym->name}}</h3>
           <h3>Gym Revenue:- {{$gym->revenue}}</h3>
-          <h3>Gym Manager:- {{$gym->staffs_id}}</h3>
+          <h3>Gym Manager:-</h3>
+          <ol>
+            @foreach ($managers as $manager )
+
+              <li><h4>{{$manager->name}}</h4></li> 
+               
+            @endforeach
+          
+          </ol>
         </div>
         <div class="card-footer">
           Our Gym System 

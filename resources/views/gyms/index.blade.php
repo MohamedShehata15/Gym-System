@@ -20,18 +20,19 @@
             {{-- @dd($gym->id) --}}
                 <tr>
                     <td>{{$gym->name}}</td>
-                    <td>2202-2-1</td>
-                    <td>2202-2-15</td>
+                    <td>{{$gym->created_at}}</td>
+                    <td>{{$gym->updated_at}}</td>
                     <td>{{$gym->revenue}}</td>
                     <td>
                         <a href="{{route('gyms.show',['id' => $gym->id])}}" class="btn btn-info">Show</a>
-                        <a href="{{route('gyms.edit',['id' => $gym->id])}}" class="btn btn-warning">Edit</a>{{-- <a href="{{route('gyms.destroy',['id' => $gym->id])}}" class="btn btn-danger">Delete</a> --}}
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <a href="{{route('gyms.edit',['id' => $gym->id])}}" class="btn btn-warning">Edit</a>
+                        {{-- <a href="{{route('gyms.destroy',['id' => $gym->id])}}" class="btn btn-danger">Delete</a> --}}
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{$gym->id}}">
                             Delete
                         </button>
                        {{-- //Model For Delete :) // --}}
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                        <div class="modal fade" id="exampleModal{{$gym->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered"">
                               <div class="modal-content">
                                 <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Warning</h5>

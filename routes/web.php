@@ -24,14 +24,17 @@ Route::GET('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::GET('/coaches', function () {
-    return view('coaches.index');
-});
+Route::group(['middleware' => 'auth'], function () {
+    
+    Route::GET('/coaches', function () {
+        return view('coaches.index');
+    });
+    Route::GET('/gyms',[GymController::class ,'index'])->name('gyms.index');
+    Route::GET('/gyms/create',[GymController::class ,'create'])->name('gyms.create');
+    Route::POST('/gyms',[GymController::class ,'store'])->name('gyms.store');
+    Route::GET('/gyms/{id}',[GymController::class ,'show'])->name('gyms.show');
+    Route::GET('/gyms/{id}/edit',[GymController::class ,'edit'])->name('gyms.edit');
+    Route::PUT('/gyms/{id}',[GymController::class ,'update'])->name('gyms.update');
+    Route::DELETE('/gyms/{id}',[GymController::class ,'destroy'])->name('gyms.destroy');
 
-Route::GET('/gyms',[GymController::class ,'index'])->name('gyms.index');
-Route::GET('/gyms/create',[GymController::class ,'create'])->name('gyms.create');
-Route::POST('/gyms',[GymController::class ,'store'])->name('gyms.store');
-Route::GET('/gyms/{id}',[GymController::class ,'show'])->name('gyms.show');
-Route::GET('/gyms/{id}/edit',[GymController::class ,'edit'])->name('gyms.edit');
-Route::PUT('/gyms/{id}',[GymController::class ,'update'])->name('gyms.update');
-Route::DELETE('/gyms/{id}',[GymController::class ,'destroy'])->name('gyms.destroy');
+}); 
