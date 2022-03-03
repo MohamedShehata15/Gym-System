@@ -3,7 +3,18 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 @endsection
 @section('content')
-    <br><br>
+
+<div class="d-flex justify-content-center mb-2 my-4">
+    <a
+      class="btn btn-success"
+      onClick="add()"
+      
+    >
+      Add New City</a
+    >
+  </div>
+
+<br><br>
     <table id="table_id" class="table table-bordered table-striped">
         <thead>
             <tr>
