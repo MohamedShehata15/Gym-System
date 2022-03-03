@@ -22,6 +22,7 @@ class User extends Authenticatable {
         'password',
         'avatar',
         'gender',
+        'attendance_session'
     ];
 
     /**
@@ -48,6 +49,6 @@ class User extends Authenticatable {
     }
 
     public function trainingPackage() {
-        return $this->belongsToMany(TrainingPackage::class, 'user_training_packages', 'user_id', 'training_packages_id');
+        return $this->belongsToMany(TrainingPackage::class, 'user_training_packages', 'user_id', 'training_package_id');
     }
 }
