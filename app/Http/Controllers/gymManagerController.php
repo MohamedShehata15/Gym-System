@@ -100,10 +100,7 @@ class gymManagerController extends Controller
             'gym_id' => $requestData['gym']
         ]);
 
-
-        // $gym = gymManager::where('gym_id',$requestData['gym']);
-        // $gym->staff_id =  $staffMember->id;
-        // $gym->save();
+        
         return redirect()->route('gym-managers.index');
     }
    //-------------------- delete member -------------------------------
