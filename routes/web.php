@@ -24,7 +24,7 @@ Route::GET('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group([ 'auth','isBanned'], function () {
     
     Route::GET('/coaches', function () {
         return view('coaches.index');

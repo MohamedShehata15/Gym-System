@@ -17,9 +17,9 @@ class isBanned
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::check() && Auth::user()->isban)
+        if(Auth::check() && Auth::staff()->is_baned)
         {
-            $banned = Auth::user()->isban == "1"; // "1"= user is banned / "0"= user is unBanned
+            $banned = Auth::staff()->is_baned == "1"; // "1"= user is banned / "0"= user is unBanned
             Auth::logout();
     
             if ($banned == 1) {

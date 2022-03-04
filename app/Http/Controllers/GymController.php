@@ -60,7 +60,6 @@ class GymController extends Controller
     public function show($id){
         $gym=Gym::find($id);
         $managers=Gym::find($id)->gymManager;
-        // dd($managers);
         return view('gyms.show',[
             'gym' => $gym,
             'managers' =>$managers

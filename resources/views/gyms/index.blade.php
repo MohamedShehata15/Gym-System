@@ -23,16 +23,14 @@
         </thead>
         <tbody>
             @foreach ( $gyms as $gym )
-            {{-- @dd($gym->id) --}}
                 <tr>
                     <td>{{$gym->name}}</td>
-                    <td>{{$gym->created_at}}</td>
-                    <td>{{$gym->updated_at}}</td>
+                    <td>{{\Carbon\Carbon::parse($gym->created_at)->format('Y-M-D')}}</td>
+                    <td>{{\Carbon\Carbon::parse($gym->updated_at)->format('Y-M-D')}}</td>
                     <td>{{$gym->revenue}}</td>
                     <td>
                         <a href="{{route('gyms.show',['id' => $gym->id])}}" class="btn btn-info">Show</a>
                         <a href="{{route('gyms.edit',['id' => $gym->id])}}" class="btn btn-warning">Edit</a>
-                        {{-- <a href="{{route('gyms.destroy',['id' => $gym->id])}}" class="btn btn-danger">Delete</a> --}}
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{$gym->id}}">
                             Delete
                         </button>
