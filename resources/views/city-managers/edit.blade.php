@@ -35,8 +35,7 @@
  
   <div class="mb-3" id="cityDiv">
     <label for="city" class="form-label">City</label>
-    <select name="city" class="form-control" id="city">
-      <option value="" disabled selected hidden>choose a City</option>  
+    <select name="city" class="form-control" id="city"> 
       @foreach($cities as $city) 
       <option value="{{$city->id}}" {{$city->staff_id == $staff->id ? "selected" : ""}}>{{$city->name}}</option>
       @endforeach

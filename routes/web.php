@@ -70,6 +70,8 @@ Route::get('/users',[UserController::class,'index'])->name('users.index');
 
 //---------------------------- Training Packages Routes -----------------------------------------------
 Route::get('training-packages',[TrainingPackageController::class,'index'])->name('training-packages.index');
-Route::get('training-packages/{training-package}/edit',[TrainingPackageController::class,'edit'])->name('training-packages.edit');
-Route::put('training-packages/{training-package}',[TrainingPackageController::class, 'update'])->name('training-packages.update');
-Route::post('destroy-training-package',[TrainingPackageController::class,'destroy'])->name('training-packages.destroy');
+Route::get('training-packages/create', [TrainingPackageController::class, 'create'])->name('training-packages.create');
+Route::post('training-packages',[TrainingPackageController::class, 'store'])->name('training-packages.store');
+Route::get('training-packages/{trainingpackage}/edit',[TrainingPackageController::class,'edit'])->name('training-packages.edit');
+Route::put('training-packages/{trainingpackage}',[TrainingPackageController::class, 'update'])->name('training-packages.update');
+Route::post('destroy-package',[TrainingPackageController::class,'destroy'])->name('training-packages.destroy');

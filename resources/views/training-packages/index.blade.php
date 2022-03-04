@@ -6,7 +6,7 @@
 @section('content')
     <br>
 <div class="d-flex justify-content-center mb-2">
-    <a class="btn btn-success" > Add New Package </a>
+    <a href="{{route('training-packages.create')}}" class="btn btn-success" > Add New Package </a>
   </div>
     <table id="table_id" class="table table-bordered table-striped">
         <thead>
@@ -77,21 +77,19 @@
     function deleteFunc(id){
         if (confirm("Delete Record?") == true) {
         var id = id;
-        console.log(id); 
          // ajax
         $.ajax({
            type:"POST",
-           url: "{{ url('destroy-training-package') }}",
+           url: "{{ route('training-packages.destroy') }}",
            data: { id: id },
            dataType: 'json',
-           success: function(res){  
-            $('#table_id').DataTable().ajax.reload();
+           success: function(res){
+               $('#table_id').DataTable().ajax.reload();
               },
-            error:function(){ 
-            alert("Failed");
+            error:function(res){ 
+            alert("this city has gyms");
         }
          });
-        }
-    }
+    }}
     </script>
 @endsection
