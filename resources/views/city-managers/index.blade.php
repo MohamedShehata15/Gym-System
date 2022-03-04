@@ -6,7 +6,7 @@
 @section('content')
 <br>
 <div class="d-flex justify-content-center mb-2">
-    <a href="{{route('staff.create')}}" class="btn btn-success">Add New Member </a>
+    <a href="{{route('city-managers.create')}}" class="btn btn-success">Add New Member </a>
   </div>
 
 
@@ -18,7 +18,6 @@
                 <th>Email</th>
                 <th>Avatar</th>
                 <th>National_ID</th>
-                <th>Role</th>
                 <th>Is_Baned</th>
                 <th></th>
             </tr>
@@ -38,7 +37,7 @@
             processing: true,
             serverSide: true,
             ajax:{
-                url: "{{ route('staff.index') }}"
+                url: "{{ route('city-managers.index') }}"
             },
             columns:[
                 {
@@ -67,10 +66,6 @@
                     name:'national_id',
                 },
                 {
-                    data:'role',
-                    name:'role',
-                },
-                {
                     data:"is_baned",
                     name:"is_baned",
                 },
@@ -88,7 +83,7 @@
          // ajax
         $.ajax({
            type:"POST",
-           url: "{{ url('destroy-staff') }}",
+           url: "{{ url('destroy-city-manager') }}",
            data: { id: id },
            dataType: 'json',
            success: function(res){

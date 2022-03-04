@@ -14,7 +14,8 @@ class Staff extends Model {
         'password',
         'avatar',
         'national_id',
-        'is_baned'
+        'is_baned',
+        'role'
     ];
 
     // City Manager

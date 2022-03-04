@@ -4,21 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Staff;
+use App\Models\City;
+use App\Models\Gym;
 
-class StaffController extends Controller
+class cityManagerController extends Controller
 {
     public function index()
     {
         if (request()->ajax()) {
-            return datatables()->of(Staff::latest()->get())
+            return datatables()->of(Staff::where('role','city_manager')->get())
                ->addColumn('action', function ($data) {
-                   $button ='<a href="'.route('staff.edit',$data->id).'" class="btn btn-info btn-sm mx-2">Edit</a>';
+                   $button ='<a href="'.route('city-managers.edit',$data->id).'" class="btn btn-info btn-sm mx-2">Edit</a>';
                    $button .='<a href="javascript:void(0);" onClick = "deleteFunc('.$data->id.')"class="btn btn-danger btn-sm mx-2">Delete</a>';
                    return $button;
                })
                ->rawColumns(['action'])->make(true);
         }
-        return view('staff.index');
+        return view('city-managers.index');
     }
     //--------------------------- edit staff member -----------------------
     public function edit($staffId)
@@ -26,7 +28,7 @@ class StaffController extends Controller
         //$staff = Staff::all();
         $staff = Staff::find($staffId);
         //$post = Post::find($postId);
-            return view('staff.edit',[
+            return view('city-managers.edit',[
                 'staff' => $staff,
                 //'users'=> $users
             ]);
@@ -37,21 +39,38 @@ class StaffController extends Controller
         $post = Post::find($postId)->update(['Title' => $requestData['Title'],
         'Description' => $requestData['Description'],
         'user_id' => $requestData['user_id']]);
-        return redirect()->route('posts.index');
+        return redirect()->route('city-managers.index');
     }
     //----------------------- create new member -------------------------
     public function create()
     {
-        //$staff = User::all();
-        return view('staff.create');
+        $scities = City::all();
+        // $gyms = Gym::all();
+        return view('city-managers.create',
+    [
+        'cities' => $scities,
+        // 'gyms' => $gyms,
+    ]);
     }
-    public function store(StorePostRequest $request)
+    public function store()
     {
         $requestData = request()->all();
-        //$validated = $request->validated();
-        //$validated = $request->safe()->only(['Title', 'Description']);
-        Post::create($requestData);
-        return redirect()->route('posts.index');
+       
+        Staff::create([
+            'name' => $requestData['name'],
+            'email' => $requestData['email'],
+            'password' => $requestData['password'],
+            'avatar' => $requestData['avatar'],
+            'national_id' => $requestData['national_id'],
+            'is_baned' => 0,
+            'role' => "city_manager",
+        ]);
+        $staffMember = Staff::where('name',$requestData['name'])->first();
+        //dd($requestData['city']);
+        $city = City::find($requestData['city']);
+        $city->staff_id =  $staffMember->id;
+        $city->save();
+        return redirect()->route('city-managers.index');
     }
    //-------------------- delete member -------------------------------
    public function destroy(Request $request)
@@ -61,13 +80,13 @@ class StaffController extends Controller
         //get the city  where city_manager=$request_id
              $city = Staff::find($request->id)->city;
         //get arrays of sessions where coach_id=$request_id
-            $sessions = Staff::find($request_id)->coachSessions;
-       $is_valid=0 ;
+            $sessions = Staff::find($request->id)->coachSessions;
+       $is_valid=true ;
        if(isset($sessions) || isset($gyms))
        {
-           $is_valid=1;
+           $is_valid=false;
        }
-       if($is_valid==0 && empty($city))
+       if($is_valid==true && empty($city))
        {
            $member = Staff::where('id', $request->id)->delete();
            return Response()->json($member);

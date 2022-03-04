@@ -16,7 +16,13 @@ class CityController extends Controller
         if (request()->ajax()) {
             return datatables()->of($cities)
                ->addColumn('cityManagers', function (City $city) {
-            return $city->cityManager->name;
+                   if($city->cityManager !== null) {
+                    return $city->cityManager->name;
+                   }else
+                   {
+                       return "Not asigned yet";
+                   }
+            
         })
                ->addColumn('action', function ($data) {
                    $button ='<a href="javascript:void(0)" onClick = "editFunc('.$data->id.')"class="btn btn-info btn-sm mx-4">Edit</a>';
@@ -44,7 +50,7 @@ class CityController extends Controller
                     ],
             [
                     'name' => $request->name,
-                    'staff_id' => 1,
+                    
                     
                     ]
         );

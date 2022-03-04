@@ -12,7 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\TrainingPackageController;
 use App\Http\Controllers\CoachController;
-use App\Http\Controllers\StaffController;
+use App\Http\Controllers\cityManagerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,13 +40,30 @@ Route::post('edit-city',[CityController::class,'edit'])->name('cities.edit');
 Route::post('destroy-city',[CityController::class,'destroy'])->name('cities.destroy');
 Route::post('store-city',[CityController::class,'store'])->name('cities.store');
 //-------------------------- staff Routes --------------------------------------
-Route::get('staff',[StaffController::class,'index'])->name('staff.index');
-Route::get('staff/create', [StaffController::class, 'create'])->name('staff.create');
-Route::post('staff',[StaffController::class, 'store'])->name('staff.store');
-Route::get('staff/{staff}',[StaffController::class, 'edit'])->name('staff.edit');
-Route::put('staff/{staff}',[StaffController::class, 'update'])->name('staff.update');
-Route::post('destroy-staff',[StaffController::class,'destroy'])->name('staff.destroy');
-Route::get('update/{staff}',[StaffController::class,'delete'])->name('cities.delete');
+
+
+
+
+//-------------------------- City Managers Routes --------------------------------
+
+Route::get('city-managers',[cityManagerController::class,'index'])->name('city-managers.index');
+Route::get('city-managers/create', [cityManagerController::class, 'create'])->name('city-managers.create');
+Route::post('city-managers',[cityManagerController::class, 'store'])->name('city-managers.store');
+Route::get('city-managers/{city-manager}',[cityManagerController::class, 'edit'])->name('city-managers.edit');
+Route::put('city-managers/{city-manager}',[cityManagerController::class, 'update'])->name('city-managers.update');
+Route::post('destroy-city-manager',[cityManagerController::class,'destroy'])->name('city-managers.destroy');
+Route::get('update/{city-manager}',[cityManagerController::class,'delete'])->name('city-managers.update');
+
+//-------------------------- Gym Managers Routes --------------------------------
+
+// Route::get('gym-managers',[gymManagerController::class,'index'])->name('gymManager.index');
+// Route::get('gym-managers/create', [gymManagerController::class, 'create'])->name('gymManager.create');
+// Route::post('gym-managers',[gymManagerController::class, 'store'])->name('gymManager.store');
+// Route::get('gym-managers/{gym-manager}',[gymManagerController::class, 'edit'])->name('gymManager.edit');
+// Route::put('gym-managers/{gym-manager}',[gymManagerController::class, 'update'])->name('gymManager.update');
+// Route::post('destroy-gym-manager',[gymManagerController::class,'destroy'])->name('gymManager.destroy');
+// Route::get('update/{gym-manager}',[gymManagerController::class,'delete'])->name('gymManager.update');
+
 //-------------------------- Coaches Routes --------------------------------
 Route::get('/coaches', [CoachController::class,'index'])->name('coaches.index');
 
