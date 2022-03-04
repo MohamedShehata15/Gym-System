@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\TrainingPackageController;
-use App\Http\Controllers\CoacheController;
-
+use App\Http\Controllers\CoachController;
+use App\Http\Controllers\StaffController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,14 +33,21 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 
-//Cities Routes
+//------------------------- Cities Routes ------------------------------
 Route::get('cities',[CityController::class,'index'])->name('cities.index');
+//Route::get('update/{city}',[CityController::class,'update'])->name('cities.update');
 Route::post('edit-city',[CityController::class,'edit'])->name('cities.edit');
 Route::post('destroy-city',[CityController::class,'destroy'])->name('cities.destroy');
 Route::post('store-city',[CityController::class,'store'])->name('cities.store');
-
-
-//Coaches Routes
+//-------------------------- staff Routes --------------------------------------
+Route::get('staff',[StaffController::class,'index'])->name('staff.index');
+Route::get('staff/create', [StaffController::class, 'create'])->name('staff.create');
+Route::post('staff',[StaffController::class, 'store'])->name('staff.store');
+Route::get('staff/{staff}',[StaffController::class, 'edit'])->name('staff.edit');
+Route::put('staff/{staff}',[StaffController::class, 'update'])->name('staff.update');
+Route::post('destroy-staff',[StaffController::class,'destroy'])->name('staff.destroy');
+Route::get('update/{staff}',[StaffController::class,'delete'])->name('cities.delete');
+//-------------------------- Coaches Routes --------------------------------
 Route::get('/coaches', [CoachController::class,'index'])->name('coaches.index');
 
 //Users Routes

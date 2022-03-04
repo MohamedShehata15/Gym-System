@@ -128,10 +128,9 @@
            dataType: 'json',
            success: function(res){
                $('#table_id').DataTable().ajax.reload();
-               
               },
             error:function(res){ 
-            alert("Delete Failed");
+            alert("this city has gyms");
         }
          });
          
