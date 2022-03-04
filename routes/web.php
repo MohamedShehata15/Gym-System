@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\CityManagerController;
 use App\Http\Controllers\GymController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,4 +37,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::PUT('/gyms/{id}',[GymController::class ,'update'])->name('gyms.update');
     Route::DELETE('/gyms/{id}',[GymController::class ,'destroy'])->name('gyms.destroy');
 
+    Route::GET('/cityManagers',[CityManagerController::class ,'index'])->name('cityManagers.index');
+    Route::GET('/cityManagers/create',[CityManagerController::class ,'create'])->name('cityManagers.create');
+    Route::POST('/cityManagers',[CityManagerController::class ,'store'])->name('cityManagers.store');
+    Route::GET('/cityManagers/{id}',[CityManagerController::class ,'show'])->name('cityManagers.show');
+    Route::GET('/cityManagers/{id}/edit',[CityManagerController::class ,'edit'])->name('cityManagers.edit');
+    Route::PUT('/cityManagers/{id}',[CityManagerController::class ,'update'])->name('cityManagers.update');
+    Route::DELETE('/cityManagers/{id}',[CityManagerController::class ,'destroy'])->name('cityManagers.destroy');
+    Route::GET('/cityManagers/{id}/ban',[CityManagerController::class ,'ban'])->name('cityManagers.ban');
 }); 

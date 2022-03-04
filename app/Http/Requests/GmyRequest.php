@@ -25,7 +25,7 @@ class GmyRequest extends FormRequest
     {
         return [ 
             'name' => ['required','min:4','max:15'],
-            'image' => ['required','image','mimes:jpg,png,jpeg,gif,svg','max:1000'],
+            'image' => ['required','image','mimes:jpg,png,jpeg,gif,svg'],
             'city_id' => ['required'],
             'staff_id' => ['required'],  
         ];
