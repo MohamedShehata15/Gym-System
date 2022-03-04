@@ -4,7 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-<form method="post" action="{{route('city-managers.store')}}" class="mt-5">
+<form method="post" action="{{route('gym-managers.store')}}" class="mt-5" id="form">
   @csrf
   <div class="mb-3">
     <label for="Name" class="form-label">Name</label>
@@ -42,12 +42,13 @@
     </select>
   </div>
 
-  {{-- <div class="mb-3" id="gymDiv">
+  <div class="mb-3" id="gymDiv">
     <label for="gym" class="form-label">Gyms</label>
     <select name="gym" class="form-control" id="gym">      
+
     </select>
   </div>
-   --}}
+  
   {{-- <div class="mb-3">
     <label for="ban" class="form-label">IsBaned</label>
     <select name="ban" class="form-control" id="ban">
@@ -64,11 +65,35 @@
 
 <script>
   $(document).ready(function() {
-              
-     
-
-        
     
+      
+    $("#city").change(function(){
+            var cityID = $(this).val();
+           
+               if(cityID) {
+                   $.ajax({
+                       url: '/getGym/'+cityID,
+                       type: "GET",
+                       data : {"_token":"{{ csrf_token() }}"},
+                       dataType: "json",
+                       success:function(data)
+                       {
+                         if(data){
+                            $('#gym').empty();
+                            $('#gym').append('<option hidden>Choose a Gym</option>');
+                            $.each(data, function(key, gym){
+                                $('select[name="gym"]').append('<option value="'+ gym.id +'">' + gym.name+ '</option>');
+                            });
+                        }else{
+                            $('#gym').empty();
+                        }
+                     }
+                   });
+               }else{
+                 $('#gym').empty();
+               }
+          });
+
 });
 </script>
 

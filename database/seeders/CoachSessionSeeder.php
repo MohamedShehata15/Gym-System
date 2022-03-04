@@ -13,6 +13,6 @@ class CoachSessionSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        CoachSession::factory()->count(50)->create();
+        CoachSession::factory()->count(10)->create();
     }
 }

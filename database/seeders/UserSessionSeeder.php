@@ -13,6 +13,6 @@ class UserSessionSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        UserSession::factory()->count(50)->create();
+        UserSession::factory()->count(10)->create();
     }
 }
