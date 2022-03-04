@@ -4,7 +4,13 @@
    
 
 </head>
-<body>
+<body> 
+    @if(Session::has('fail'))
+        <div class="alert alert-danger">
+        {{Session('fail')}}
+    </div>
+    {{Session()->forget('fail')}}
+    @endif
     <table id="gyms" class="display">
         <thead>
             <tr>

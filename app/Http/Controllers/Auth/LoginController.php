@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -37,4 +38,16 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // protected $redirectTo = '/home';
+
+    // OR-Else => use if you already used to redirecting authentication as per role. 
+    protected function authenticated()
+    {
+        if(Auth::user()->role_as == '0') // Normal or Default User Login
+        {
+            return redirect('/home');
+        }
+    }
+
 }

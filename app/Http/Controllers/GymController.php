@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GmyRequest;
 use App\Models\City;
+use App\Models\CoachSession;
 use App\Models\Gym;
 use App\Models\GymManager;
+use App\Models\Session;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,7 +19,7 @@ class GymController extends Controller
     public function index(){
         $gyms=Gym::all();
         return view('gyms.index',[   
-            'gyms'=>$gyms
+            'gyms'=>$gyms,   
         ]);
     }
 //----------------------create--------------------//
@@ -94,8 +96,21 @@ class GymController extends Controller
     }
     //----------------------destroy--------------------//
     public function destroy($id){ 
-        Gym::find($id)->delete();
-        return redirect()->route("gyms.index");
+       $flag=0;
+       $gymCoaches= Gym::find($id)->gymCoaches;
+        foreach($gymCoaches as $gymCoache){
+            $gymSession= CoachSession::where('staff_id',$gymCoache->id)->get();
+            if($gymSession != NULL){
+                $flag=1;
+            }
+        }
+        if($flag==0){
+            Gym::find($id)->delete();
+            return redirect()->route("gyms.index");
+        }else{
+            Session(['fail'=> "You Can't Delete this GYM it had a sessions."]);
+            return redirect()->route("gyms.index");
+        }
     }
 
 
