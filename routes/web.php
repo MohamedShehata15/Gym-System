@@ -70,5 +70,8 @@ Route::get('/coaches', [CoachController::class,'index'])->name('coaches.index');
 //Users Routes
 Route::get('/users',[UserController::class,'index'])->name('users.index');
 
-//Training Packages Routes
-Route::get('/training-package',[TrainingPackageController::class,'index'])->name('training-package.index');
+//---------------------------- Training Packages Routes -----------------------------------------------
+Route::get('training-packages',[TrainingPackageController::class,'index'])->name('training-packages.index');
+Route::get('training-packages/{training-package}/edit',[TrainingPackageController::class,'edit'])->name('training-packages.edit');
+Route::put('training-packages/{training-package}',[TrainingPackageController::class, 'update'])->name('training-packages.update');
+Route::post('destroy-training-package',[TrainingPackageController::class,'destroy'])->name('training-packages.destroy');

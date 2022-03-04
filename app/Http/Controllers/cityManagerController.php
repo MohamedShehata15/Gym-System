@@ -75,21 +75,21 @@ class cityManagerController extends Controller
    //-------------------- delete member -------------------------------
    public function destroy(Request $request)
    {
-       // get arrays of gyms where gym_manager = $request-id
-             $gyms=Staff::find($request->id)->gymManger;
+    //    // get arrays of gyms where gym_manager = $request-id
+    //          $gyms=Staff::find($request->id)->gymManger;
         //get the city  where city_manager=$request_id
              $city = Staff::find($request->id)->city;
-        //get arrays of sessions where coach_id=$request_id
-            $sessions = Staff::find($request->id)->coachSessions;
-       $is_valid=true ;
-       if(isset($sessions) || isset($gyms))
+        // //get arrays of sessions where coach_id=$request_id
+        //     $sessions = Staff::find($request->id)->coachSessions;
+    //    $is_valid=true ;
+    //    if(isset($sessions) || isset($gyms))
+    //    {
+    //        $is_valid=false;
+    //    }
+       if(empty($city))
        {
-           $is_valid=false;
-       }
-       if($is_valid==true && empty($city))
-       {
-           $member = Staff::where('id', $request->id)->delete();
-           return Response()->json($member);
+           $cityManager = Staff::where('id', $request->id)->delete();
+           return Response()->json($cityManager);
        }
        
    }
