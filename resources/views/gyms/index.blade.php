@@ -5,7 +5,7 @@
 
 </head>
 <body>
-    <table id="table_id" class="display">
+    <table id="gyms" class="display">
         <thead>
             <tr>
                 <th>Name</th>
@@ -58,8 +58,13 @@
                 </tr> 
             @endforeach  
         </tbody>
-    </table>
-
-
-    
+    </table>  
   @endsection
+
+  @section('script')
+       <script>
+           $(document).ready( function () {
+           $('#gyms').DataTable();
+           });
+       </script>
+   @endsection	   

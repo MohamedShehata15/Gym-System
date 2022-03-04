@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 class CityManagerController extends Controller
 {
     public function index(){
-        $cityManagers=Staff::where('role','city_manager')->get();
+        $cityGyms=Staff::find(4)->city->gyms;
+ 
         return view('cityManagers.index',[   
-            'cityManagers'=>$cityManagers,
-        ]);
+            'cityGyms'=>$cityGyms
+        ]);  
+
     }
     public function show(){
         
@@ -32,8 +34,8 @@ class CityManagerController extends Controller
 
     }
     public function ban($id){
-        $cityManager=Staff::where('id',$id)->first();
-        $isBan= $cityManager->is_baned;
+        $gymManager=Staff::where('id',$id)->first();
+        $isBan= $gymManager->is_baned;
         $isBan == 0 ? $updatedBan =[  'is_baned' => 1] :  $updatedBan =[  'is_baned' => 0 ];
         Staff::where('id',$id)->update($updatedBan);
         return redirect()->route("cityManagers.index");
