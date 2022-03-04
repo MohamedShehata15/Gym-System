@@ -7,12 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TrainingPackage extends Model {
     use HasFactory;
-    protected $fillable = [
-        'name',
-        'price',
-        'session_number',
-        'gym_id',
-    ];
+
     public function trainingPackageGym() {
         return $this->belongsTo(Gym::class, 'gym_id');
     }
