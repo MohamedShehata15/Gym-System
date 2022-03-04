@@ -13,6 +13,6 @@ class GymManagerSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        GymManager::factory()->count(50)->create();
+        GymManager::factory()->count(10)->create();
     }
 }

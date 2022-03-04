@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->foreignId('staff_id')-> nullable()->onDelete('cascade');
+            $table->foreignId('staff_id')->nullable()->onDelete('set null');
         });
     }
 

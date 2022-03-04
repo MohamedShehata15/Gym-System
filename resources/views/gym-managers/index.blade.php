@@ -6,7 +6,7 @@
 @section('content')
 <br>
 <div class="d-flex justify-content-center mb-2">
-    <a href="{{route('city-managers.create')}}" class="btn btn-success">Add New Manager </a>
+    <a href="{{route('gym-managers.create')}}" class="btn btn-success">Add New Manager </a>
   </div>
 
 
@@ -37,7 +37,7 @@
             processing: true,
             serverSide: true,
             ajax:{
-                url: "{{ route('city-managers.index') }}"
+                url: "{{ route('gym-managers.index') }}"
             },
             columns:[
                 {
@@ -83,7 +83,7 @@
          // ajax
         $.ajax({
            type:"POST",
-           url: "{{ url('destroy-city-manager') }}",
+           url: "{{ url('destroy-gym-manager') }}",
            data: { id: id },
            dataType: 'json',
            success: function(res){
