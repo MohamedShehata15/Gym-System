@@ -62,8 +62,8 @@
 
             <div class="form-group">
             <label class="form-label text-dark" for="exampleFormControlSelect2">Choose Coaches</label>
-            <select name="coaches[]" multiple class="form-control" id="coaches">
-
+            <select name="coaches[]" multiple class="form-control" id="coaches"> 
+                       
            </select>
            </div>
             <form>
@@ -85,6 +85,7 @@
 
 @section('javascripts')
 <script>
+
     $(document).ready(function(){
        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
        $('#myTable').DataTable({
@@ -141,7 +142,7 @@
         }
          });   
     }}
-
+   
     function EditSession(id){
         var id = id;
         $.ajax({
@@ -156,26 +157,31 @@
                var day=startdate[0];
                var StartTime=startdate[1];
                var FinishTime=finishdate[1];
-               var coaches=data.coaches;
-               var coachesid=data.coachesid;
+               var selectedCoaches=data.selectedCoaches;
+               var coachesid=data.coachesid; 
+               var options=data.coaches;
+
                $('#id').val(id);
                $('#name').val(data.name);
                $('#day').val(day);
                $('#start').val(StartTime);
                $('#finish').val(FinishTime);
-               
-               for(var i=0 ; i<coaches.length;i++)
-               {
-                var x = document.createElement("OPTION");
-                 x.setAttribute("value", coachesid[i]);
-                 var t = document.createTextNode(coaches[i]);
-                 x.appendChild(t);
-                 document.getElementById("coaches").appendChild(x);
-               }               
+               $("#coaches").empty();
+
+               for (var j = 0; j< options.length; j++) {
+                      if(jQuery.inArray(coachesid[j], selectedCoaches) !== -1)                       {
+                         $("#coaches").append(new Option(options[j], coachesid[j],true, true));
+                       }
+                      else{
+                        $("#coaches").append(new Option(options[j], coachesid[j]));
+
+                       }
+                   }
                //show the modal
                var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
                myModal.show();
            }
+
         });   
 
     }

@@ -98,18 +98,21 @@ class SessionController extends Controller
 
     public function edit(Request $request)
     {
-      $coaches=Staff::select('name')->where('role', '=', 'coach')->pluck('name');
-      $coachesid=Staff::select('id')->where('role', '=', 'coach')->pluck('id');
-
+      $coaches=Staff::where('role', '=', 'coach')->pluck('name');
+      $coachesid=Staff::where('role', '=', 'coach')->pluck('id');
       $session=Session::find($request->id);
+      $selectedCoaches=SessionStaff::where('session_id','=',$session->id)->pluck('staff_id');
+
       $output=array(
         'name' => $session->name,
         'start_at' => $session->start_at,
         'finish_at' => $session->finish_at,
         'coaches' => $coaches,
-        'coachesid'=>$coachesid
+        'coachesid'=>$coachesid,
+        'selectedCoaches'=>$selectedCoaches
       );
         echo json_encode($output);
+
     }
 
 
@@ -127,21 +130,19 @@ class SessionController extends Controller
 
             if(($changedStartDate!= $startdate || $changedFinishDate!= $finishdate) && $SomeoneAttend) 
             {
-                    return  redirect()->back()->withErrors(['There is people attend this session you cannot change the date :(']);
+                return  back()->withErrors(['There is people attend this session you cannot change the date :(']);
             }
+
             else{
                 Session::where('id', $requestData['id'])->update([
                     'name'=>$requestData['name'],
                     'start_at' =>$requestData['day']." ".$requestData['start'],
                     'finish_at' =>$requestData['day']." ".$requestData['finish']]);    
-                $coaches=$requestData['coaches'];
-                $coaches=array_values($coaches);
-                $data=Staff::find($coaches);
-                $CurrentSession->coaches()->sync($data); //assign coaches to the session
-        
-                // foreach ($coaches as $coach) {
-                //  SessionStaff::where('session_id', $requestData['id'])->update(['staff_id'=>$coach]);
-                // }
+                    $coaches=$requestData['coaches'];
+                    $coaches=array_values($coaches);
+                    $data=Staff::find($coaches);
+                    $CurrentSession->coaches()->sync($data); //assign coaches to the session
+
                 return redirect()->route('sessions.index');  
 
             }
