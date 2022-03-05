@@ -2,7 +2,7 @@
     $managerRole = Auth::user()->role;
     if($managerRole == 'coach') {
         $path = "coaches";
-        $reoute = "coaches.index";
+        $route = "coaches.index";
     } else {
         $path = "/";
         $route = "home";
