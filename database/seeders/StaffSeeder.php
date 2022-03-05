@@ -14,7 +14,7 @@ class StaffSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        Staff::insert([
+        Staff::create([
             'name' => "Admin",
             'email' => "admin@admin.com",
             'password' => Hash::make(123456),

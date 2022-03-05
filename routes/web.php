@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CoachController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,15 +24,24 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-/* ======================= Coaches Routes ========================= */
-Route::get('/coaches', [CoachController::class, 'index'])->name('coaches.index');
 
-Route::get('/coaches/profile/show', [CoachController::class, 'profile'])->name('coaches.profile');
+Route::post('/login/staff', [LoginController::class, 'staffLogin']);
 
-Route::get("/coaches/profile/edit", [CoachController::class, 'edit'])->name('coaches.edit');
+Route::get('logout', [LoginController::class, 'logout']);
 
-Route::get('/coaches/sessions', [CoachController::class, 'sessions'])->name('coaches.sessions');
+Route::group(['middleware' => 'auth:staff'], function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get("/coaches/password", [CoachController::class, 'password'])->name('coaches.password');
+    /* ======================= Coaches Routes ========================= */
+    Route::get('/coaches', [CoachController::class, 'index'])->name('coaches.index');
 
-/* ===================================================================== */
+    Route::get('/coaches/profile/show', [CoachController::class, 'profile'])->name('coaches.profile');
+
+    Route::get("/coaches/profile/edit", [CoachController::class, 'edit'])->name('coaches.edit');
+
+    Route::get('/coaches/sessions', [CoachController::class, 'sessions'])->name('coaches.sessions');
+
+    Route::get("/coaches/password", [CoachController::class, 'password'])->name('coaches.password');
+
+    /* ===================================================================== */
+});
