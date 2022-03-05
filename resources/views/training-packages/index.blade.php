@@ -4,22 +4,18 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-<br>
+    <br>
 <div class="d-flex justify-content-center mb-2">
-    <a href="{{route('staff.create')}}" class="btn btn-success">Add New Member </a>
+    <a href="{{route('training-packages.create')}}" class="btn btn-success" > Add New Package </a>
   </div>
-
-
     <table id="table_id" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Avatar</th>
-                <th>National_ID</th>
-                <th>Role</th>
-                <th>Is_Baned</th>
+                <th>name</th>
+                <th>price</th>
+                <th>Session Number</th>
+                <th>Gym Name</th>
                 <th></th>
             </tr>
         </thead>
@@ -38,7 +34,7 @@
             processing: true,
             serverSide: true,
             ajax:{
-                url: "{{ route('staff.index') }}"
+                url: "{{ route('training-packages.index') }}"
             },
             columns:[
                 {
@@ -50,35 +46,29 @@
                     name:'name',
                 },
                 {
-                    data:'email',
-                    name:'email',
-                },
-                {
-                    data:'avatar',
-                    name:'avatar',
+                    data:'price',
+                    name:'price',
                     render:function(data,type,full,meta)
                     {
-                        return "<img src="+data+" width='70' class='img-thumbnail' />";
-                    },
-                    orderable:false
+                        return (data*0.01+'$');
+                    }
+                },
+               
+                {
+                    data:'session_number',
+                    name:'session_number',
                 },
                 {
-                    data:'national_id',
-                    name:'national_id',
-                },
-                {
-                    data:'role',
-                    name:'role',
-                },
-                {
-                    data:"is_baned",
-                    name:"is_baned",
+                    data:'GymName',
+                    name:'GymName',
+                    orderable:false,
                 },
                 {
                     data:'action',
                     name:'action',
                     orderable:false,
                 },
+                
             ]
         });
     } );
@@ -88,17 +78,16 @@
          // ajax
         $.ajax({
            type:"POST",
-           url: "{{ url('destroy-staff') }}",
+           url: "{{ route('training-packages.destroy') }}",
            data: { id: id },
            dataType: 'json',
            success: function(res){
-            $('#table_id').DataTable().ajax.reload();
+               $('#table_id').DataTable().ajax.reload();
               },
-            error:function(){ 
+            error:function(res){ 
             alert("Failed");
         }
          });
-         
     }}
     </script>
 @endsection
