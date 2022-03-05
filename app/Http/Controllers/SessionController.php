@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\GymCoaches;
 use App\Models\User;
 use App\Models\SessionUser;
+use App\Models\SessionStaff;
 use App\DataTables\SessionDataTable;
 use App\Http\Requests\SessionRequest;
 
@@ -88,13 +89,18 @@ class SessionController extends Controller {
 
 
     public function edit(Request $request) {
-        $coaches = Staff::select('name')->where('role', '=', 'coach')->pluck('name');
+        $coaches = Staff::where('role', '=', 'coach')->pluck('name');
+        $coachesid = Staff::where('role', '=', 'coach')->pluck('id');
         $session = Session::find($request->id);
+        $selectedCoaches = SessionStaff::where('session_id', '=', $session->id)->pluck('staff_id');
+
         $output = array(
             'name' => $session->name,
             'start_at' => $session->start_at,
             'finish_at' => $session->finish_at,
-            'coaches' => $coaches
+            'coaches' => $coaches,
+            'coachesid' => $coachesid,
+            'selectedCoaches' => $selectedCoaches
         );
         echo json_encode($output);
     }

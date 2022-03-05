@@ -34,7 +34,12 @@
             </div>
 
             <div class="modal-body">
-                <form>
+                <form method="POST" action="{{route('sessions.update')}}">
+                    @csrf
+                    @method('PUT')
+                    <div>
+                        <input name="id" type="hidden" class="form-control" id="id" aria-describedby="emailHelp">
+                    </div>
 
                     <div>
                         <label for="exampleInputEmail1" class="form-label text-dark">Name</label>
@@ -93,9 +98,7 @@
             ajax: {
                 url: "{{route('sessions.index')}}"
             },
-            columns: [
-
-                {
+            columns: [{
                     data: 'id',
                     name: 'id'
                 },
@@ -139,7 +142,7 @@
                     $('#myTable').DataTable().ajax.reload();
                 },
                 error: function () {
-                    alert("There are people will attend this session:(");
+                    alert("There are people will attend this session you cannot delete it:(");
                 }
             });
         }
@@ -161,25 +164,27 @@
                 var day = startdate[0];
                 var StartTime = startdate[1];
                 var FinishTime = finishdate[1];
-                var coaches = data.coaches;
+                var selectedCoaches = data.selectedCoaches;
+                var coachesid = data.coachesid;
+                var options = data.coaches;
+                $('#id').val(id);
                 $('#name').val(data.name);
                 $('#day').val(day);
                 $('#start').val(StartTime);
                 $('#finish').val(FinishTime);
-
-                for (var i = 0; i < coaches.length; i++) {
-                    var x = document.createElement("OPTION");
-                    x.setAttribute("value", i + 1);
-                    var t = document.createTextNode(coaches[i]);
-                    x.appendChild(t);
-                    document.getElementById("coaches").appendChild(x);
+                $("#coaches").empty();
+                for (var j = 0; j < options.length; j++) {
+                    if (jQuery.inArray(coachesid[j], selectedCoaches) !== -1) {
+                        $("#coaches").append(new Option(options[j], coachesid[j], true, true));
+                    } else {
+                        $("#coaches").append(new Option(options[j], coachesid[j]));
+                    }
                 }
                 //show the modal
                 var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
                 myModal.show();
             }
         });
-
     }
 
 </script>
