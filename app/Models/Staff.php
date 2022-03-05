@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Staff extends Model {
-    use HasFactory;
+class Staff extends Authenticatable {
+    use HasFactory, Notifiable;
+
+    protected $guard = 'staff';
 
     protected $fillable = [
         'name',
@@ -15,6 +18,10 @@ class Staff extends Model {
         'avatar',
         'national_id',
         'is_baned'
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token'
     ];
 
     // City Manager
