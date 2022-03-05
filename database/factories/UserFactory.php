@@ -15,13 +15,18 @@ class UserFactory extends Factory {
      *
      * @return array<string, mixed>
      */
+
+
     public function definition() {
+        $gender = $this->faker->randomElement(['male', 'female']);
+
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => Hash::make(12345),
+            'password' => Hash::make(123456),
             'remember_token' => Str::random(10),
+            'gender' => $gender,
         ];
     }
 

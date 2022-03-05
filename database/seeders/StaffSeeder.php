@@ -14,13 +14,13 @@ class StaffSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        Staff::insert([
+        Staff::create([
             'name' => "Admin",
             'email' => "admin@admin.com",
             'password' => Hash::make(123456),
             'national_id' => rand(1, 20),
             'role' => 'admin'
         ]);
-        Staff::factory()->count(10)->create();
+        Staff::factory()->count(100)->create();
     }
 }

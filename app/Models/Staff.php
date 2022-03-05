@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Staff extends Model {
-    use HasFactory;
+class Staff extends Authenticatable {
+    use HasFactory, Notifiable;
+
+    protected $guard = 'staff';
 
     protected $fillable = [
         'name',
@@ -14,7 +17,12 @@ class Staff extends Model {
         'password',
         'avatar',
         'national_id',
-        'is_baned'
+        'is_baned',
+        'role'
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token'
     ];
 
     // City Manager
@@ -34,4 +42,9 @@ class Staff extends Model {
     public function coachSessions() {
         return $this->belongsToMany(Session::class, 'coach_sessions', 'staff_id', 'session_id');
     }
+
+    // public function session()
+    // {
+    //     return $this->belongsToMany(Session::class);
+    // }
 }

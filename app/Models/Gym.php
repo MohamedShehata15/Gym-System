@@ -1,9 +1,11 @@
 <?php
-
-namespace App\Models;
+   namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
+
+
 
 class Gym extends Model {
     use HasFactory;
@@ -12,7 +14,7 @@ class Gym extends Model {
         'name',
         'image',
         'revenue',
-        'city_id'
+        'city_id',   
     ];
 
     // Managers
@@ -32,3 +34,4 @@ class Gym extends Model {
         return $this->hasMany(TrainingPackage::class);
     }
 }
+
