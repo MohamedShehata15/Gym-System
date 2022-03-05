@@ -138,7 +138,7 @@
                $('#myTable').DataTable().ajax.reload();
               },
             error:function(){ 
-            alert("There are people will attend this session:(");
+            alert("There are people will attend this session you cannot delete it:(");
         }
          });   
     }}
@@ -169,7 +169,7 @@
                $("#coaches").empty();
 
                for (var j = 0; j< options.length; j++) {
-                      if(jQuery.inArray(coachesid[j], selectedCoaches) !== -1)                       {
+                      if(jQuery.inArray(coachesid[j], selectedCoaches) !== -1){
                          $("#coaches").append(new Option(options[j], coachesid[j],true, true));
                        }
                       else{
@@ -182,7 +182,7 @@
                myModal.show();
            }
 
-        });   
+          });   
 
     }
 </script>
