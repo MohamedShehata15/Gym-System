@@ -8,7 +8,9 @@
         <thead>
             <tr class="text-white">
                 <th scope="col">#</th>
+                @if(Auth::user()->role=='admin')
                 <th scope="col">Name</th>
+                @endif
                 <th scope="col">Start-at</th>
                 <th scope="col">Finish-at</th>
                 <th scope="col">Coaches</th>
@@ -102,10 +104,11 @@
                     data: 'id',
                     name: 'id'
                 },
+                @if(Auth::user()->role=='admin')
                 {
                     data: 'name',
                     name: 'name'
-                },
+                },@endif
                 {
                     data: 'start_at',
                     name: 'start_at'

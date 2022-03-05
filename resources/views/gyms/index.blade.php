@@ -21,7 +21,7 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-dark">
             @foreach ( $gyms as $gym )
                 <tr>
                     <td>{{$gym->name}}</td>
