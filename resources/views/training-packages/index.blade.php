@@ -72,6 +72,7 @@
             ]
         });
     } );
+
     function deleteFunc(id){
         if (confirm("Delete Record?") == true) {
         var id = id;
@@ -89,5 +90,6 @@
         }
          });
     }}
+
     </script>
 @endsection
