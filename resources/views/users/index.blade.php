@@ -1,22 +1,22 @@
 @extends('layouts.app')
 @section('third_party_stylesheets')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-    <br><br>
+<br>
+<div class="d-flex justify-content-center mb-2">
+    <a href="{{route('users.create')}}" class="btn btn-success" > Add New User </a>
+  </div>
     <table id="table_id" class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>id</th>
-                <th>name</th>
-                <th>email</th>
-                {{-- <th>email_verified_at</th>
-                <th>created_at</th>
-                <th>updated_at</th> --}}
-                <th>gender</th>
-                <th>avatar</th>
-                <th>attendance_session</th>
-                <th>role</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Avatar</th>
+                <th>Gym</th>
                 <th></th>
             </tr>
         </thead>
@@ -30,6 +30,7 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer></script>
     <script>
         $(document).ready( function () {
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $('#table_id').DataTable({
             processing: true,
             serverSide: true,
@@ -48,19 +49,8 @@
                 {
                     data:'email',
                     name:'email',
+                    width:'30px',
                 },
-                // {
-                //     data:'email_verified_at',
-                //     name:'email_verified_at',
-                // },
-                // {
-                //     data:'created_at',
-                //     name:'created_at',
-                // },
-                // {
-                //     data:'updated_at',
-                //     name:'update_at',
-                // },
                 {
                     data:'gender',
                     name:'gender',
@@ -70,17 +60,14 @@
                     name:'avatar',
                     render:function(data,type,full,meta)
                     {
-                        return "<img src="+data+" width='70' class='img-thumbnail' />";
+                        return "<img src="+data+" width='70' class='img-thumbnail'  />";
                     },
                     orderable:false
                 },
                 {
-                    data:'attendance_session',
-                    name:'attendance_session',
-                },
-                {
-                    data:'role',
-                    name:'role',
+                    data:'gym',
+                    name:'gym',
+                    orderable:false,
                 },
                 {
                     data:'action',
@@ -90,6 +77,23 @@
             ]
         });
     } );
+    function deleteFunc(id){
+        if (confirm("Do you want to delete this user ?") == true) {
+        var id = id;
+         // ajax
+        $.ajax({
+           type:"POST",
+           url: "{{ route('users.destroy')}}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(res){
+               $('#table_id').DataTable().ajax.reload();
+              },
+            error:function(res){ 
+            alert("Failed");
+        }
+         });
+    }}
     
     </script>
 @endsection
