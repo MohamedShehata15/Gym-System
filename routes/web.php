@@ -10,6 +10,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\TrainingPackageController;
 use App\Http\Controllers\cityManagerController;
 use App\Http\Controllers\gymManagerController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,7 +45,6 @@ Route::group(['middleware' => 'auth:staff'], function () {
 
     /* ======================= Admin Routes ========================= */
 
-
     //------------------------- Cities Routes ------------------------------
     Route::get('cities', [CityController::class, 'index'])->name('cities.index');
     //Route::get('update/{city}',[CityController::class,'update'])->name('cities.update');
@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth:staff'], function () {
         return response()->json($gym);
     });
 
-    //---------------------------- Training Packages Routes -----------------------------------------------
+    //-------------------------- Training Packages Routes --------------------------------
     Route::get('training-packages', [TrainingPackageController::class, 'index'])->name('training-packages.index');
     Route::get('training-packages/create', [TrainingPackageController::class, 'create'])->name('training-packages.create');
     Route::post('training-packages', [TrainingPackageController::class, 'store'])->name('training-packages.store');
@@ -82,8 +82,32 @@ Route::group(['middleware' => 'auth:staff'], function () {
     Route::put('training-packages/{trainingpackage}', [TrainingPackageController::class, 'update'])->name('training-packages.update');
     Route::post('destroy-package', [TrainingPackageController::class, 'destroy'])->name('training-packages.destroy');
 
-    //Users Routes
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+
+
+    //-------------------------- Coaches Routes --------------------------------
+    Route::get('coaches', [coachController::class, 'index'])->name('coaches.index');
+    Route::get('coaches/create', [coachController::class, 'create'])->name('coaches.create');
+    Route::post('coaches', [coachController::class, 'store'])->name('coaches.store');
+    Route::get('coaches/{coachId}/edit', [coachController::class, 'edit'])->name('coaches.edit');
+    Route::put('coaches/{coachId}', [coachController::class, 'update'])->name('coaches.update');
+    Route::post('destroy-coach', [coachController::class, 'destroy'])->name('coaches.destroy');
+    Route::get('getGym/{id}', function ($id) {
+        $gym = App\Models\Gym::where('city_id', $id)->get();
+        return response()->json($gym);
+    });
+
+
+
+
+    //-------------------------- Users Routes --------------------------------
+
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('users', [UserController::class, 'store'])->name('users.store');
+    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::post('destroy-user', [UserController::class, 'destroy'])->name('users.destroy');
 
 
     /* ===================================================================== */

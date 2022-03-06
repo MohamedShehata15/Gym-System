@@ -42,20 +42,7 @@
     </select>
   </div>
 
-  {{-- <div class="mb-3 d-none" id="gymDiv">
-    <label for="gym" class="form-label">Gyms</label>
-    <select name="gym" class="form-control" id="gym">      
 
-    </select>
-  </div> --}}
-  
-  {{-- <div class="mb-3">
-    <label for="ban" class="form-label">IsBaned</label>
-    <select name="ban" class="form-control" id="ban">
-        <option value="0">No</option>
-        <option value="1">Yes</option>
-</select>
-  </div> --}}
   <button type="submit" class="btn btn-primary">Update</button>
 </form>  
 <script
@@ -67,48 +54,7 @@
   $(document).ready(function() {
     
       
-        // if(val == "city_manager")
-        // {
-        // $("#cityDiv").addClass("d-block");
-        // $("#gymDiv").removeClass("d-block");
-        // console.log(val);
-        // }
-        // else if (val == "gym_manager")
-        // {
-        //   $("#cityDiv").addClass("d-block");
-        //   $("#city").change(function(){
-        //     $("#gymDiv").addClass("d-block");
-        //     var cityID = $(this).val();
-        //     console.log(cityID);
-        //        if(cityID) {
-        //            $.ajax({
-        //                url: '/getCity/'+cityID,
-        //                type: "GET",
-        //                data : {"_token":"{{ csrf_token() }}"},
-        //                dataType: "json",
-        //                success:function(data)
-        //                {
-        //                  if(data){
-        //                     $('#gym').empty();
-        //                     $('#gym').append('<option hidden>Choose a Gym</option>');
-        //                     $.each(data, function(key, gym){
-        //                         $('select[name="gym"]').append('<option value="'+ key +'">' + gym.name+ '</option>');
-        //                     });
-        //                 }else{
-        //                     $('#gym').empty();
-        //                 }
-        //              }
-        //            });
-        //        }else{
-        //          $('#gym').empty();
-        //        }
-        //   });
-
-        // }
-        // else
-        // {
-          
-        // }
+  
     
 });
 </script>

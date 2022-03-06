@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('third_party_stylesheets')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
     <br>
@@ -14,6 +15,7 @@
                 <th>name</th>
                 <th>price</th>
                 <th>Session Number</th>
+                <th>Gym Name</th>
                 <th></th>
             </tr>
         </thead>
@@ -27,11 +29,12 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer></script>
     <script>
         $(document).ready( function () {
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $('#table_id').DataTable({
             processing: true,
             serverSide: true,
             ajax:{
-                url: "{{ route('training-package.index') }}"
+                url: "{{ route('training-packages.index') }}"
             },
             columns:[
                 {
@@ -45,26 +48,31 @@
                 {
                     data:'price',
                     name:'price',
+                    render:function(data,type,full,meta)
+                    {
+                        return (data*0.01+'$');
+                    }
                 },
                
                 {
                     data:'session_number',
                     name:'session_number',
                 },
-               
-               
+                {
+                    data:'GymName',
+                    name:'GymName',
+                    orderable:false,
+                },
                 {
                     data:'action',
                     name:'action',
                     orderable:false,
-
-
                 },
                 
             ]
         });
     } );
-<<<<<<< HEAD:resources/views/training-packages/index.blade.php
+
     function deleteFunc(id){
         if (confirm("Delete Record?") == true) {
         var id = id;
@@ -78,11 +86,10 @@
                $('#table_id').DataTable().ajax.reload();
               },
             error:function(res){ 
-            alert("this city has gyms");
+            alert("Failed");
         }
          });
     }}
-=======
->>>>>>> 6a7f8e828a24d79458b2d8826472f9db85ff9dc2:resources/views/training-package/index.blade.php
+
     </script>
 @endsection
