@@ -30,16 +30,15 @@ Route::GET('/', function () {
 
 Route::GET('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 
 
 
-Route::post('/login/staff', [LoginController::class, 'staffLogin']);
 
 Route::get('logout', [LoginController::class, 'logout']);
 
-Route::group(['middleware' => 'auth:staff'], function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
