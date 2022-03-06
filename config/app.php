@@ -198,4 +198,6 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ])->toArray(),
 
+    'DataTables'=>Yajra\DataTables\DataTablesServiceProvider::class,
+
 ];

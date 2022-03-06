@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\CoachSession;
+use App\Models\SessionStaff;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CoachSessionSeeder extends Seeder {
+class SessionStaffSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-        CoachSession::factory()->count(10)->create();
+        SessionStaff::factory()->count(10)->create();
     }
 }

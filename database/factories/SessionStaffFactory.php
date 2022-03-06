@@ -7,9 +7,9 @@ use App\Models\Staff;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\odel=CoachSession>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\odel=SessionStaff>
  */
-class CoachSessionFactory extends Factory {
+class SessionStaffFactory extends Factory {
     /**
      * Define the model's default state.
      *

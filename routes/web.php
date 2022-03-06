@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CoachController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SessionController;
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\TrainingPackageController;
@@ -29,8 +31,6 @@ Route::GET('/', function () {
 Route::GET('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
-
-
 
 
 
@@ -109,6 +109,16 @@ Route::group(['middleware' => 'auth:staff'], function () {
     Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::post('destroy-user', [UserController::class, 'destroy'])->name('users.destroy');
 
+
+
+    /* ======================= Gym Manager Routes ========================= */
+    Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
+    Route::get('/sessions/create', [SessionController::class, 'create'])->name('sessions.create');
+    Route::post('/sessions', [SessionController::class, 'store'])->name('sessions.store');
+    Route::post('destroy', [SessionController::class, 'destroy'])->name('sessions.destroy');
+    Route::get('edit', [SessionController::class, 'edit'])->name('sessions.edit');
+    Route::put('/sessions', [SessionController::class, 'update'])->name('sessions.update');
+    /* ===================================================================== */
 
     /* ===================================================================== */
 

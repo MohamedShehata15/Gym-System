@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('staff_id')->unique()->constrained()->onDelete('cascade');
             $table->foreignId('gym_id')->constrained()->onDelete('cascade');
             $table->primary(['staff_id', 'gym_id']);
-            $table->timestamps();	
+            $table->timestamps();
         });
     }
 

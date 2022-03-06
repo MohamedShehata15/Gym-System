@@ -47,6 +47,7 @@
 @endif
 
 <!-- need to remove -->
+@yield('menubar')
 <li class="nav-item">
     <a href="{{ route($route) }}" class="nav-link {{ Request::is($path) ? 'active' : '' }}">
         <i class="nav-icon fas fa-home"></i>

@@ -40,6 +40,11 @@ class Staff extends Authenticatable {
     }
 
     public function coachSessions() {
-        return $this->belongsToMany(Session::class, 'coach_sessions', 'staff_id', 'session_id');
+        return $this->belongsToMany(Session::class, 'session_staff', 'staff_id', 'session_id');
     }
+
+    // public function session()
+    // {
+    //     return $this->belongsToMany(Session::class);
+    // }
 }

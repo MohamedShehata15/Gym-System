@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GmyRequest;
 use App\Models\City;
-use App\Models\CoachSession;
+use App\Models\SessionStaff;
 use App\Models\Gym;
 use App\Models\GymManager;
 use App\Models\Session;
@@ -98,7 +98,7 @@ class GymController extends Controller
        $flag=0;
        $gymCoaches= Gym::find($id)->gymCoaches;
         foreach($gymCoaches as $gymCoache){
-            $gymSession= CoachSession::where('staff_id',$gymCoache->id)->get();
+            $gymSession= SessionStaff::where('staff_id',$gymCoache->id)->get();
             if($gymSession != NULL){
                 $flag=1;
             }

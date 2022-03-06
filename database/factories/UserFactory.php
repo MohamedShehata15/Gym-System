@@ -15,10 +15,10 @@ class UserFactory extends Factory {
      *
      * @return array<string, mixed>
      */
-  
-    
-        public function definition() {
-            $gender= $this->faker->randomElement(['male','female']);
+
+
+    public function definition() {
+        $gender = $this->faker->randomElement(['male', 'female']);
 
         return [
             'name' => $this->faker->name(),
@@ -26,7 +26,7 @@ class UserFactory extends Factory {
             'email_verified_at' => now(),
             'password' => Hash::make(123456),
             'remember_token' => Str::random(10),
-            'gender'=> $gender,
+            'gender' => $gender,
         ];
     }
 

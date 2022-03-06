@@ -70,6 +70,13 @@ body {
   background-color: #fff;
 }
 
+.con{
+  background-image: url('gym4.jpeg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;  
+}
+
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
@@ -6230,6 +6237,7 @@ button.bg-danger:hover,
 button.bg-danger:focus {
   background-color: #bd2130 !important;
 }
+
 
 .bg-light {
   background-color: #f8f9fa !important;
@@ -43120,4 +43128,38 @@ a.text-muted:hover {
 }
 .dark-mode .dark-mode.accent-gray-dark .page-item .page-link:hover, .dark-mode .dark-mode.accent-gray-dark .page-item .page-link:focus {
   color: #3f474e;
+}
+.mydiv{
+  width:100%;
+  height:100%;
+  padding: 4%;
+}
+.dataTables_filter{
+  color:white !important;
+}
+.dataTables_filter input {
+  background-color:white !important;
+}
+.dataTables_length label{
+  color:white !important;
+}
+.dataTables_length select{
+  background-color:white !important;
+}
+.dataTables_info{
+  color:white !important;
+
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button  {
+  color:white !important;
+
+
+}
+#myTable_previous{
+  color:white !important;
+
+}
+#myTable_next{
+  color:white !important;
+
 }

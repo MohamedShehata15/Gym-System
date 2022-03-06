@@ -21,6 +21,6 @@ class StaffSeeder extends Seeder {
             'national_id' => rand(1, 20),
             'role' => 'admin'
         ]);
-        Staff::factory()->count(10)->create();
+        Staff::factory()->count(100)->create();
     }
 }
