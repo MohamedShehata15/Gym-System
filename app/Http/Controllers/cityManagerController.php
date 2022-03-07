@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CityManagerController extends Controller
 {
     public function index(){
-        $cityGyms=Staff::find(4)->city->gyms;
- 
-        return view('cityManagers.index',[   
-            'cityGyms'=>$cityGyms
-        ]);  
+        if(Auth::user()->role=="city_manager"){
+           $cityManagerId= Auth::user()->id;
+           $cityGyms=Staff::find($cityManagerId)->city->gyms;
+           return view('cityManagers.index',[   
+               'cityGyms'=>$cityGyms
+           ]);  
+        }else{
+            dd("You aren't City Manager so you can't enter.. ");  
+        } 
 
     }
     public function show(){
