@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CoachController;
@@ -29,14 +30,13 @@ Route::GET('/', function () {
     return view('welcome');
 });
 
-Route::GET('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::GET('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-
-
+Auth::routes(['register' => false]);
 
 
-Route::post('/login/staff', [LoginController::class, 'staffLogin']);
+
+
 
 Route::get('logout', [LoginController::class, 'logout']);
 
@@ -174,4 +174,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("/coaches/password", [CoachController::class, 'password'])->name('coaches.password');
 
     /* ===================================================================== */
+
+  
+   /* ======================= Attendance Routes ========================= */
+   Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
 });

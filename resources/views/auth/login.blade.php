@@ -57,25 +57,6 @@
 
                     </div>
 
-                    <div class="row mb-2">
-                        <div class="col d-flex">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="loginRole" id="inputStaffRadio"
-                                    value="staff" @if(old('loginRole') == 'staff') checked @endif>
-                                <label class="form-check-label" for="inputStaffRadio">
-                                    Staff
-                                </label>
-                            </div>
-                            <div class="form-check mx-3">
-                                <input class="form-check-input" type="radio" name="loginRole" id="inputUserRadio"
-                                    value="user" @if(old('loginRole') != 'staff') checked @endif>
-                                <label class="form-check-label" for="inputUserRadio">
-                                    User
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
             <div class="row">
                 <div class="col-8">
                     <div class="icheck-primary">
@@ -94,9 +75,6 @@
             <p class="mb-1">
                 <a href="{{ route('password.request') }}">I forgot my password</a>
             </p>
-            <p class="mb-0">
-                <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
-            </p>
         </div>
         <!-- /.login-card-body -->
     </div>
@@ -105,21 +83,6 @@
     <!-- /.login-box -->
 
     <script src="{{ mix('js/app.js') }}" defer></script>
-    <script defer>
-        const loginForm = document.querySelector('#loginForm');
-
-        loginForm.addEventListener('submit',  function(e) {
-            e.preventDefault();
-            const loginRole = document.querySelector("input[name='loginRole']:checked")?.value;
-            if(loginRole == 'staff')
-                this.setAttribute('action', '/login/staff')
-            else
-                this.setAttribute('action', '/login')
-
-            this.submit();
-        })
-
-    </script>
 
 </body>
 
