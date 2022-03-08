@@ -21,7 +21,6 @@ return new class extends Migration {
             $table->timestamps();
             $table->string("avatar")->default('user_avatar.png');
             $table->integer('national_id');
-            $table->enum('role', ['admin', 'gym_manager', 'city_manager', 'coach']);
             $table->boolean('is_baned')->default(false);
         });
     }

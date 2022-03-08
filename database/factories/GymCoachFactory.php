@@ -18,7 +18,10 @@ class GymCoachFactory extends Factory {
     public function definition() {
         return [
             'gym_id' => $this->faker->randomElement(Gym::all())['id'],
-            'staff_id' => $this->faker->randomElement(Staff::where('role', 'coach')->get())['id']
+            'staff_id' => $this->faker->randomElement(
+                Staff::role('coach')->get()           
+            
+                )['id']
         ];
     }
 }

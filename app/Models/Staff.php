@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
 class Staff extends Authenticatable {
-    use HasFactory, Notifiable,HasRoles;
+    use HasFactory, Notifiable, HasRoles;
 
     protected $guard = 'staff';
 
@@ -19,7 +19,7 @@ class Staff extends Authenticatable {
         'avatar',
         'national_id',
         'is_baned',
-        'role'
+        
     ];
 
     protected $hidden = [

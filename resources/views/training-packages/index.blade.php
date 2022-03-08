@@ -86,7 +86,7 @@
                $('#table_id').DataTable().ajax.reload();
               },
             error:function(res){ 
-            alert("Failed");
+            alert("Cannot Delete Package");
         }
          });
     }}

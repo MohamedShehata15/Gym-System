@@ -13,8 +13,12 @@
                 <th>Email</th>
                 <th>Package Name</th>
                 <th>Paid Price</th>
+                @role('city_manager')
                 <th>Gym</th>
+                @endrole
+                @role('Super-Admin')
                 <th>City</th>
+                @endrole
                 <th></th>
             </tr>
         </thead>
@@ -58,14 +62,19 @@
                     data:'price',
                     name:'price',
                 },
+                @role('city_manager')
                 {
                     data:'gymName',
                     name:'gymName',
                 },
+                @endrole
+                @role('Super-Admin')
                 {
                     data:'cityName',
                     name:'cityName',
-                },
+                }
+                ,
+                @endrole
                 {
                     data:'action',
                     name:'action',

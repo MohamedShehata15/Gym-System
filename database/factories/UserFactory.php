@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Gym;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -27,6 +28,7 @@ class UserFactory extends Factory {
             'password' => Hash::make(123456),
             'remember_token' => Str::random(10),
             'gender' => $gender,
+            'gym_id' => $this->faker->randomElement(Gym::all())['id']
         ];
     }
 
