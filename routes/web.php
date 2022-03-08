@@ -12,6 +12,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\TrainingPackageController;
 use App\Http\Controllers\cityManagerController;
 use App\Http\Controllers\gymManagerController;
+use App\Http\Controllers\PurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,7 @@ Route::post('/login/staff', [LoginController::class, 'staffLogin']);
 
 Route::get('logout', [LoginController::class, 'logout']);
 
-Route::group(['middleware' => 'auth:staff'], function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
@@ -119,6 +120,16 @@ Route::group(['middleware' => 'auth:staff'], function () {
     Route::get('edit', [SessionController::class, 'edit'])->name('sessions.edit');
     Route::put('/sessions', [SessionController::class, 'update'])->name('sessions.update');
     /* ===================================================================== */
+
+
+
+    //-------------------------- Purchases Routes --------------------------------
+
+
+    Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
+    Route::post('destroy-purchase', [cityManagerController::class, 'destroy'])->name('destroy-purchase');
+
+
 
     /* ===================================================================== */
 

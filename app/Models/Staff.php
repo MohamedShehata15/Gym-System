@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class Staff extends Authenticatable {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable,HasRoles;
 
     protected $guard = 'staff';
 
@@ -43,8 +44,6 @@ class Staff extends Authenticatable {
         return $this->belongsToMany(Session::class, 'session_staff', 'staff_id', 'session_id');
     }
 
-    // public function session()
-    // {
-    //     return $this->belongsToMany(Session::class);
-    // }
+   
+   
 }
