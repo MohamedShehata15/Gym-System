@@ -1,6 +1,5 @@
 @php
-    $managerRole = Auth::user()->role;
-    if($managerRole == 'coach') {
+    if(Auth::user()->hasRole('coach')) {
         $path = "coaches";
         $route = "coaches.index";
     } else {
@@ -9,7 +8,7 @@
     }
 @endphp
 
-@if( $managerRole== 'city_manager')
+@if(Auth::user()->hasRole('city_manager'))
  <li class="w-100">
     <div class="accordion w-100" id="accordionPanelsStayOpenExample">
         <div class="accordion-item">
@@ -54,7 +53,7 @@
         <p>Home</p>
     </a>
 </li>
-@if( $managerRole== 'coach')
+@if( Auth::user()->hasRole('coach'))
 <li class="nav-item">
     <a href="{{route('coaches.profile')}}" class="nav-link {{Request::is('coaches/profile/show') ? 'active' : ''}}">
         <i class="nav-icon fas fa-user"></i>

@@ -110,4 +110,16 @@ class GymController extends Controller {
             return redirect()->route("gyms.index");
         }
     }
+
+    //----------------------Get Gym users--------------------//
+    public function users($id) {
+        $users = Gym::find($id)->users->all();
+        return $users;
+    }
+
+    //----------------------Get Gym Packages--------------------//
+    public function packages($id) {
+        $packages = Gym::find($id)->trainingPackages->all();
+        return $packages;
+    }
 }

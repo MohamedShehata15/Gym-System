@@ -4,7 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-@if(Auth::user()->role == 'admin')
+@if(Auth::user()->hasRole('Super-Admin'))
 <br><br>
 <table id="table_id" class="table table-bordered table-striped">
     <thead>
@@ -23,13 +23,13 @@
 </table>
 @endif
 
-@if(Auth::user()->role == 'coach')
+@if(Auth::user()->hasRole('coach'))
 <div class="card-body text-center">
     <div class="text-center mb-2">
         <img class="profile-user-img img-fluid img-circle"
             src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg" alt="User profile picture">
     </div>
-    <p class="mb-4">{{$name}}</p>
+    <p class="mb-4">{{Auth::user()->name}}</p>
     <a class="btn btn-app" href="{{route('coaches.profile')}}">
         <i class="fas fa-user"></i> Profile
     </a>

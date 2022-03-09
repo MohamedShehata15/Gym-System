@@ -15,6 +15,7 @@ use App\Http\Controllers\cityManagerController;
 use App\Http\Controllers\gymManagerController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\PurchaseController;
+use App\Models\City;
 use App\Models\Staff;
 
 /*
@@ -38,8 +39,14 @@ Auth::routes(['register' => false]);
 
 
 Route::get('/test', function () {
-    $staff = Staff::all();
-    dd($staff);
+    // $staff = Staff::role('coach')->get();
+    // dd($staff);
+
+    // -----------------------
+
+    $cities = City::find(10)->gyms;
+
+    // dd($cities);
 });
 
 
@@ -152,6 +159,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::GET('/gyms/{id}/edit', [GymController::class, 'edit'])->name('gyms.edit');
         Route::PUT('/gyms/{id}', [GymController::class, 'update'])->name('gyms.update');
         Route::DELETE('/gyms/{id}', [GymController::class, 'destroy'])->name('gyms.destroy');
+        Route::get('/gyms/{id}/users', [GymController::class, 'users']);
+        Route::get('/gyms/{id}/packages', [GymController::class, 'packages']);
 
         Route::GET('/cityManagers', [CityManagerController::class, 'index'])->name('cityManagers.index');
         Route::GET('/cityManagers/create', [CityManagerController::class, 'create'])->name('cityManagers.create');

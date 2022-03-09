@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-
-
-
 @section('content')
 
 <div class="container">
@@ -19,8 +16,8 @@
         <div class="row">
             <div class="mb-3 col-12">
                 <label for="inputCity" class="form-label">City</label>
-                <select id="inputCity" class="form-select form-control city" aria-label="Default select">
-                    <option selected>Select a City</option>
+                <select id="inputCity" class="form-select form-control cities" aria-label="Default select" name="city">
+                    <option selected disabled>Select a City</option>
                     @foreach($cities as $city)
                     <option value="{{$city->id}}">{{$city->name}}</option>
                     @endforeach
@@ -31,8 +28,8 @@
         <div class="row">
             <div class="mb-3 col-12">
                 <label for="inputGym" class="form-label">Gym</label>
-                <select id="inputGym" class="form-select form-control gym" aria-label="Default select">
-                    <option selected>Select a Gym</option>
+                <select id="inputGym" class="form-select form-control gyms" aria-label="Default select" name="gym">
+                    <option selected disabled>Select a Gym</option>
                 </select>
             </div>
         </div>
@@ -40,11 +37,21 @@
         <div class="row">
             <div class="mb-3 col-12">
                 <label for="inputUserName" class="form-label">User Name</label>
-                <select id="inputUserName" class="form-select form-control username" aria-label="Default select">
-                    <option selected>Select a user name</option>
+                <select id="inputUserName" class="form-select form-control users" aria-label="Default select" name="user">
+                    <option selected disabled>Select a user name</option>
                 </select>
             </div>
         </div>
+
+        <div class="row">
+            <div class="mb-3 col-12">
+                <label for="inputPackage" class="form-label">Package</label>
+                <select id="inputPackage" class="form-select form-control packages " aria-label="Default select" name="training_package">
+                    <option selected>Select a package</option>
+                </select>
+            </div>
+        </div>
+
         <div class="row">
             <div class="mb-3 col-12">
                 <label for="inputCardNumber" class="form-label">Card Number</label>
@@ -91,7 +98,7 @@
     $(function () {
 
         // Handle City
-        $('.city').on('change', function () {
+        $('.cities').on('change', function () {
             $.ajax({
                 type: 'get',
                 headers: {
@@ -100,21 +107,42 @@
                 url: 'http://127.0.0.1:8000/cities',
                 success: function (response) {
                     response.data.forEach(gym => {
-                        $('.gym').append(`<option value="${gym.id}">${gym.name}</option>`);
+                        $('.gyms').append(`<option value="${gym.id}">${gym.name}</option>`);
                     })
                 }
             })
         });
 
-        $('.gym').on('change', function () {
+        $('.gyms').on('change', function () {
             $.ajax({
                 type: 'get',
                 headers: {
                     'Accept': 'application/json'
                 },
-                url: `http://127.0.0.1:8000/gyms/${$(this).val()}`,
+                url: `http://127.0.0.1:8000/gyms/${$(this).val()}/users`,
                 success: function (response) {
-                    console.log(response);
+                    response.forEach(user => {
+                        $('.users').append(`<option value="${user.id}">
+                            <span>${user.name}</span>
+                        </option>`);
+                    })
+                }
+            })
+        });
+
+        $('.gyms').on('change', function () {
+            $.ajax({
+                type: 'get',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                url: `http://127.0.0.1:8000/gyms/${$(this).val()}/packages`,
+                success: function (response) {
+                    response.forEach(package => {
+                        $('.packages').append(`<option value="${package.id}">
+                            <span>${package.name}  $${package.price}</span>
+                        </option>`);
+                    })
                 }
             })
         });
@@ -149,7 +177,10 @@
                     number: $('.card-number').val(),
                     cvc: $('.card-cvc').val(),
                     exp_month: $('.card-expiry-month').val(),
-                    exp_year: $('.card-expiry-year').val()
+                    exp_year: $('.card-expiry-year').val(),
+                    user: $('.users:selected').val(),
+                    gym: $('.gyms:selected').val(),
+                    training_package: $('.training_package:selected').val()
                 }, stripeResponseHandler);
             }
 
