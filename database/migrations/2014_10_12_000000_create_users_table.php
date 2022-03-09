@@ -21,8 +21,8 @@ return new class extends Migration {
             $table->timestamps();
             $table->enum('gender', ['Male', 'Female']);
             $table->string("avatar")->default('user_avatar.png');
-            $table->integer('attendance_session')->default(0);
-            $table->string('role')->default('user');
+            $table->integer('remaining_sessions')->default(0);
+            $table->foreignId('gym_id')->constrained()->onDelete('cascade');
         });
     }
 

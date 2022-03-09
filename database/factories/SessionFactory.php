@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Gym;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,6 +21,7 @@ class SessionFactory extends Factory {
             'name' => $this->faker->company(),
             'start_at' => $date,
             'finish_at' => Carbon::parse($date)->addHours(2),
+            'gym_id' => $this->faker->randomElement(Gym::all())['id']
         ];
     }
 }

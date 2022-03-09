@@ -4,18 +4,21 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-    <br>
-<div class="d-flex justify-content-center mb-2">
-    <a href="{{route('training-packages.create')}}" class="btn btn-success" > Add New Package </a>
-  </div>
+
     <table id="table_id" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>id</th>
-                <th>name</th>
-                <th>price</th>
-                <th>Session Number</th>
-                <th>Gym Name</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Package Name</th>
+                <th>Paid Price</th>
+                @role('city_manager')
+                <th>Gym</th>
+                @endrole
+                @role('Super-Admin')
+                <th>City</th>
+                @endrole
                 <th></th>
             </tr>
         </thead>
@@ -34,62 +37,68 @@
             processing: true,
             serverSide: true,
             ajax:{
-                url: "{{ route('training-packages.index') }}"
+                url: "{{ route('purchases.index') }}"
             },
             columns:[
+
                 {
                     data:'id',
                     name:'id',
+                },   
+                {
+                    data:'userName',
+                    name:'userName',
                 },
                 {
-                    data:'name',
-                    name:'name',
+                    data:'email',
+                    name:'email',
+                },
+                
+                {
+                    data:'packageName',
+                    name:'packageName',
                 },
                 {
                     data:'price',
                     name:'price',
-                    render:function(data,type,full,meta)
-                    {
-                        return (data*0.01+'$');
-                    }
                 },
-               
+                @role('city_manager')
                 {
-                    data:'session_number',
-                    name:'session_number',
+                    data:'gymName',
+                    name:'gymName',
                 },
+                @endrole
+                @role('Super-Admin')
                 {
-                    data:'GymName',
-                    name:'GymName',
-                    orderable:false,
-                },
+                    data:'cityName',
+                    name:'cityName',
+                }
+                ,
+                @endrole
                 {
                     data:'action',
                     name:'action',
                     orderable:false,
                 },
-                
             ]
         });
     } );
-
     function deleteFunc(id){
         if (confirm("Delete Record?") == true) {
         var id = id;
-         // ajax
         $.ajax({
            type:"POST",
-           url: "{{ route('training-packages.destroy') }}",
+           url: "{{ url('destroy-purchase') }}",
            data: { id: id },
            dataType: 'json',
            success: function(res){
-               $('#table_id').DataTable().ajax.reload();
+            $('#table_id').DataTable().ajax.reload();
               },
-            error:function(res){ 
-            alert("Cannot Delete Package");
+            error:function(){ 
+            alert("Cannot delete this record");
         }
          });
+         
     }}
-
     </script>
 @endsection

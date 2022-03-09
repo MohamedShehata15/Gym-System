@@ -8,9 +8,9 @@
         <thead>
             <tr class="text-white">
                 <th scope="col">#</th>
-                @if(Auth::user()->role=='admin')
+                @role('Super-Admin')
                 <th scope="col">Name</th>
-                @endif
+                @endrole
                 <th scope="col">Start-at</th>
                 <th scope="col">Finish-at</th>
                 <th scope="col">Coaches</th>

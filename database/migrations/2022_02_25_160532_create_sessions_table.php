@@ -17,6 +17,9 @@ return new class extends Migration {
             $table->string('name');
             $table->timestamp('start_at');
             $table->timestamp('finish_at');
+            $table->foreignId('gym_id')->constrained()->onDelete('cascade');
+
+
         });
     }
 

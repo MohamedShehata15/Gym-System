@@ -19,13 +19,14 @@ class StaffFactory extends Factory {
      */
     public function definition() {
 
-        $arrRoles = ['gym_manager', 'city_manager', 'coach'];
+        
+
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->email,
             'password' => Hash::make(123456),
             'national_id' => rand(1, 20),
-            'role' => $arrRoles[array_rand($arrRoles)]
+           
         ];
     }
 }

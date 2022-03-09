@@ -13,6 +13,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\TrainingPackageController;
 use App\Http\Controllers\cityManagerController;
 use App\Http\Controllers\gymManagerController;
+use App\Http\Controllers\PurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -119,6 +120,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('edit', [SessionController::class, 'edit'])->name('sessions.edit');
     Route::put('/sessions', [SessionController::class, 'update'])->name('sessions.update');
     /* ===================================================================== */
+
+
+
+    //-------------------------- Purchases Routes --------------------------------
+
+
+    Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
+    Route::post('destroy-purchase', [cityManagerController::class, 'destroy'])->name('destroy-purchase');
+
+
 
     /* ===================================================================== */
 

@@ -4,6 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
+<br>
 
 <div class="d-flex justify-content-center mb-2">
     <a
