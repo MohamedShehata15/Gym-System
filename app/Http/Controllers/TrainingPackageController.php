@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\TrainingPackage;
 use App\Models\Gym;
+use App\Models\UserTrainingPackage;
 use Illuminate\Http\Request;
 
 
@@ -67,7 +68,11 @@ class TrainingPackageController extends Controller
     //-------------------------- delete training package --------------------------------
     public function destroy(Request $request)
     {
-        $trainingPackage = TrainingPackage::where('id', $request->id)->delete();
-        return Response()->json($trainingPackage);
+        $recordedPackage =  UserTrainingPackage::where('training_package_id', $request->id)->get();
+
+        if (count($recordedPackage) == 0){
+            $trainingPackage = TrainingPackage::where('id', $request->id)->delete();
+            return Response()->json($trainingPackage);
+        }
     }
 }
