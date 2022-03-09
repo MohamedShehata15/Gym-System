@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-   
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
 
 </head>
 <body>
@@ -14,8 +18,8 @@
 		  <input type="text" class="form-control" id="gymName" name="name"value="{{ old('name') }}">
 		</div>
 		<div class="mb-3">
-			<label for="manager" class="form-label">Choose Manager</label>
-			<select id="manager" class="form-select"  name="staff_id">
+			<label for="manager[]" class="form-label select-label">Choose Managers</label>
+			<select id="manager" class="form-select select"  name="staff_id[]">
 				@foreach ($staff as $manager )
 				<option value="{{$manager->id}}" {{ old('staff_id')== $manager->id? "selected": "" }}>{{$manager->name}}</option>
 				@endforeach
@@ -35,6 +39,29 @@
 		</div>
 		<button class="btn btn-primary">Add</button>
 	  </form>
-  </div>   
+  </div>  
+  {{-- <script type="text/javascript">
+    $(document).ready(function() {
+        $('#example').multiselect();
+    });
+</script> 
 
+  <select name="states" id="example" class="form-control w-50 m-auto"  multiple="multiple">
+   
+	<option value="AL">Alabama</option>
+	  <option value="AK">Alaska</option>
+	  <option value="AZ">Arizona</option>
+	  <option value="AR">Arkansas</option>
+	  <option selected value="CA">California</option>
+	 
+	</select>
+  <label class="form-label select-label">Example label</label> --}}
  @endsection
+ {{-- @section("script")
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $('#example').multiselect();
+    });
+</script>
+@endsection --}}

@@ -2,6 +2,11 @@
 
 @section('content')
    
+<style>
+    img {
+        width:75px;
+    }
+</style>
 
 </head>
 <body> 
@@ -16,8 +21,10 @@
             <tr>
                 <th>Name</th>
                 <th>Created at</th>
-                <th>updated time</th>
-                <th>revenue</th>
+                @if(Auth::user()->role=="admin")
+                    <th>City Manager</th>
+                @endif
+                <th>Cover_Image</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -26,8 +33,10 @@
                 <tr>
                     <td>{{$gym->name}}</td>
                     <td>{{\Carbon\Carbon::parse($gym->created_at)->format('Y-M-D')}}</td>
-                    <td>{{\Carbon\Carbon::parse($gym->updated_at)->format('Y-M-D')}}</td>
-                    <td>{{$gym->revenue}}</td>
+                    @if(Auth::user()->role=="admin")
+                         <td>{{$gym->city->cityManager->name}}</td>
+                    @endif
+                    <td><img src="../uploads/gyms/{{$gym->image}}" alt="notFounded" class="rounded-circle shadow"/></td>
                     <td>
                         <a href="{{route('gyms.show',['id' => $gym->id])}}" class="btn btn-info">Show</a>
                         <a href="{{route('gyms.edit',['id' => $gym->id])}}" class="btn btn-warning">Edit</a>

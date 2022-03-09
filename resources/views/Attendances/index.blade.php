@@ -20,11 +20,11 @@
         <tbody class="text-dark">
             @foreach ($userTrainingPackages as $userTrainingPackage )
                  {{-- @dd(User::where('id',$UserTrainin->user_id)->get()); --}}
-                 <tr>
+                 <tr>`
                      <td>City</td>
                      <td>Gym</td>
-                     <td>{{$userTrainingPackage->user_id}}</td>
-                     <td>{{$userTrainingPackage->Users->where('id',$userTrainingPackage->user_id)}}</td>
+                     <td>{{$users::find($userTrainingPackage->user_id)}}</td>
+                     {{-- <td>{{$userTrainingPackage->users->name}}</td> --}}
                      <td>{{$userTrainingPackage->training_package_id}}</td>
                      <td>{{\Carbon\Carbon::parse($userTrainingPackage->date)->format('H:i:s') }}</td>
                      <td>{{\Carbon\Carbon::parse($userTrainingPackage->date)->format('Y-M-D') }}</td>                       
