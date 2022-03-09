@@ -13,6 +13,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\TrainingPackageController;
 use App\Http\Controllers\cityManagerController;
 use App\Http\Controllers\gymManagerController;
+use App\Http\Controllers\StripePaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -164,7 +165,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* ===================================================================== */
 
-  
-   /* ======================= Attendance Routes ========================= */
-   Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
+
+    /* ======================= Attendance Routes ========================= */
+    Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
+
+    /* ======================= Payment Routes ========================= */
+    Route::get('stripe', [StripePaymentController::class, 'stripe']);
+    Route::post('stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+    /* ===================================================================== */
 });
