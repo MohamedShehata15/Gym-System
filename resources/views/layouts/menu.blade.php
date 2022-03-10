@@ -177,7 +177,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('attendance.index') }}" class="nav-link active  multi-collapse" id="multiCollapseExample1">
+                <a href="{{ route('revenue.show') }}" class="nav-link active  multi-collapse" id="multiCollapseExample1">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Show Revenue</p>
                 </a>

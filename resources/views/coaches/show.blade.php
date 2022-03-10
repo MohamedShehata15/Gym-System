@@ -7,7 +7,7 @@
         $coach = Auth::user();
 @endphp
 
-<div class="card-body text-center">
+<div class="card-body text-center mydiv">
     <div class="text-center mb-2">
         <img class="profile-user-img img-fluid img-circle"
             src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg" alt="User profile picture">

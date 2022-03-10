@@ -200,5 +200,5 @@ Route::group(['middleware' => 'auth'], function () {
     });
     /* ===================================================================== */
     /* ======================= Revenue Routes ========================= */
-    Route::get('revenue',[RevenueController::class,'show']);
+    Route::get('revenue',[RevenueController::class,'show'])->name('revenue.show');
 });

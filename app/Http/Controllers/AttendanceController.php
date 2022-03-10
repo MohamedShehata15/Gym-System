@@ -10,18 +10,18 @@ use Illuminate\Http\Request;
 class AttendanceController extends Controller
 {
     public function index(){
-      // $userTrainingPackages=UserTrainingPackage::get();
+      $userTrainingPackages=UserTrainingPackage::get();
       // foreach($userTrainingPackages as $UserTrainin){
  
-      // //   $userId = $UserTrainin->user_id;
-      // //   $gymId = $UserTrainin->gym_id;
+      //   $userId = $UserTrainin->user_id;
+      //   $gymId = $UserTrainin->gym_id;
 
 
-      // //   // dd(User::find($userId)->name);
-      // //   // dd(Gym::find($gymId)->name);
+        // dd(User::find($userId)->name);
+        // dd(Gym::find($gymId)->name);
       // }        
       return view('attendance.index',[
-        // 'userTrainingPackages' => $userTrainingPackages
+        'userTrainingPackages' => $userTrainingPackages
       ]);
     }
 }
