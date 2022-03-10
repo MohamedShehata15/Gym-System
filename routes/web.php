@@ -195,7 +195,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
 
     /* ======================= Payment Routes ========================= */
-    Route::get('stripe', [StripePaymentController::class, 'stripe']);
-    Route::post('stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+    Route::group(['middleware' => ['role_or_permission:Super-Admin|city_manager|gym_manager']], function () {
+        Route::get('stripe', [StripePaymentController::class, 'stripe']);
+        Route::post('stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+    });
     /* ===================================================================== */
 });

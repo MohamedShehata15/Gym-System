@@ -28,8 +28,6 @@ class StripePaymentController extends Controller {
             return back();
         }
 
-        dd('hello');
-
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         Stripe\Charge::create([
             'amount' => $trainingPackage->price,
