@@ -85,6 +85,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('gym-managers/{gymManagerId}/edit', [GymManagerController::class, 'edit'])->name('gym-managers.edit');
     Route::put('gym-managers/{gymManagerId}', [GymManagerController::class, 'update'])->name('gym-managers.update');
     Route::post('destroy-gym-manager', [GymManagerController::class, 'destroy'])->name('gym-managers.destroy');
+    Route::post('ban-gym-manager', [GymManagerController::class, 'ban'])->name('gym-managers.ban');
     Route::get('getGym/{id}', function ($id) {
         $gym = App\Models\Gym::where('city_id', $id)->get();
         return response()->json($gym);
@@ -127,7 +128,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-    /* ======================= Gym Manager Routes ========================= */
+    /* ======================= Sessions Routes ========================= */
     Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
     Route::get('/sessions/create', [SessionController::class, 'create'])->name('sessions.create');
     Route::post('/sessions', [SessionController::class, 'store'])->name('sessions.store');

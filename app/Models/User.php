@@ -43,11 +43,12 @@ class User extends Authenticatable {
         'email_verified_at' => 'datetime',
     ];
 
-    public function sessions() {
-        return $this->belongsToMany(Session::class, 'user_sessions', 'user_id', 'session_id');
-    }
 
     public function trainingPackage() {
         return $this->belongsToMany(TrainingPackage::class, 'user_training_packages', 'user_id', 'training_package_id');
+    }
+    public function session()
+    {
+        return $this->belongsToMany(Session::class);
     }
 }

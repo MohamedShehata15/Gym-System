@@ -11,17 +11,16 @@ use App\Models\SessionUser;
 use App\Models\SessionStaff;
 use App\DataTables\SessionDataTable;
 use App\Http\Requests\SessionRequest;
-
-
+use App\Models\UserCoachSession;
 
 class SessionController extends Controller {
     public function index() {
         if (request()->ajax()) {
             return datatables()->of(Session::latest()->get())
                 ->addColumn('Coaches', function (Session $session) {
-                    $coaches = $session->staff->pluck('name'); //extract name keys from data
+                    $coaches = $session->coaches->pluck('name'); //extract name keys from data
                     foreach ($coaches as $coach) {
-                        return  $coaches->implode(' , ');
+                        return  $coach->implode(' , ');
                     }
                 })
 
@@ -44,7 +43,7 @@ class SessionController extends Controller {
     }
 
     public function create() {
-        $coaches = Staff::all()->where('role', '=', 'coach');
+        $coaches = Staff::role('coach')->get();
         return view('sessions.create', [
             'coaches' => $coaches
         ]);
@@ -63,12 +62,13 @@ class SessionController extends Controller {
                 'name' => $requestData['name'],
                 'start_at' => $dataTimeStart,
                 'finish_at' => $dateTimeFinish,
+                'gym_id'=>2
             ]);
 
             $coaches = $requestData['coaches'];
             $coaches = array_values($coaches);
             $data = Staff::find($coaches);
-            $session->staff()->attach($data); //assign coaches to the session
+            $session->coaches()->attach($data); //assign coaches to the session
 
 
             return redirect()->route('sessions.index');
@@ -78,7 +78,7 @@ class SessionController extends Controller {
     }
 
     public function destroy(Request $request) {
-        $SomeoneAttend = SessionUser::where('session_id', '=', $request->id)->exists();
+        $SomeoneAttend = UserCoachSession::where('session_id', '=', $request->id)->exists();
         if (!$SomeoneAttend) {
             $session = Session::where('id', $request->id)->delete();
             return (Response()->json($session));
@@ -89,10 +89,10 @@ class SessionController extends Controller {
 
 
     public function edit(Request $request) {
-        $coaches = Staff::where('role', '=', 'coach')->pluck('name');
-        $coachesid = Staff::where('role', '=', 'coach')->pluck('id');
+        $coaches = Staff::role('coach')->pluck('name');
+        $coachesid = Staff::role('coach')->pluck('id');
         $session = Session::find($request->id);
-        $selectedCoaches = SessionStaff::where('session_id', '=', $session->id)->pluck('staff_id');
+        $selectedCoaches = UserCoachSession::where('session_id', '=', $session->id)->pluck('staff_id');
 
         $output = array(
             'name' => $session->name,
@@ -110,7 +110,7 @@ class SessionController extends Controller {
         $requestData = request()->all();
 
         //check if any one attend this session 
-        $SomeoneAttend = SessionUser::where('session_id', '=', $requestData['id'])->exists();
+        $SomeoneAttend = UserCoachSession::where('session_id', '=', $requestData['id'])->exists();
         $CurrentSession = Session::find($request->id);
         $startdate = $CurrentSession->start_at;
         $finishdate = $CurrentSession->finish_at;

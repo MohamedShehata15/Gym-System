@@ -15,7 +15,7 @@
 </li>
 @yield('menubar')
 
-@if(Auth::user()->hasRole('gym_manager'))
+@if(Auth::user()->hasRole('Super-Admin'))
 <!--City Manager Tab-->
 <li class="nav-item has-treeview">
             <a href=".multi-collapse" class="nav-link active text-white" data-toggle="collapsing" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
@@ -33,7 +33,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('city-managers.create') }}" class="nav-link  multi-collapse" id="multiCollapseExample2">
+                <a href="{{ route('city-managers.create') }}" class="nav-link active multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add City Manager</p>
                 </a>
@@ -57,7 +57,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('gym-managers.create') }}" class="nav-link  multi-collapse" id="multiCollapseExample2">
+                <a href="{{ route('gym-managers.create') }}" class="nav-link active multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Gym Manager</p>
                 </a>
@@ -78,12 +78,6 @@
                 <a href="{{ route('users.index') }}" class="nav-link active  multi-collapse" id="multiCollapseExample1">
                   <i class="far fa-circle nav-icon"></i>
                   <p>List Users</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('users.create')}}" class="nav-link  multi-collapse" id="multiCollapseExample2">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add User</p>
                 </a>
               </li>
             </ul>
@@ -123,7 +117,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('training-packages.create')}}" class="nav-link  multi-collapse" id="multiCollapseExample2">
+                <a href="{{route('training-packages.create')}}" class="nav-link active multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Buy a training Package</p>
                 </a>
@@ -147,7 +141,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('coaches.create')}}" class="nav-link  multi-collapse" id="multiCollapseExample2">
+                <a href="{{route('coaches.create')}}" class="nav-link active multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add a Coach</p>
                 </a>
@@ -190,8 +184,6 @@
               </li>
             </ul>
           </li>
-
-
 @endif
 
 
@@ -226,14 +218,8 @@
  </li>
 @endif
 
-<!-- need to remove -->
-@yield('menubar')
-<li class="nav-item">
-    <a href="{{ route($route) }}" class="nav-link {{ Request::is($path) ? 'active' : '' }}">
-        <i class="nav-icon fas fa-home"></i>
-        <p>Home</p>
-    </a>
-</li>
+
+
 @if( Auth::user()->hasRole('coach'))
 <li class="nav-item">
     <a href="{{route('coaches.profile', ['id' => Auth::user()->id])}}" class="nav-link {{Request::is('coaches/profile/show') ? 'active' : ''}}">
