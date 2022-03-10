@@ -76,7 +76,7 @@ class coachController extends Controller {
             'avatar' => $requestData['avatar'],
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
-            'role' => "coach",
+
         ]);
 
 
@@ -113,15 +113,16 @@ class coachController extends Controller {
     public function store() {
         $requestData = request()->all();
         $gymIds = $requestData['gyms'];
-        Staff::create([
+        $coach = Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
             'avatar' => $requestData['avatar'],
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
-            'role' => "coach",
+
         ]);
+        $coach->assignRole('coach');
         $staffMember = Staff::where('name', $requestData['name'])->first();
 
 
