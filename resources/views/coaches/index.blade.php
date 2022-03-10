@@ -8,14 +8,14 @@
 <br><br>
 <div class="text-center mydiv">
     <a href="{{route('coaches.create')}}" class="btn btn-success">Add New Coach </a>
-<table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark">
+<table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
     <thead>
         <tr class="text-white">
             <th>id</th>
             <th>name</th>
             <th>email</th>
-            <th>national_id</th>
             <th>avatar</th>
+            <th>national_id</th>
             <th>is_baned</th>
             <th></th>
         </tr>

@@ -126,12 +126,12 @@
               <li class="nav-item">
                 <a href="{{route('training-packages.create')}}" class="nav-link  multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add a Package</p>
+                  <p>Buy a training Package</p>
                 </a>
               </li>
             </ul>
           </li>
-<!--Coaches-->
+<!--Coaches tab-->
 <li class="nav-item has-treeview">
             <a href=".multi-collapse" class="nav-link bg-purple " data-toggle="collapsing" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
               <i class="nav-icon fas fa fa-users"></i>
@@ -155,7 +155,42 @@
               </li>
             </ul>
           </li>
-
+<!--Attendance tab-->
+<li class="nav-item has-treeview">
+            <a href=".multi-collapse" class="nav-link bg-pink " data-toggle="collapsing" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
+              <i class="nav-icon fas fa fa-check"></i>
+              <p>
+              Attendance
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('attendances.index') }}" class="nav-link active  multi-collapse" id="multiCollapseExample1">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Show Attendance</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+<!--Revenue tab-->
+<li class="nav-item has-treeview">
+            <a href=".multi-collapse" class="nav-link bg-yellow " data-toggle="collapsing" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
+              <i class="nav-icon fas fa fa-calculator"></i>
+              <p>
+              Revenue
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('attendances.index') }}" class="nav-link active  multi-collapse" id="multiCollapseExample1">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Show Revenue</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
 
 @endif
