@@ -6,14 +6,16 @@
 @section('content')
 @if(Auth::user()->hasRole('Super-Admin'))
 <br><br>
-<table id="table_id" class="table table-bordered table-striped">
+<div class="text-center mydiv">
+    <a href="{{route('coaches.create')}}" class="btn btn-success">Add New Coach </a>
+<table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
     <thead>
-        <tr>
+        <tr class="text-white">
             <th>id</th>
             <th>name</th>
             <th>email</th>
-            <th>national_id</th>
             <th>avatar</th>
+            <th>national_id</th>
             <th>is_baned</th>
             <th></th>
         </tr>
@@ -21,6 +23,8 @@
     <tbody>
     </tbody>
 </table>
+</div>
+
 @endif
 
 @if(Auth::user()->hasRole('coach'))
@@ -47,36 +51,7 @@
 @endif
 
 @endsection
-@section('third_party_scripts')
-<script src="{{ mix('js/app.js') }}" defer></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer>
-</script>
-<script>
-    $(document).ready(function () {
-<br>
-<div class="d-flex justify-content-center mb-2">
-    <a href="{{route('coaches.create')}}" class="btn btn-success">Add New Coach </a>
-  </div>
 
-
-    <table id="table_id" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Avatar</th>
-                <th>National_ID</th>
-                <th>Is_Baned</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-@endsection
 @section('third_party_scripts')
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

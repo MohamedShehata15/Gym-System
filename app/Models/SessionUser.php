@@ -5,6 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserSession extends Model {
+class SessionUser extends Model {
     use HasFactory;
 }

@@ -71,7 +71,7 @@ body {
 }
 
 .con{
-  background-image: url('gym4.jpeg');
+  background-image: url('/photos/gym4.jpeg');
   background-position: center;
   background-repeat: no-repeat;
   background-size:cover;  
@@ -2982,7 +2982,7 @@ input[type=button].btn-block {
   position: relative;
   height: 0;
   overflow: hidden;
-  transition: height 0.35s ease;
+  transition: height 0.50s ease;
 }
 @media (prefers-reduced-motion: reduce) {
   .collapsing {
@@ -43130,9 +43130,8 @@ a.text-muted:hover {
   color: #3f474e;
 }
 .mydiv{
-  width:100%;
   height:100%;
-  padding: 4%;
+  padding: 2%;
 }
 .dataTables_filter{
   color:white !important;
@@ -43155,11 +43154,15 @@ a.text-muted:hover {
 
 
 }
-#myTable_previous{
+#myTable_previous,#table_id_previous{
   color:white !important;
 
 }
-#myTable_next{
+#myTable_next,#table_id_next{
   color:white !important;
 
+}
+
+#table_id,#myTable{
+width: 100% !important
 }
