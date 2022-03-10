@@ -9,8 +9,8 @@
     }
 @endphp
 <li class="nav-item">
-    <a href="{{ route($route) }}" class="nav-link {{ Request::is($path) ? 'active' : '' }}">
-        <i class="nav-icon fas fa-home"></i>
+    <a href="{{ route($route) }}" class="nav-link {{ Request::is($path) ? 'active' : '' }} bg-secondary">
+        <i class="nav-icon  fas fa-home"></i>
         <p>Home</p>
     </a>
 </li>
@@ -89,6 +89,75 @@
               </li>
             </ul>
           </li>
+<!--Cities Tab-->
+<li class="nav-item has-treeview">
+            <a href=".multi-collapse" class="nav-link bg-danger text-white" data-toggle="collapsing" aria-expanded="false" aria-controls="CollapseExample1">
+              <i class="nav-icon fas fa fa-building"></i>
+              <p>
+               Cities
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('cities.index') }}" class="nav-link active  multi-collapse" id="CollapseExample1">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>List Cities</p>
+                </a>
+              </li>
+              </ul>
+          </li>
+<!--Training Packages Tab-->
+<li class="nav-item has-treeview">
+            <a href=".multi-collapse" class="nav-link bg-white " data-toggle="collapsing" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
+              <i class="nav-icon fas fa fa-tags"></i>
+              <p>
+              Training Packages
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('training-packages.index') }}" class="nav-link active  multi-collapse" id="multiCollapseExample1">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>List Packages</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('training-packages.create')}}" class="nav-link  multi-collapse" id="multiCollapseExample2">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add a Package</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+<!--Coaches-->
+<li class="nav-item has-treeview">
+            <a href=".multi-collapse" class="nav-link bg-purple " data-toggle="collapsing" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
+              <i class="nav-icon fas fa fa-users"></i>
+              <p>
+              Coaches
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('coaches.index') }}" class="nav-link active  multi-collapse" id="multiCollapseExample1">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>List Coaches</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('coaches.create')}}" class="nav-link  multi-collapse" id="multiCollapseExample2">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add a Coach</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+
 @endif
 
 
