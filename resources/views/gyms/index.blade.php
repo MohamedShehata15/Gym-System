@@ -16,6 +16,10 @@
     </div>
     {{Session()->forget('fail')}}
     @endif
+    <br>
+    <div class="d-flex justify-content-center mb-2">
+    <a href="{{route('gyms.create')}}" class="btn btn-success">Add New Gym </a>
+    </div>
     <table id="gyms" class="display">
         <thead>
             <tr>
@@ -25,6 +29,10 @@
                     <th>City Manager</th>
                 @endif
                 <th>Cover_Image</th>
+                <th>Cover Image</th>
+                @role('Super-Admin')
+                <th>City Manager Name</th>
+                @endrole
                 <th>Action</th>
             </tr>
         </thead>
@@ -37,6 +45,10 @@
                          <td>{{$gym->city->cityManager->name}}</td>
                     @endif
                     <td><img src="../uploads/gyms/{{$gym->image}}" alt="notFounded" class="rounded-circle shadow"/></td>
+                    <td>{{$gym->image}}</td>
+                    @role('Super-Admin')
+                    <td>{{$gym->created_by}}</td>
+                    @endrole
                     <td>
                         <a href="{{route('gyms.show',['id' => $gym->id])}}" class="btn btn-info">Show</a>
                         <a href="{{route('gyms.edit',['id' => $gym->id])}}" class="btn btn-warning">Edit</a>

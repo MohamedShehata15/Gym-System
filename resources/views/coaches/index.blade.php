@@ -1,10 +1,24 @@
 @extends('layouts.app')
+
+@if(Auth::user()->hasRole('coach'))
+@section('starter_script')
+@php
+    $id = Auth::user()->id;
+    $url = url("/coaches/$id");
+    // dd($url);
+@endphp
+<script>
+    window.location.href = "{{$url}}";
+</script>
+@endsection
+@endif
+
 @section('third_party_stylesheets')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-@if(Auth::user()->role == 'admin')
+@if(Auth::user()->hasRole('Super-Admin'))
 <br><br>
 <div class="text-center mydiv">
     <a href="{{route('coaches.create')}}" class="btn btn-success">Add New Coach </a>
@@ -27,28 +41,6 @@
 
 @endif
 
-@if(Auth::user()->role == 'coach')
-<div class="card-body text-center">
-    <div class="text-center mb-2">
-        <img class="profile-user-img img-fluid img-circle"
-            src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg" alt="User profile picture">
-    </div>
-    <p class="mb-4">{{$name}}</p>
-    <a class="btn btn-app" href="{{route('coaches.profile')}}">
-        <i class="fas fa-user"></i> Profile
-    </a>
-    <a class="btn btn-app" href="{{route('coaches.edit')}}">
-        <i class="fas fa-edit"></i> Edit Profile
-    </a>
-    <a class="btn btn-app" href="{{route('coaches.password')}}">
-        <i class="fas fa-lock"></i> Change Password
-    </a>
-    <a class="btn btn-app" href="{{route('coaches.sessions')}}">
-        <i class="fas fa-calendar-check"></i> Sessions
-    </a>
-</div>
-
-@endif
 
 @endsection
 

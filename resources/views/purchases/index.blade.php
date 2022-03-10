@@ -13,9 +13,9 @@
                 <th>Email</th>
                 <th>Package Name</th>
                 <th>Paid Price</th>
-                @role('city_manager')
+                @can('gym-managers')
                 <th>Gym</th>
-                @endrole
+                @endcan
                 @role('Super-Admin')
                 <th>City</th>
                 @endrole
@@ -62,18 +62,17 @@
                     data:'price',
                     name:'price',
                 },
-                @role('city_manager')
+                @can('gym-managers')
                 {
                     data:'gymName',
                     name:'gymName',
                 },
-                @endrole
+                @endcan
                 @role('Super-Admin')
                 {
                     data:'cityName',
                     name:'cityName',
-                }
-                ,
+                },
                 @endrole
                 {
                     data:'action',

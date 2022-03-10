@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
-
-class Staff extends Authenticatable {
-    use HasFactory, Notifiable, HasRoles;
+use Cog\Contracts\Ban\Bannable as BannableContract;
+use Cog\Laravel\Ban\Traits\Bannable;
+class Staff extends Authenticatable implements BannableContract {
+    use HasFactory, Notifiable, HasRoles, Bannable;
 
     protected $guard = 'staff';
 
@@ -18,8 +19,7 @@ class Staff extends Authenticatable {
         'password',
         'avatar',
         'national_id',
-        'is_baned',
-        
+
     ];
 
     protected $hidden = [
@@ -43,7 +43,4 @@ class Staff extends Authenticatable {
     public function coachSessions() {
         return $this->belongsToMany(Session::class, 'session_staff', 'staff_id', 'session_id');
     }
-
-   
-   
 }

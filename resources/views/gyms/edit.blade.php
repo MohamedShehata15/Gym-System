@@ -13,23 +13,18 @@
 		<div class="mb-3">
 		  <label for="gymName" class="form-label">Name</label>
 		  <input type="text" class="form-control" id="gymName" name="name" value="{{$gym->name}}">
-		</div>
-		<div class="mb-3">
-			<label for="manager" class="form-label">Choose Manager</label>
-			<select class="form-select"  name="staff_id">
-				@foreach ($staff as $manager )
-					<option value="{{$manager->id}}">{{$manager->name}}</option>
-				@endforeach
-			  </select>	
-	     </div>		
+		</div>	
+		@role('Super-Admin')
 		<div class="mb-3">
 			<label for="cities" class="form-label">Choose city</label>
 			<select id="cities" class="form-select"  name="city_id">
+				<option value="" disabled selected hidden>choose a City</option> 
 				@foreach ($cities as $city )
-					<option value="{{$city->id}}">{{$city->name}}</option>
+					<option value="{{$city->id}}" {{$city->id == $gym->city_id ? "selected" : ""}}>{{$city->name}}</option>
 				@endforeach
 			  </select>			
 		</div>	
+		@endrole
 		<div class="mb-3">
 			<label for="formFile" class="form-label">Choose Image</label>
 			<input class="form-control" type="file" id="formFile" name="image"value="{{$gym->image}}">

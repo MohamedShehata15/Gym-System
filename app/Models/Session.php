@@ -17,7 +17,7 @@ class Session extends Model {
 
     public function staff()   //relationship between sessions & coaches
     {
-        return $this->belongsToMany(Staff::class);
+        return $this->belongsToMany(UserCoachSession::class, 'staff_id');
     }
 
     public function users()   //relationship between sessions & users

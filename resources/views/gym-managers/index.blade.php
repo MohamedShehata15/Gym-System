@@ -15,7 +15,7 @@
                 <th>Email</th>
                 <th>Avatar</th>
                 <th>National_ID</th>
-                <th>Is_Baned</th>
+                <th>Gym-City</th>
                 <th></th>
             </tr>
         </thead>
@@ -65,9 +65,11 @@
                     name:'national_id',
                 },
                 {
-                    data:"is_baned",
-                    name:"is_baned",
+                    data:'gym-city',
+                    name:'gym-city',
                 },
+               
+                
                 {
                     data:'action',
                     name:'action',
@@ -83,6 +85,24 @@
         $.ajax({
            type:"POST",
            url: "{{ url('destroy-gym-manager') }}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(res){
+            $('#table_id').DataTable().ajax.reload();
+              },
+            error:function(){ 
+            alert("Failed");
+        }
+         });
+         
+    }}
+    function ban(id){
+        if (confirm("Ban this member?") == true) {
+        var id = id;
+         // ajax
+        $.ajax({
+           type:"POST",
+           url: "{{ url('ban-gym-manager') }}",
            data: { id: id },
            dataType: 'json',
            success: function(res){
