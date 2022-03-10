@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\City;
-use App\Models\Staff;
-use App\Models\Gym;
 
 class CityController extends Controller {
     public function index() {
