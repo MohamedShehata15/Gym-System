@@ -12,18 +12,22 @@ class GymManagerController extends Controller
 {
     public function index()
     {
+        $gymManagers = Staff::role('gym_manager')->get();
         if (request()->ajax()) {
-            return datatables()->of(Staff::role('gym_manager')->get())
+            return datatables()->of($gymManagers)
                ->addColumn('action', function ($data) {
+                   $banStatus = $data->isBanned()? "unban":"ban";
+                   $buttonColor = $data->isBanned()? "secondary" :"warning";
                    $button ='<a href="'.route('gym-managers.edit',$data->id).'" class="btn btn-info btn-sm mx-2">Edit</a>';
                    $button .='<a href="javascript:void(0);" onClick = "deleteFunc('.$data->id.')"class="btn btn-danger btn-sm mx-2">Delete</a>';
-                   return $button;
+                   $button .='<a href="javascript:void(0);" onClick = "ban('.$data->id.')"class="btn btn-'.$buttonColor.' btn-sm mx-2">'.$banStatus.'</a>';                 
+                    return $button;
                })
                ->addColumn('gym-city', function ($data) {
                 $gymId =GymManager::where('staff_id',$data->id)->first()->gym_id;
                 $gym = Gym::find($gymId);
                 $city = City::find($gym->city_id);
-                return $gym->name.'-'.$city->name;
+                return $gym->name.'-'.$city->name;  
 
             })
                ->rawColumns(['action'])->make(true);
@@ -36,10 +40,9 @@ class GymManagerController extends Controller
         
         $staff = Staff::find($staffId);
         $gymId = gymManager::where('staff_id',$staffId)->first()->gym_id;
-        //dd($gymId);
-        //$gymId = $gymMan->gym_id;
+        
         $gym = Gym::where('id',$gymId)->first();
-        //dd($gym);
+       
         $cities = City::all();
         $gyms = Gym::all();
             return view('gym-managers.edit',[
@@ -53,7 +56,7 @@ class GymManagerController extends Controller
     public function update($staffId)
     {
         $requestData = request()->all();
-        $gymManager = Staff::find($staffId)->update([
+         Staff::find($staffId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
@@ -118,6 +121,15 @@ class GymManagerController extends Controller
        
            $member = Staff::where('id', $request->id)->delete();
            return Response()->json($member);
+       
+       
+   }
+   public function ban(Request $request)
+   {
+       
+           $member = Staff::find($request->id);
+           $ban = $member->isBanned()? $member->unban(): $member->ban();
+           return Response()->json($ban);
        
        
    }

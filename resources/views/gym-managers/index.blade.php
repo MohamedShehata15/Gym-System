@@ -96,5 +96,23 @@
          });
          
     }}
+    function ban(id){
+        if (confirm("Ban this member?") == true) {
+        var id = id;
+         // ajax
+        $.ajax({
+           type:"POST",
+           url: "{{ url('ban-gym-manager') }}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(res){
+            $('#table_id').DataTable().ajax.reload();
+              },
+            error:function(){ 
+            alert("Failed");
+        }
+         });
+         
+    }}
     </script>
 @endsection
