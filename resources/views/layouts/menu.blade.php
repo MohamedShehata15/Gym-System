@@ -34,7 +34,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('city-managers.create') }}" class="nav-link  multi-collapse" id="multiCollapseExample2">
+                <a href="{{ route('city-managers.create') }}" class="nav-link active multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add City Manager</p>
                 </a>
@@ -58,7 +58,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('gym-managers.create') }}" class="nav-link  multi-collapse" id="multiCollapseExample2">
+                <a href="{{ route('gym-managers.create') }}" class="nav-link active multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Gym Manager</p>
                 </a>
@@ -82,7 +82,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('users.create')}}" class="nav-link  multi-collapse" id="multiCollapseExample2">
+                <a href="{{route('users.create')}}" class="nav-link active multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add User</p>
                 </a>
@@ -124,7 +124,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('training-packages.create')}}" class="nav-link  multi-collapse" id="multiCollapseExample2">
+                <a href="{{route('training-packages.create')}}" class="nav-link active multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Buy a training Package</p>
                 </a>
@@ -148,7 +148,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('coaches.create')}}" class="nav-link  multi-collapse" id="multiCollapseExample2">
+                <a href="{{route('coaches.create')}}" class="nav-link active multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add a Coach</p>
                 </a>
