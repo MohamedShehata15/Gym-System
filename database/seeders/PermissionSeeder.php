@@ -33,7 +33,7 @@ class PermissionSeeder extends Seeder
         
 
        $gymManager->syncPermissions(['gyms','sessions','buy-package']);
-       $cityManager->syncPermissions(['gyms','gym-managers','sessions','buy-package']);
+       $cityManager->syncPermissions(['gym-managers','buy-package']);
 
 
 

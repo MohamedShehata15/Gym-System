@@ -41,7 +41,7 @@ class CityManagerController extends Controller
     public function update($staffId)
     {
         $requestData = request()->all();
-        $cityManager = Staff::find($staffId)->update([
+        Staff::find($staffId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
