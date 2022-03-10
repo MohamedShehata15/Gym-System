@@ -19,7 +19,7 @@
 		</div>
 		<div class="mb-3">
 			<label for="manager[]" class="form-label select-label">Choose Managers</label>
-			<select id="manager" class="form-select select"  name="staff_id[]">
+			<select id="manager" class="form-select select" multiple  name="staff_id[]">
 				@foreach ($staff as $manager )
 				<option value="{{$manager->id}}" {{ old('staff_id')== $manager->id? "selected": "" }}>{{$manager->name}}</option>
 				@endforeach

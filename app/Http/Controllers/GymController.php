@@ -11,16 +11,42 @@ use App\Models\Session;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Nette\Utils\Json;
 
 class GymController extends Controller
 {
 
 //----------------------index--------------------//
     public function index(){
-        $gyms=Gym::all();
-        return view('gyms.index',[   
-            'gyms'=>$gyms,   
+        $gyms=Gym::with('city')->get();
+       
+        if(request()->ajax()){
+            return Datatables()->of($gyms)->addIndexColumn()
+            ->addColumn('action',function($data){
+                    $actionBtn = '<a href="'.route('gyms.show', $data->id).'"  class="show btn btn-info btn-sm">Show</a>
+                                 <a onClick="editFunc('.$data->id.')" class="edit btn btn-warning btn-sm">Edit</a>
+                                 <a onClick="DeleteGym('.$data->id.')" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
+            })
+            ->addColumn('cityManager', function (Gym $gym) {
+                return $gym->city->cityManager->name;
+            })
+            ->editColumn('created_at', function ($gym) {
+                return $gym->created_at->format('Y-M-D');
+            })
+            ->addColumn('gymImage', function (Gym $gym) {
+                $imageGym='<img src="../uploads/gyms/'.$gym->image.'" alt="notFounded" class="rounded-circle shadow"/>';
+                return $imageGym;
+                // $url= url("storage/uploads/users/".$gym->image. "");
+                // return '<img src="'. $url .'" alt="notFounded" class="rounded-circle shadow/>';
+            })
+                ->rawColumns(['action'])
+                ->make(true);
+         }
+         return view('gyms.index',[
+         'gyms' => $gyms,
         ]);
+        
     }
 //----------------------create--------------------//
     public function create(){
@@ -68,13 +94,20 @@ class GymController extends Controller
 //----------------------edit--------------------//
     public function edit($id){
         $gym=Gym::find($id);
-        $staff=Staff::where("role","gym_manager")->get();  
-        $cities=City::all(); 
-        return view('gyms.edit',[
-            'gym' => $gym ,
-            'staff' => $staff,
-            'cities' => $cities
-        ]); 
+        $staff=Staff::all();  //gymManager             //return array of names   
+        $cities=City::all();   //cityManager
+        $output=array(
+           'cities'=>$cities,
+           'cityManager'=>$staff,
+            'gym'=> $gym->name
+        );
+        echo json_encode($output);
+
+        // return view('gyms.edit',[
+        //     'gym' => $gym ,
+        //     'staff' => $staff,
+        //     'cities' => $cities
+        // ]); 
     }
 //----------------------update--------------------//
     public function update($id ,GmyRequest $request){
@@ -94,9 +127,9 @@ class GymController extends Controller
         return redirect()->route("gyms.index");
     }
     //----------------------destroy--------------------//
-    public function destroy($id){ 
+    public function destroy(Request $request){ 
        $flag=0;
-       $gymCoaches= Gym::find($id)->gymCoaches;
+       $gymCoaches= Gym::find($request->id)->gymCoaches;
         foreach($gymCoaches as $gymCoache){
             $gymSession= SessionStaff::where('staff_id',$gymCoache->id)->get();
             if($gymSession != NULL){
@@ -104,13 +137,11 @@ class GymController extends Controller
             }
         }
         if($flag==0){
-            Gym::find($id)->delete();
-            return redirect()->route("gyms.index");
+            $gym=Gym::find($request->id)->delete();
+            return (Response()->json($gym));
         }else{
-            Session(['fail'=> "You Can't Delete this GYM it had a sessions."]);
             return redirect()->route("gyms.index");
         }
     }
-
 
 }
