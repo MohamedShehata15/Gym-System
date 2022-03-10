@@ -89,16 +89,18 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-
+<div class="text-center mydiv">
+    <h1> Gyms</h1>
+    <a href="{{route('gyms.create')}}" class="btn btn-success btn-lg my-2">Add Gym</a>
 
 <table id="gymsTable" class="table table-bordered table-striped bg-light">
     <thead>
         <tr>
             <th>Name</th>
                 <th>Created at</th>
-                {{-- @if(Auth::user()->hasrole=="admin") --}}
+                @if(Auth::user()->hasRole("Super-Admin"))
                     <th>City Manager</th>
-                {{-- @endif --}}
+                @endif 
                 <th>Cover_Image</th>
                 <th>Action</th>
         </tr>
@@ -132,8 +134,10 @@
                     </div>
 
                     <div>
-                        <label class="form-label text-dark" for="Day">City Manager</label>
-                        <input name="cityManager" id="cityManager" class="form-control" type="text" />
+                        <label class="form-label text-dark" for="cityManager">City Manager</label>
+                        <select name="cityManager" multiple class="form-control" id="cityManager">
+
+                        </select>
                     </div>
 
                     <div>
@@ -141,13 +145,12 @@
                         <input name="image" type="file" id="image" class="form-control" />
                     </div>
 
-                    <div>
-                        <label class="form-label text-dark" for="finish">Gym Managers</label>
-                        <select class="form-select" multiple  name="staff_id">
-                           
-                            
-                          </select>	
-                    </div>
+                    <div class="form-group">
+                        <label class="form-label text-dark" for="exampleFormControlSelect2">Choose Gym Managers</label>
+                        <select name="gymManagers[]" multiple class="form-control" id="gymManagers">
+
+                        </select>
+                     </div>
                     <form>
             </div>
 
@@ -219,11 +222,14 @@
             },
             dataType: 'json',
             success: function (data) {
-               $('#name').val("data.gym.name");
-            console.log("Edit Function");
+               $('#name').val(data.gym.name);
+               $('#cityManager').val(data.citieManagers.name);
+               $('#image').val(data.gym.image);
+               $('#gymManagers').val(data.gymManagers.name);
+           
                 //show the modal
-            //     var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
-            //    myModal.show();
+                var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+               myModal.show();
             }
             
         });
@@ -241,7 +247,7 @@
                 },
                 dataType: 'json',
                 success: function (res) {
-                    $('#myTable').DataTable().ajax.reload();
+                    $('#gymsTable').DataTable().ajax.reload();
                 },
                 error: function () {
                     alert("There are people will attend this session you cannot delete it...");

@@ -31,7 +31,7 @@ class GymController extends Controller
             ->addColumn('cityManager', function (Gym $gym) {
                 return $gym->city->cityManager->name;
             })
-            ->editColumn('created_at', function ($gym) {
+            ->addColumn('created_at', function ($gym) {
                 return $gym->created_at->format('Y-M-D');
             })
             ->addColumn('gymImage', function (Gym $gym) {
@@ -50,7 +50,7 @@ class GymController extends Controller
     }
 //----------------------create--------------------//
     public function create(){
-        $staff=Staff::where("role","gym_manager")->get();                            //to return array
+        $staff=Staff::role('gym_manager');                            //to return array
         $cities=City::all();
         return view('gyms.create',[
             'staff' => $staff ,
@@ -94,20 +94,16 @@ class GymController extends Controller
 //----------------------edit--------------------//
     public function edit($id){
         $gym=Gym::find($id);
-        $staff=Staff::all();  //gymManager             //return array of names   
+        $staff=Staff::role('gym_manager');  //gymManager             //return array of names   
         $cities=City::all();   //cityManager
+        $citieManagers=$cities->cityManager->get();
         $output=array(
-           'cities'=>$cities,
-           'cityManager'=>$staff,
+           'citieManagers'=>$citieManagers,
+           'gymManagers'=>$staff,
             'gym'=> $gym->name
         );
         echo json_encode($output);
 
-        // return view('gyms.edit',[
-        //     'gym' => $gym ,
-        //     'staff' => $staff,
-        //     'cities' => $cities
-        // ]); 
     }
 //----------------------update--------------------//
     public function update($id ,GmyRequest $request){

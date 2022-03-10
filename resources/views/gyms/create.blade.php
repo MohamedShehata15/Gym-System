@@ -18,9 +18,10 @@
 		  <input type="text" class="form-control" id="gymName" name="name"value="{{ old('name') }}">
 		</div>
 		<div class="mb-3">
-			<label for="manager[]" class="form-label select-label">Choose Managers</label>
+			<label for="manager" class="form-label select-label">Choose Managers</label>
 			<select id="manager" class="form-select select" multiple  name="staff_id[]">
 				@foreach ($staff as $manager )
+				@dd($manager)
 				<option value="{{$manager->id}}" {{ old('staff_id')== $manager->id? "selected": "" }}>{{$manager->name}}</option>
 				@endforeach
 			</select>			
