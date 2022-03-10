@@ -15,6 +15,7 @@ use App\Http\Controllers\CityManagerController;
 use App\Http\Controllers\GymManagerController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\RevenueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -197,4 +198,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
     });
     /* ===================================================================== */
+    /* ======================= Revenue Routes ========================= */
+    Route::get('revenue',[RevenueController::class,'show']);
 });
