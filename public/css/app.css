@@ -69,6 +69,21 @@ body {
   text-align: left;
   background-color: #fff;
 }
+.revDiv{
+  width:20%;
+  text-align: center;
+  margin-left: 870px;
+  margin-top:2px;
+  height:30px;
+}
+.revBody{
+  color:lightgray;
+}
+.selectBody{
+  width:50%;
+  margin:50px auto;
+}
+
 
 .con{
   background-image: url('/photos/gym4.jpeg');
