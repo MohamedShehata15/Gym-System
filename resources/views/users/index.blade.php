@@ -5,12 +5,11 @@
 @endsection
 @section('content')
 <br>
-<div class="d-flex justify-content-center mb-2">
+<div class="text-center mydiv">
     <a href="{{route('users.create')}}" class="btn btn-success" > Add New User </a>
-  </div>
-    <table id="table_id" class="table table-bordered table-striped">
+    <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
         <thead>
-            <tr>
+            <tr class="text-white">
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -23,6 +22,8 @@
         <tbody>
         </tbody>
     </table>
+    </div>
+
 @endsection
 @section('third_party_scripts')
     <script src="{{ mix('js/app.js') }}" defer></script>
