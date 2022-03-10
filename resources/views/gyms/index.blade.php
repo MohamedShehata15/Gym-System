@@ -22,7 +22,7 @@
                 <th>Created at</th>
                 <th>Cover Image</th>
                 @role('Super-Admin')
-                <th>Created By</th>
+                <th>City Manager Name</th>
                 @endrole
                 <th>Action</th>
             </tr>
