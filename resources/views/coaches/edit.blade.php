@@ -1,32 +1,8 @@
+@php
+    $coachGyms = $coach->coachGyms->where('city_id')->pluck('city_id')->all();
+@endphp
+
 @extends('layouts.app')
-
-{{-- @section('content')
-<form>
-<div class="text-center">
-    <img class="profile-user-img img-fluid img-circle" src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg" alt="User profile picture">
-</div>
-    <div class="form-group">
-        <label for="inputName">Name</label>
-        <input type="text" class="form-control" id="inputName" placeholder="Name" value="{{$coach->name}}">
-</div>
-<div class="form-group">
-    <label for="inputEmail">Email</label>
-    <input type="email" class="form-control" id="inputEmail" placeholder="Email" value="{{$coach->email}}">
-</div>
-
-<div class="form-group">
-    <label for="inputPassword">Password</label>
-    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-</div>
-<div class="form-group">
-    <label for="inputConfirmPassword">Confirm Password</label>
-    <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password">
-</div>
-
-
-<button type="submit" class="btn btn-primary">Update</button>
-</form>
-@endsection --}}
 
 @section('third_party_stylesheets')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
@@ -51,14 +27,6 @@
         <label for="Email" class="form-label">Email</label>
         <input type="email" name="email" id="Email" class="form-control" value="{{$coach->email}}" />
     </div>
-    <div class="mb-3">
-        <label for="pass" class="form-label">Password</label>
-        <input type="password" name="password" id="password" class="form-control"  placeholder="Type your password if youw wanna change it"/>
-    </div>
-    <div class="mb-3">
-        <label for="confirm" class="form-label">Confrim Password</label>
-        <input type="password" name="confirm" id="confirm" class="form-control" placeholder="Conirm your password if you wanna change it" />
-    </div>
 
     <div class="mb-3 ">
         <label for="national_id" class="form-label">National_id</label>
@@ -70,9 +38,10 @@
         <label for="city" class="form-label">City</label>
         <select name="city" class="form-control" id="city">
             <option value="" disabled selected hidden>choose a City</option>
-            {{-- @foreach($cities as $city)
-            <option value="{{$city->id}}" {{$city->id == $gymsCity->id ? "selected" : ""}}>{{$city->name}}</option>
-            @endforeach --}}
+            @foreach($cities as $city)
+            <option value="{{$city->id}}" {{in_array($city->id, $coachGyms) ? "selected" : ""}}>{{$city->name}}</option>
+            {{-- <option value="{{$city->id}}" {{$city->id == $gymsCity->id ? "selected" : ""}}>{{$city->name}}</option> --}}
+            @endforeach
         </select>
     </div>
 

@@ -1,4 +1,18 @@
 @extends('layouts.app')
+
+@if(Auth::user()->hasRole('coach'))
+@section('starter_script')
+@php
+    $id = Auth::user()->id;
+    $url = url("/coaches/$id");
+    // dd($url);
+@endphp
+<script>
+    window.location.href = "{{$url}}";
+</script>
+@endsection
+@endif
+
 @section('third_party_stylesheets')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 <meta name="csrf-token" content="{{ csrf_token() }}">

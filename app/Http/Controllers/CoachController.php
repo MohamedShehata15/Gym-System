@@ -7,13 +7,14 @@ use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymCoach;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class coachController extends Controller {
     public function index() {
         if (request()->ajax()) {
             return datatables()->of(Staff::role('coach')->get())
                 ->addColumn('action', function ($data) {
-                    $button = '<a href="' . route('coaches.edit', $data->id) . '" class="btn btn-info btn-sm mx-2">Edit</a>';
+                    $button = '<a href="' . route('coaches.show', $data->id) . '" class="btn btn-info btn-sm mx-2">Edit</a>';
                     $button .= '<a href="javascript:void(0);" onClick = "deleteFunc(' . $data->id . ')"class="btn btn-danger btn-sm mx-2">Delete</a>';
                     return $button;
                 })
@@ -50,13 +51,22 @@ class coachController extends Controller {
 
         return view('coaches.edit', [
             'staff' => $staff,
-            'gyms' => $gyms,
+            // 'gyms' => $gyms,
             'cities' => $cities,
             'gymsCollection' => $gymsCollection,
             'gymsCity' => $gymsCity
 
         ]);
     }
+
+    public function show($id) {
+        if (Auth::user()->hasRole('coach'))
+            return view('coaches.show', ['coach' => Auth::user()]);
+
+        $coach = Staff::find($id);
+        return view('coaches.show', ['coach' => $coach]);
+    }
+
     public function update($staffId) {
         $requestData = request()->all();
         $post = Staff::find($staffId)->update([
@@ -138,8 +148,11 @@ class coachController extends Controller {
         return Response()->json($member);
     }
 
-    public function profile() {
-        $coach = Staff::find(9);
+    public function profile($id) {
+        if (Auth::user()->hasRole('coach'))
+            return view('coaches.profile', ['coach' => Auth::user()]);
+
+        $coach = Staff::find($id);
         return view('coaches.profile', ['coach' => $coach]);
     }
     public function sessions() {

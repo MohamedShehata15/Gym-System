@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+{{-- @php
+    if(Auth::user()->hasRole('coach'))
+        $coach = Auth::user();
+@endphp --}}
+
 @section('content')
 <form class="pt-4">
     <h2 class="text-center"><span>Change Password</span></h2>

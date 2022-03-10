@@ -15,8 +15,6 @@ use App\Http\Controllers\cityManagerController;
 use App\Http\Controllers\gymManagerController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\PurchaseController;
-use App\Models\City;
-use App\Models\Staff;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +37,10 @@ Auth::routes(['register' => false]);
 
 
 Route::get('/test', function () {
+
+
+    return view('test');
+
     // $staff = Staff::role('coach')->get();
     // dd($staff);
 
@@ -150,9 +152,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['auth', 'isBanned'], function () {
 
-        Route::GET('/coaches', function () {
-            return view('coaches.index');
-        });
         Route::GET('/gyms', [GymController::class, 'index'])->name('gyms.index');
         Route::GET('/gyms/create', [GymController::class, 'create'])->name('gyms.create');
         Route::POST('/gyms', [GymController::class, 'store'])->name('gyms.store');
@@ -178,15 +177,15 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     /* ======================= Coaches Routes ========================= */
-    Route::get('/coaches', [CoachController::class, 'index'])->name('coaches.index');
 
-    Route::get('/coaches/profile/show', [CoachController::class, 'profile'])->name('coaches.profile');
+    Route::get('/coaches/{id}/profile', [CoachController::class, 'profile'])->name('coaches.profile');
+    Route::get('/coaches/{id}', [CoachController::class, 'show'])->name('coaches.show');
 
-    Route::get("/coaches/profile/edit", [CoachController::class, 'edit'])->name('coaches.edit');
+    Route::get("/coaches/{id}/profile/edit", [CoachController::class, 'edit'])->name('coaches.edit');
 
-    Route::get('/coaches/sessions', [CoachController::class, 'sessions'])->name('coaches.sessions');
+    Route::get('/coaches/{id}/sessions', [CoachController::class, 'sessions'])->name('coaches.sessions');
 
-    Route::get("/coaches/password", [CoachController::class, 'password'])->name('coaches.password');
+    Route::get("/coaches/{id}/password", [CoachController::class, 'password'])->name('coaches.password');
 
     /* ===================================================================== */
 
