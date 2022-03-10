@@ -44,7 +44,7 @@ Route::get('/test', function () {
 
     // -----------------------
 
-    $cities = City::find(10)->gyms;
+    // $cities = City::find(10)->gyms;
 
     // dd($cities);
 });
@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
     //------------------------- Cities Routes ------------------------------
     Route::get('cities', [CityController::class, 'index'])->name('cities.index');
     //Route::get('update/{city}',[CityController::class,'update'])->name('cities.update');
+    // Route::get('/cities/{id}')
     Route::post('edit-city', [CityController::class, 'edit'])->name('cities.edit');
     Route::post('destroy-city', [CityController::class, 'destroy'])->name('cities.destroy');
     Route::post('store-city', [CityController::class, 'store'])->name('cities.store');

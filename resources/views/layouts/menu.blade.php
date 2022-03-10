@@ -15,7 +15,7 @@
 </li>
 @yield('menubar')
 
-@if( $managerRole== 'admin')
+@if(Auth::user()->hasRole('gym_manager'))
 <!--City Manager Tab-->
 <li class="nav-item has-treeview">
             <a href=".multi-collapse" class="nav-link active text-white" data-toggle="collapsing" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">

@@ -18,6 +18,18 @@ class StripePaymentController extends Controller {
 
     public function stripePost(Request $request) {
 
+        $trainingPackage = TrainingPackage::find($request->training_package);
+        $user = User::find($request->user);
+
+        // dd($user);
+
+        if ($user->remaining_sessions > 0) {
+            Session::flash('error', "You have already remaining sessions");
+            return back();
+        }
+
+        dd('hello');
+
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         Stripe\Charge::create([
             'amount' => 100 * 100,
@@ -25,9 +37,6 @@ class StripePaymentController extends Controller {
             'source' => $request->stripeToken,
             'description' => "Payment Package for user"
         ]);
-
-        $trainingPackage = TrainingPackage::find($request->training_package);
-        $user = User::find($request->user);
 
         $user->update(['remaining_sessions' => $trainingPackage->session_number]);
 
