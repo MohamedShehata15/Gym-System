@@ -8,17 +8,24 @@ use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymManager;
 
-class gymManagerController extends Controller
+class GymManagerController extends Controller
 {
     public function index()
     {
         if (request()->ajax()) {
-            return datatables()->of(Staff::where('role','gym_manager')->get())
+            return datatables()->of(Staff::role('gym_manager')->get())
                ->addColumn('action', function ($data) {
                    $button ='<a href="'.route('gym-managers.edit',$data->id).'" class="btn btn-info btn-sm mx-2">Edit</a>';
                    $button .='<a href="javascript:void(0);" onClick = "deleteFunc('.$data->id.')"class="btn btn-danger btn-sm mx-2">Delete</a>';
                    return $button;
                })
+               ->addColumn('gym-city', function ($data) {
+                $gymId =GymManager::where('staff_id',$data->id)->first()->gym_id;
+                $gym = Gym::find($gymId);
+                $city = City::find($gym->city_id);
+                return $gym->name.'-'.$city->name;
+
+            })
                ->rawColumns(['action'])->make(true);
         }
         return view('gym-managers.index');
@@ -46,17 +53,16 @@ class gymManagerController extends Controller
     public function update($staffId)
     {
         $requestData = request()->all();
-        $post = Staff::find($staffId)->update([
+        $gymManager = Staff::find($staffId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
             'avatar' => $requestData['avatar'],
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
-            'role' => "gym_manager",
+            
         ]);
-
-        $gym = gymManager::where('staff_id',$staffId)->update([
+        gymManager::where('staff_id',$staffId)->update([
             'gym_id' => $requestData['gym']
         ]);
         
@@ -80,15 +86,17 @@ class gymManagerController extends Controller
     {
         $requestData = request()->all();
        
-        Staff::create([
+        $gymManager= Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
             'avatar' => $requestData['avatar'],
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
-            'role' => "gym_manager",
+            
         ]);
+        $gymManager->assignRole('gym_manager');
+
         $staffMember = Staff::where('name',$requestData['name'])->first();
         
        

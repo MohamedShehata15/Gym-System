@@ -20,7 +20,7 @@ class AttendanceController extends Controller
       // //   // dd(User::find($userId)->name);
       // //   // dd(Gym::find($gymId)->name);
       // }        
-      return view('attendances.index',[
+      return view('attendance.index',[
         // 'userTrainingPackages' => $userTrainingPackages
       ]);
     }

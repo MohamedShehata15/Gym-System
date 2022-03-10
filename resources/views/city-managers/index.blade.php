@@ -18,7 +18,7 @@
                 <th>Email</th>
                 <th>Avatar</th>
                 <th>National_ID</th>
-                <th>Is_Baned</th>
+                <th>City</th>
                 <th></th>
             </tr>
         </thead>
@@ -66,9 +66,10 @@
                     name:'national_id',
                 },
                 {
-                    data:"is_baned",
-                    name:"is_baned",
+                    data:'city',
+                    name:'city',
                 },
+               
                 {
                     data:'action',
                     name:'action',

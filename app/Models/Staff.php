@@ -19,7 +19,7 @@ class Staff extends Authenticatable {
         'avatar',
         'national_id',
         'is_baned',
-        
+
     ];
 
     protected $hidden = [
@@ -43,7 +43,4 @@ class Staff extends Authenticatable {
     public function coachSessions() {
         return $this->belongsToMany(Session::class, 'session_staff', 'staff_id', 'session_id');
     }
-
-   
-   
 }

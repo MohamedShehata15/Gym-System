@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class coachController extends Controller {
     public function index() {
         if (request()->ajax()) {
-            return datatables()->of(Staff::where('role', 'coach')->get())
+            return datatables()->of(Staff::role('coach')->get())
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('coaches.edit', $data->id) . '" class="btn btn-info btn-sm mx-2">Edit</a>';
                     $button .= '<a href="javascript:void(0);" onClick = "deleteFunc(' . $data->id . ')"class="btn btn-danger btn-sm mx-2">Delete</a>';
@@ -24,8 +24,18 @@ class coachController extends Controller {
     //--------------------------- edit staff member -----------------------
     public function edit($staffId) {
         $cities = City::all();
-        $gyms = Gym::all();
         $staff = Staff::find($staffId);
+
+        return view('coaches.edit', [
+            'cities' => $cities,
+            'coach' => $staff
+        ]);
+
+
+
+        // dd('-------------------------------');
+
+
         $coachedGyms = gymCoach::where('staff_id', $staffId)->get();
 
         $gymsCollection = collect([]);
@@ -40,7 +50,6 @@ class coachController extends Controller {
 
         return view('coaches.edit', [
             'staff' => $staff,
-            'gyms' => $gyms,
             'cities' => $cities,
             'gymsCollection' => $gymsCollection,
             'gymsCity' => $gymsCity
@@ -56,7 +65,7 @@ class coachController extends Controller {
             'avatar' => $requestData['avatar'],
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
-            'role' => "coach",
+            
         ]);
 
 
@@ -93,15 +102,16 @@ class coachController extends Controller {
     public function store() {
         $requestData = request()->all();
         $gymIds = $requestData['gyms'];
-        Staff::create([
+        $coach=Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
             'avatar' => $requestData['avatar'],
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
-            'role' => "coach",
+            
         ]);
+        $coach->assignRole('coach');
         $staffMember = Staff::where('name', $requestData['name'])->first();
 
 

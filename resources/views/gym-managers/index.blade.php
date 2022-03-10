@@ -4,27 +4,26 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-<br>
-<div class="d-flex justify-content-center mb-2">
-    <a href="{{route('gym-managers.create')}}" class="btn btn-success">Add New Manager </a>
-  </div>
+<div class="text-center mydiv">
+    <a href="{{route('gym-managers.create')}}" class="btn btn-success btn-lg my-2">Add New Manager </a>
 
-
-    <table id="table_id" class="table table-bordered table-striped">
+    <table id="table_id" class="table table-responsive-md cell-border compact stripe table-dark my-4 text-dark">
         <thead>
-            <tr>
+            <tr class="text-white">
                 <th>id</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Avatar</th>
                 <th>National_ID</th>
-                <th>Is_Baned</th>
+                <th>Gym-City</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table>
+    </div>
+
 @endsection
 @section('third_party_scripts')
     <script src="{{ mix('js/app.js') }}" defer></script>
@@ -66,9 +65,11 @@
                     name:'national_id',
                 },
                 {
-                    data:"is_baned",
-                    name:"is_baned",
+                    data:'gym-city',
+                    name:'gym-city',
                 },
+               
+                
                 {
                     data:'action',
                     name:'action',
