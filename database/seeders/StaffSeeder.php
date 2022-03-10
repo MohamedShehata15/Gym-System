@@ -50,5 +50,5 @@ class StaffSeeder extends Seeder
         
             $coach->assignRole('coach');
         }
-    }
+     }
 }

@@ -18,7 +18,7 @@ class SessionController extends Controller {
         if (request()->ajax()) {
             return datatables()->of(Session::latest()->get())
                 ->addColumn('Coaches', function (Session $session) {
-                    $coaches = $session->staff->pluck('name'); //extract name keys from data
+                    $coaches = $session->coaches->pluck('name'); //extract name keys from data
                     foreach ($coaches as $coach) {
                         return  $coach->implode(' , ');
                     }
@@ -43,7 +43,7 @@ class SessionController extends Controller {
     }
 
     public function create() {
-        $coaches = Staff::all()->where('role', '=', 'coach');
+        $coaches = Staff::role('coach')->get();
         return view('sessions.create', [
             'coaches' => $coaches
         ]);
@@ -62,12 +62,13 @@ class SessionController extends Controller {
                 'name' => $requestData['name'],
                 'start_at' => $dataTimeStart,
                 'finish_at' => $dateTimeFinish,
+                'gym_id'=>2
             ]);
 
             $coaches = $requestData['coaches'];
             $coaches = array_values($coaches);
             $data = Staff::find($coaches);
-            $session->staff()->attach($data); //assign coaches to the session
+            $session->coaches()->attach($data); //assign coaches to the session
 
 
             return redirect()->route('sessions.index');
