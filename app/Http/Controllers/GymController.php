@@ -100,7 +100,7 @@ class GymController extends Controller {
         $gym = Gym::find($id);
         $cities = City::all();
 
-        dd(count(Session::where("gym_id", $id)->get())==0);
+       // dd(count(Session::where("gym_id", $id)->get())==0);
         return view('gyms.edit', [
             'gym' => $gym,
             'cities' => $cities
