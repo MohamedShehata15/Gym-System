@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Session;
+use App\Models\SessionUser;
 use App\Models\User;
-use App\Models\UserCoachSession;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -38,7 +38,7 @@ class RemainingTrainingSessionsController extends Controller
     public function remainingSession(Request $request)
     {
         $user = User::where('remember_token', explode(" ", $request->header()['authorization'][0])[1])->get()->first();
-        // dd($user);
+
         $total_session = $user->trainingPackage;
         $remaining_sessions = $user->remaining_sessions;
         $total = 0;
@@ -60,7 +60,7 @@ class RemainingTrainingSessionsController extends Controller
         $start = $session->start_at;
         $finish = $session->finish_at;
 
-        $user_session = UserCoachSession::where('user_id', $user->id)->where('session_id', $session->id)->get();
+        $user_session = SessionUser::where('user_id', $user->id)->where('session_id', $session->id)->get();
         
         if ($user_session->first()) {
             throw ValidationException::withMessages([
@@ -72,7 +72,7 @@ class RemainingTrainingSessionsController extends Controller
 
             if ($start <= $now && $finish >= $now) {
     
-                UserCoachSession::create([
+                SessionUser::create([
                     'session_id' => $session->id,
                     'user_id' => $user->id,
                     'staff_id' => 10

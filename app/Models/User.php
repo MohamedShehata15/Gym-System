@@ -23,13 +23,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'gender',
         'remaining_sessions',
-<<<<<<< HEAD
         'avatar',
         'birth_date',
         'gym_id'
-=======
-        'avatar'
->>>>>>> fafbb258fe17050ff13bdce10db2f9653a6d3a54
     ];
 
     /**
