@@ -159,7 +159,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::GET('/gyms/{id}', [GymController::class, 'show'])->name('gyms.show');
         Route::GET('/gyms/{id}/edit', [GymController::class, 'edit'])->name('gyms.edit');
         Route::PUT('/gyms/{id}', [GymController::class, 'update'])->name('gyms.update');
-        Route::DELETE('/gyms/{id}', [GymController::class, 'destroy'])->name('gyms.destroy');
+        Route::post('destroy-gym', [GymManagerController::class, 'destroy'])->name('gyms.destroy');
         Route::get('/gyms/{id}/users', [GymController::class, 'users']);
         Route::get('/gyms/{id}/packages', [GymController::class, 'packages']);
 

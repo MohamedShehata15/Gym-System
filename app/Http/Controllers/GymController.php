@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\GmyRequest;
 use App\Models\City;
 use App\Models\Gym;
+use App\Models\SessionStaff;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,17 +16,25 @@ class GymController extends Controller {
 
 //----------------------index--------------------//
     public function index(){
-        $gyms=Gym::with('city')->get();       
+        if (Auth::user()->hasRole('city_manager')) {
+            $city = City::where('staff_id', Auth::user()->id)->first();
+            $gyms = Gym::with('city')->where('city_id', $city->id)->get();
+
+        }
+        else{
+        $gyms = Gym::with('city')->get();
+
+        }      
         if(request()->ajax()){
             return Datatables()->of($gyms)->addIndexColumn()
             ->addColumn('action',function($data){
                     $actionBtn = '<a href="'.route('gyms.show', $data->id).'"  class="show btn btn-info btn-sm">Show</a>
-                                 <a onClick="editFunc('.$data->id.')" class="edit btn btn-warning btn-sm">Edit</a>
+                                <a href="'.route('gyms.edit',$data->id).'" class="btn btn-warning btn-sm mx-2">Edit</a>
                                  <a onClick="DeleteGym('.$data->id.')" class="delete btn btn-danger btn-sm">Delete</a>';
                     return $actionBtn;
             })
             ->addColumn('cityManager', function (Gym $gym) {
-                return $gym->city->cityManager->name;
+                return $gym->created_by;
             })
             ->addColumn('created_at', function ($gym) {
                 return $gym->created_at->format('Y-M-D');
@@ -65,7 +74,7 @@ class GymController extends Controller {
         $fileName = $this->getImageData($request);
         $createdBy = Auth::user()-> hasRole('city_manager') ? Auth::user()->name : "Admin";
     
-        //dd($createdBy);
+        
         Gym::create([
             'name' => $gymData['name'],
             'revenue' => 0,
@@ -87,15 +96,13 @@ class GymController extends Controller {
     }
 //----------------------edit--------------------//
     public function edit($id){
-        $gym=Gym::find($id);
-        $staff=Staff::role('gym_manager')->get();  //gymManager             //return array of names   
-        $citieManagers=Staff::role('city_manager')->get();  //gymManager             //return array of names   
-        $output=array(
-           'citieManagers'=>$citieManagers,
-           'gymManagers'=>$staff,
-            'gym'=> $gym->name
-        );
-        echo json_encode($output);
+        $gym = Gym::find($id);
+        
+        $cities = City::all();
+        return view('gyms.edit', [
+            'gym' => $gym,
+            'cities' => $cities
+        ]);
 
     }
     //----------------------update--------------------//
@@ -115,8 +122,8 @@ class GymController extends Controller {
     public function destroy(Request $request){ 
        $flag=0;
        $gymCoaches= Gym::find($request->id)->gymCoaches;
-        foreach($gymCoaches as $gymCoache){
-            $gymSession= SessionStaff::where('staff_id',$gymCoache->id)->get();
+        foreach($gymCoaches as $gymCoach){
+            $gymSession= SessionStaff::where('staff_id',$gymCoach->id)->get();
             if($gymSession != NULL){
                 $flag=1;
             }
