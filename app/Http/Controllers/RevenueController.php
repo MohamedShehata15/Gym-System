@@ -14,12 +14,12 @@ class RevenueController extends Controller
    {
        $loginUser = Auth::user();
        $revenue =0 ;
-       if($loginUser->role =='gym_manager')
+       if($loginUser->hasRole('gym_manager'))
        {
            $gymId = GymManager::where('staff_id',$loginUser->id)->first()->gym_id;
            $revenue = Gym::where('id',$gymId)->get()[0]->revenue;
        }
-       else if ($loginUser->role =='city_manager')
+       else if ($loginUser->hasRole('city_manager'))
        {
            $cityId=City::where('staff_id',$loginUser->id)->first()->id;
            $gyms= Gym::where('city_id',$cityId)->get();
@@ -28,7 +28,7 @@ class RevenueController extends Controller
                $revenue += $gym->revenue;
            }
        }
-       else if ($loginUser->role =='admin')
+       else if ($loginUser->hasRole('Super-Admin'))
        {
            $cities = City::all();
            foreach($cities as $city)

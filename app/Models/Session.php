@@ -12,6 +12,7 @@ class Session extends Model {
         'name',
         'start_at',
         'finish_at',
+        'gym_id'
     ]; //array of columns which allowed to change
 
 
@@ -21,7 +22,7 @@ class Session extends Model {
         return $this->belongsToMany(User::class, 'session_user', 'session_id', 'user_id');
     }
     public function coaches() {
-        return $this->belongsToMany(Staff::class, 'session_staff', 'session_id', 'staff_id');
+        return $this->belongsToMany(Staff::class, 'user_coach_sessions','user_id', 'staff_id', 'session_id');
     }
     public function gym()   //relationship between sessions & users
     {

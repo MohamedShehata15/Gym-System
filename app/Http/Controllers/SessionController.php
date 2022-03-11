@@ -103,12 +103,13 @@ class SessionController extends Controller {
                 'name' => $requestData['name'],
                 'start_at' => $dataTimeStart,
                 'finish_at' => $dateTimeFinish,
+                'gym_id'=>2
             ]);
 
             $coaches = $requestData['coaches'];
             $coaches = array_values($coaches);
             $data = Staff::find($coaches);
-            $session->staff()->attach($data); //assign coaches to the session
+            $session->coaches()->attach($data); //assign coaches to the session
 
 
             return redirect()->route('sessions.index');

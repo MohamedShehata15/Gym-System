@@ -15,24 +15,32 @@ class BuyPackageController extends Controller
    public function create()
    {
        $loginUser = Auth::user();
+       $cities = City::all();
+       $gyms = Gym::all();
+       $users = User::all();
+       $packages= TrainingPackage::all();
        if( $loginUser->hasRole('gym_manager'))
           {
             $gymId = GymManager::where('staff_id',$loginUser->id)->first()->gym_id;
             $users = User::where('gym_id',$gymId)->get();
             $packages= TrainingPackage::where('gym_id',$gymId)->get();
+            return view('buypackage.create',[
+              'users' => $users,
+              'packages' => $packages,
+             ]);
           }
         else if ($loginUser->hasRole('city_manager'))
         {
             $cityId = City::where('staff_id',$loginUser->id)->first()->id;
             $gyms = Gym::where('city_id',$cityId)->get();
-            $users = User::all();
-            $packages= TrainingPackage::all();
         }
         return view('buypackage.create',[
-            'users' => $users,
-            'packages' => $packages,
-            'gyms' => $gyms,
-        ]);
+          'users' => $users,
+          'packages' => $packages,
+          'gyms' => $gyms,
+          'cities'=> $cities,
+      ]);
+      
    }
     
 }
