@@ -52,7 +52,7 @@ class UserController extends Controller
         $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
         // $requestData['avatar']->validate([
         //     'avatar' => 'required|mimes:jpeg,png,jpg|max:2048']);
-        $requestData['avatar']->move(public_path(), $imageName);
+        $requestData['avatar']->move(public_path('images'), $imageName);
         $user = User::find($userId)->update(['name' => $requestData['Name'],
         'email' => $requestData['Email'],
         'gender' => $requestData['Gender'],

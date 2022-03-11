@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="selectDiv mydiv">
+<form method="post"  class="row d-flex flex-column justify-content-center align-items-center" >
 @role('Super-Admin')
-<form class="row d-flex flex-column justify-content-center align-items-center" >
 <div class="mb-3 col-sm-6" id="cityDiv">
  <label for="city" class="form-label">City</label>
   <select class="form-control" id="city" >
