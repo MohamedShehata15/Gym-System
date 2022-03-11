@@ -40,7 +40,7 @@ class GymController extends Controller {
                 return $gym->created_at->format('Y-M-D');
             })
             ->addColumn('gymImage', function (Gym $gym) {
-                $imageGym='<img src="../uploads/gyms/'.$gym->image.'" alt="notFounded" class="rounded-circle shadow"/>';
+                $imageGym='<img src="../uploads/gyms/'.$gym->image.'"  alt="notFounded" class="rounded-circle shadow"/>';
                 return $imageGym;
             })
                 ->rawColumns(['gymImage','action'])
@@ -71,7 +71,13 @@ class GymController extends Controller {
     //----------------------store--------------------//
     public function store(GmyRequest $request) {
         $gymData = request()->all();
-        $fileName = $this->getImageData($request);
+        if(isset($request['image']))
+        {
+            $fileName = $this->getImageData($request);
+        }
+        else{
+            $fileName = '1646963019.jpeg';
+        }
         $createdBy = Auth::user()-> hasRole('city_manager') ? Auth::user()->name : "Admin";
     
         
@@ -109,7 +115,13 @@ class GymController extends Controller {
     public function update($id, GmyRequest $request) {
         $gym = Gym::find($id);
         $gymData = request()->all();
-        $fileName = $this->getImageData($request);
+        if(isset($request['image']))
+        {
+            $fileName = $this->getImageData($request);
+        }
+        else{
+            $fileName = Gym::find($id)->image;
+        }
         $updatedGymData = [
             'name' => $request['name'],
             'image' => $fileName,
