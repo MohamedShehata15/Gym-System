@@ -73,9 +73,9 @@ class SessionController extends Controller {
     }
 
     public function create() {
-        $coaches = Staff::role('coach')->get();
+        $cities = City::all();
         return view('sessions.create', [
-            'coaches' => $coaches
+            'cities' => $cities,
         ]);
     }
 
