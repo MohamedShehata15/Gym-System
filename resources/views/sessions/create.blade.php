@@ -9,7 +9,7 @@
 
 
 @section('content')  
-<div class=" mydiv">
+<div class="coachesSession">
         <form  method="POST"  action="{{route('sessions.store')}}" class="row d-flex flex-column justify-content-center align-items-center" >
 
             @csrf
@@ -35,7 +35,7 @@
 
         <div class="form-group col-sm-6">
         <label for="exampleFormControlSelect2">Choose Coaches</label>
-       <select name="coaches[]" multiple class="form-control" id="exampleFormControlSelect2">
+       <select class="form-control coachesSelect" id="exampleFormControlSelect2">
        coaches
        @foreach($coaches as $coach)
                   {
@@ -44,6 +44,7 @@
                   @endforeach
        </select>
       </div>
+      <div class="coachesTags my-3 d-flex flex-wrap"></div>
                 <div class="mb-3 col-sm-6 offset-5">
             <button type="submit" class="btn btn-success btn-lg ">Add</button>
             </div>
@@ -52,5 +53,13 @@
 @endsection
 
 @section('javascripts')
+<script>
+      // Gyms Tags
+      document.querySelector('.coachesSession .coachesSelect').addEventListener('input', e => tags(e, ".coachesTags"));
 
+    // Submit the Data with Data of tags
+    document.querySelector('.coachesSession').addEventListener('submit', (e) => {
+        generateInputSaveTagsID(e, '.coachesSession .coachesTags', 'coaches');
+    })
+</script>
 @endsection

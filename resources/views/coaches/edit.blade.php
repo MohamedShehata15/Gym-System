@@ -106,7 +106,7 @@
 
     // Submit the Data
     document.querySelector('.editCoach').addEventListener('submit', (e) => {
-        generateInputSaveTagsID(e, '.editCoach .gymsTags');
+        generateInputSaveTagsID(e, '.editCoach .gymsTags', 'gyms');
     })
 
 
