@@ -41,7 +41,7 @@ class GymController extends Controller {
                 return $gym->created_at->format('Y-M-D');
             })
             ->addColumn('gymImage', function (Gym $gym) {
-                $imageGym='<img src="../uploads/gyms/'.$gym->image.'" alt="notFounded" class="rounded-circle shadow"/>';
+                $imageGym='<img src="../uploads/gyms/'.$gym->image.'" alt="notFounded" width="40" height="40" class="rounded-circle shadow"/>';
                 return $imageGym;
             })
                 ->rawColumns(['gymImage','action'])
@@ -105,11 +105,6 @@ class GymController extends Controller {
             'gym' => $gym,
             'cities' => $cities
         ]);
-
-       
-
-        
-
     }
     //----------------------update--------------------//
     public function update($id, GmyRequest $request) {
