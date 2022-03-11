@@ -57,11 +57,11 @@ class SessionController extends Controller {
                 ->addColumn('action', function ($data) {
                     $button = '<a
                 onClick="EditSession(' . $data->id . ')"
-                class="edit btn btn-primary mx-4">Edit</a>';
+                class="edit btn btn-primary btn-sm mx-2">Edit</a>';
 
                     $button .= '<a
                 onClick="DeleteSession(' . $data->id . ')"
-                class="delete btn btn-danger mx-4">Delete</a>';
+                class="delete btn btn-danger btn-sm">Delete</a>';
                     return $button;
                 })
 
@@ -73,7 +73,7 @@ class SessionController extends Controller {
     }
 
     public function create() {
-        $coaches = Staff::all()->role('coach');
+        $coaches = Staff::role('coach')->get();
         return view('sessions.create', [
             'coaches' => $coaches
         ]);
@@ -119,8 +119,8 @@ class SessionController extends Controller {
 
 
     public function edit(Request $request) {
-        $coaches = Staff::where('role', '=', 'coach')->pluck('name');
-        $coachesid = Staff::where('role', '=', 'coach')->pluck('id');
+        $coaches = Staff::role('coach')->pluck('name');
+        $coachesid = Staff::role('coach')->pluck('id');
         $session = Session::find($request->id);
         $selectedCoaches = SessionStaff::where('session_id', '=', $session->id)->pluck('staff_id');
 
