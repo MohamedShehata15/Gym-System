@@ -97,7 +97,7 @@ class GymController extends Controller {
 //----------------------edit--------------------//
     public function edit($id){
         $gym = Gym::find($id);
-        
+       
         $cities = City::all();
         return view('gyms.edit', [
             'gym' => $gym,
@@ -124,7 +124,7 @@ class GymController extends Controller {
        $gymCoaches= Gym::find($request->id)->gymCoaches;
         foreach($gymCoaches as $gymCoach){
             $gymSession= SessionStaff::where('staff_id',$gymCoach->id)->get();
-            if($gymSession != NULL){
+            if(count($gymSession) > 0){
                 $flag=1;
             }
         }
@@ -132,7 +132,8 @@ class GymController extends Controller {
             $gym=Gym::find($request->id)->delete();
             return (Response()->json($gym));
         }else{
-            return redirect()->route("gyms.index");
+            $false = false;
+            return (Response()->json($false));
         }
     }
 

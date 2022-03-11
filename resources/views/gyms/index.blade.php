@@ -109,11 +109,6 @@
                 {
                   data:'gymImage',
                   name: 'gymImage',
-                //   render:function(data,type,full,meta)
-                //     {
-                //         return "<img src='../uploads/gyms/data'" width='70' class='img-thumbnail'  />";
-                //     }
-                //   orderable:false,
                 },
                
                 {
