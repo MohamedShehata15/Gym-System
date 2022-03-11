@@ -151,7 +151,11 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li>               
+@endif
+
+
+@if(Auth::user()->hasRole('city_manager') || Auth::user()->hasRole('Super-Admin') || Auth::user()->hasRole('gym_manager'))
 <!--Training Packages Tab-->
 <li class="nav-item has-treeview">
             <a href=".multi-collapse" class="nav-link bg-secondary " data-toggle="collapsing" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
@@ -168,12 +172,12 @@
                   <p>List Packages</p>
                 </a>
               </li>
-              {{-- <li class="nav-item">
-                <a href="{{route('buypackage.create')}}" class="nav-link active multi-collapse" id="multiCollapseExample2">
+              <li class="nav-item">
+                <a href="{{route('stripe.post')}}" class="nav-link active multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Buy a training Package</p>
                 </a>
-              </li> --}}
+              </li> 
             </ul>
           </li>
 <!--Sessions Tab-->
@@ -235,8 +239,9 @@
                 </a>
               </li>
             </ul>
-          </li>                 
-@endif
+          </li>  
+@endif         
+
 
 @if( Auth::user()->hasRole('coach'))
 <li class="nav-item">

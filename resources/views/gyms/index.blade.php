@@ -47,11 +47,13 @@
                     data:'created_at',
                     name:'created_at',
                 },
+                @role('Super-Admin')
                 {
                   data:'cityManager',
                   name: 'cityManager',
                   orderable:false,
                 },
+                @endrole
                 {
                   data:'gymImage',
                   name: 'gymImage',

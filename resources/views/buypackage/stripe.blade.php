@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class=" mydiv">
     @if (Session::has('success'))
     <div class="alert alert-success text-center">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
@@ -15,12 +15,11 @@
         <p>{{Session::get('error')}}</p>
     </div>
     @endif
-    <form role="form" action="{{ route('stripe.post') }}" method="post" class="require-validation pt-3"
+    <form role="form" action="{{ route('stripe.post') }}" method="post" class="require-validation row d-flex flex-column justify-content-center align-items-center"
         data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
         @csrf
 
-        <div class="row">
-            <div class="mb-3 col-12">
+            <div class="mb-3 col-sm-7">
                 <label for="inputCity" class="form-label">City</label>
                 <select id="inputCity" class="form-select form-control cities" aria-label="Default select" name="city">
                     @if(Auth::user()->hasRole('Super-Admin'))
@@ -38,10 +37,8 @@
                     @endif
                 </select>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="mb-3 col-12">
+            <div class="mb-3 col-sm-7">
                 <label for="inputGym" class="form-label">Gym</label>
                 <select id="inputGym" class="form-select form-control gyms" aria-label="Default select" name="gym">
 
@@ -61,10 +58,8 @@
                     @endif
                 </select>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="mb-3 col-12">
+            <div class="mb-3 col-sm-7">
                 <label for="inputUserName" class="form-label">User Name</label>
                 <select id="inputUserName" class="form-select form-control users" aria-label="Default select"
                     name="user">
@@ -80,25 +75,20 @@
                     @endif
                 </select>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="mb-3 col-12">
+            <div class="mb-3 col-sm-7">
                 <label for="inputPackage" class="form-label">Package</label>
                 <select id="inputPackage" class="form-select form-control packages " aria-label="Default select"
                     name="training_package">
                     <option selected>Select a package</option>
                 </select>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="mb-3 col-12">
+            <div class="mb-3 col-sm-7">
                 <label for="inputCardNumber" class="form-label">Card Number</label>
                 <input type="text" class="form-control card-number" id="inputCardNumber" placeholder="5105105105105100"
                     autocomplete="false">
             </div>
-        </div>
         <div class="row">
             <div class="col-4">
                 <label for="inputCVC" class="form-label">CVC</label>
@@ -147,6 +137,8 @@
                 },
                 url: `http://127.0.0.1:8000/cities/${$(this).val()}/gyms`,
                 success: function (response) {
+                    $('.gyms').empty();
+                    $('.gyms').append(`<option value="" disabled selected hidden>Select a Gym</option>`);
                     if(response.gyms.length > 0) {
                         response.gyms.forEach(gym => {
                             $('.gyms').append(
@@ -167,8 +159,10 @@
                 },
                 url: `http://127.0.0.1:8000/gyms/${$(this).val()}/users`,
                 success: function (response) {
-                    console.log(response);
+                    $('.users').empty();
+                    $('.users').append(`<option value="" disabled selected hidden>Select a user name</option>`);
                     response.users.forEach(user => {
+
                         $('.users').append(`<option value="${user.id}">
                             <span>${user.name}</span>
                         </option>`);
@@ -186,6 +180,8 @@
                 },
                 url: `http://127.0.0.1:8000/gyms/${$(this).val()}/packages`,
                 success: function (response) {
+                    $('.packages').empty();
+                    $('.packages').append(`<option value="" disabled selected hidden>Select a Package</option>`);
                     response.packages.forEach(package => {
                         $('.packages').append(`<option value="${package.id}">
                             <span>${package.name}  $${package.price * 0.01}</span>
