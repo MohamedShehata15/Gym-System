@@ -40,7 +40,7 @@ class RevenueController extends Controller
              }
            }
        }
-       return view ('revenue',[
+       return view ('revenue.show',[
         'revenue' => $revenue
     ]);
    }

@@ -11,10 +11,10 @@
         <thead>
             <tr class="text-white">
                 <th>ID</th>
+                <th>Avatar</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Gender</th>
-                <th>Avatar</th>
                 <th>Gym</th>
                 <th></th>
             </tr>
@@ -44,6 +44,15 @@
                     name:'id',
                 },
                 {
+                    data:'avatar',
+                    name:'avatar',
+                    render:function(data,type,full,meta)
+                    {
+                        return "<img src='images/"+data+"' width='60' style='border-radius:50%;' class='img-thumbnail'  />";
+                    },
+                    orderable:false
+                },
+                {
                     data:'name',
                     name:'name',
                 },
@@ -55,15 +64,6 @@
                 {
                     data:'gender',
                     name:'gender',
-                },
-                {
-                    data:'avatar',
-                    name:'avatar',
-                    render:function(data,type,full,meta)
-                    {
-                        return "<img src="+data+" width='70' class='img-thumbnail'  />";
-                    },
-                    orderable:false
                 },
                 {
                     data:'gym',

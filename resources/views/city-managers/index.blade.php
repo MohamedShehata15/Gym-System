@@ -11,9 +11,9 @@
         <thead>
             <tr class="text-white">
                 <th>id</th>
+                <th>Avatar</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Avatar</th>
                 <th>National_ID</th>
                 <th>City</th>
                 <th></th>
@@ -44,21 +44,21 @@
                     name:'id',
                 },
                 {
+                    data:'avatar',
+                    name:'avatar',
+                    render:function(data,type,full,meta)
+                    {
+                        return "<img src='images/"+data+"'width='60' style='border-radius:50%;' class='img-thumbnail'  />";
+                    },
+                    orderable:false
+                },
+                {
                     data:'name',
                     name:'name',
                 },
                 {
                     data:'email',
                     name:'email',
-                },
-                {
-                    data:'avatar',
-                    name:'avatar',
-                    render:function(data,type,full,meta)
-                    {
-                        return "<img src="+data+" width='70' class='img-thumbnail' />";
-                    },
-                    orderable:false
                 },
                 {
                     data:'national_id',

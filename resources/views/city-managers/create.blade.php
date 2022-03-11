@@ -6,7 +6,7 @@
 @section('content')
 <div class=" mydiv">
 
-<form method="post" action="{{route('city-managers.store')}}" class="row d-flex flex-column justify-content-center align-items-center" >
+<form method="post" action="{{route('city-managers.store')}}" class="row d-flex flex-column justify-content-center align-items-center" enctype="multipart/form-data">
   @csrf
   <div class="mb-3 col-sm-6">
     <label for="Name" class="form-label">Name</label>

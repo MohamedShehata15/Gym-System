@@ -22,7 +22,7 @@ class Session extends Model {
         return $this->belongsToMany(User::class, 'session_user', 'session_id', 'user_id');
     }
     public function coaches() {
-        return $this->belongsToMany(Staff::class, 'user_coach_sessions', 'user_id', 'staff_id', 'session_id');
+        return $this->belongsToMany(Staff::class, 'session_staff','session_id', 'staff_id');
     }
     public function gym()   //relationship between sessions & users
     {
