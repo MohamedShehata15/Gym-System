@@ -151,7 +151,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* ======================= City Manager Routes ========================= */
 
-    Route::group(['auth', 'isBanned'], function () {
+    // Route::group(['auth', 'isBanned'], function () {
 
         Route::GET('/gyms', [GymController::class, 'index'])->name('gyms.index');
         Route::GET('/gyms/create', [GymController::class, 'create'])->name('gyms.create');
@@ -159,7 +159,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::GET('/gyms/{id}', [GymController::class, 'show'])->name('gyms.show');
         Route::GET('/gyms/{id}/edit', [GymController::class, 'edit'])->name('gyms.edit');
         Route::PUT('/gyms/{id}', [GymController::class, 'update'])->name('gyms.update');
-        Route::post('destroy-gym', [GymManagerController::class, 'destroy'])->name('gyms.destroy');
+        Route::post('destroy-gym', [GymController::class, 'destroy'])->name('gyms.destroy');
         Route::get('/gyms/{id}/users', [GymController::class, 'users']);
         Route::get('/gyms/{id}/packages', [GymController::class, 'packages']);
 
@@ -171,7 +171,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::PUT('/cityManagers/{id}', [CityManagerController::class, 'update'])->name('cityManagers.update');
         Route::DELETE('/cityManagers/{id}', [CityManagerController::class, 'destroy'])->name('cityManagers.destroy');
         Route::GET('/cityManagers/{id}/ban', [CityManagerController::class, 'ban'])->name('cityManagers.ban');
-    });
+    // });
 
 
     /* ===================================================================== */
