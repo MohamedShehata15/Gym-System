@@ -16,10 +16,9 @@
     </div>
     {{Session()->forget('fail')}}
     @endif
-    <br>
-    <div class="d-flex justify-content-center mb-2">
+<!-- 
+    <div class="text-center mydiv">
     <a href="{{route('gyms.create')}}" class="btn btn-success">Add New Gym </a>
-    </div>
     <table id="gyms" class="display">
         <thead>
             <tr>
@@ -36,8 +35,8 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody class="text-dark">
-            @foreach ( $gyms as $gym )
+        <tbody class="text-dark"> -->
+            <!-- @foreach ( $gyms as $gym )
                 <tr>
                     <td>{{$gym->name}}</td>
                     <td>{{\Carbon\Carbon::parse($gym->created_at)->format('Y-M-D')}}</td>
@@ -80,18 +79,20 @@
                             </div>
                         </div>
                     </td>    
-                </tr> 
-            @endforeach  
-        </tbody>
+                </tr> -->
+            <!-- @endforeach    -->
+        <!-- </tbody>
     </table>  
+    </div> -->
+
   @endsection
 
   @section('script')
-       <script>
+       <!-- <script>
            $(document).ready( function () {
            $('#gyms').DataTable();
            });
-       </script>
+       </script> -->
    @endsection	    --}}
 
 
@@ -102,13 +103,14 @@
 @endsection
 @section('content')
 
+<div class="text-center mydiv">
 
-<table id="gymsTable" class="table table-bordered table-striped bg-light">
+<table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark">
     <thead>
-        <tr>
+        <tr class="text-white">
             <th>Name</th>
                 <th>Created at</th>
-                {{-- @if(Auth::user()->hasrole=="admin") --}}
+                {{-- @if(Auth::user()->hasRole('Super-Admin')) --}}
                     <th>City Manager</th>
                 {{-- @endif --}}
                 <th>Cover_Image</th>
@@ -118,6 +120,7 @@
     <tbody>
     </tbody>
 </table>
+</div>
 
 <div id="myModal" class="modal fade " data-bs-backdrop="static" bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -183,21 +186,25 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer></script>
     <script>
          $(document).ready( function () {
-            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-        $('#gymsTable').DataTable({
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#table_id').DataTable({
             processing: true,
             serverSide: true,
-            ajax:{
+            ajax: {
                 url: "{{ route('gyms.index') }}"
             },
             columns:[
                 {
                     data:'name',
-                    name:'gym.name',
+                    name:'name',
                 },
                 {
                     data:'created_at',
-                    name:'gym.create_at',
+                    name:'created_at',
                 },
                 {
                   data:'cityManager',
@@ -207,11 +214,7 @@
                 {
                   data:'gymImage',
                   name: 'gymImage',
-                //   render:function(data,type,full,meta)
-                //     {
-                //         return "<img src='../uploads/gyms/data'" width='70' class='img-thumbnail'  />";
-                //     }
-                //   orderable:false,
+               
                 },
                
                 {

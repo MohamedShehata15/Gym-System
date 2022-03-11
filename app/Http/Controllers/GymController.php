@@ -28,14 +28,15 @@ class GymController extends Controller {
                                  return $actionBtn;
             })
             ->addColumn('cityManager', function (Gym $gym) {
-                return $gym->city->cityManager->name;
+                //return $gym->city->cityManager->name;
             })
-            ->addColumn('gymImage', function (Gym $gym) {
-                // $imageGym=<img src="../uploads/gyms/{{$gym->image}}" alt="notFounded" class="rounded-circle shadow"/>
-                // <img src="../uploads/gyms/{{$gym->image}}" alt="notFounded" class="rounded-circle shadow"/>
-                return $gym->image;
-            })
-                ->rawColumns(['action'])
+          
+          ->addColumn('gymImage', function (Gym $gym) {
+            $url=asset("../uploads/gyms/{$gym->image}");
+            return '<img src='.$url.' width="40" height="40" class="rounded-circle" align="center" />';
+
+             })
+                ->rawColumns(['gymImage','action'])
                 ->make(true);
          }
          return view('gyms.index',[
