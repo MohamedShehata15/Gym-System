@@ -7,6 +7,7 @@ use App\Models\Staff;
 use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymManager;
+use App\Http\Requests\GymManagerRequest;
 
 class GymManagerController extends Controller
 {
@@ -53,7 +54,7 @@ class GymManagerController extends Controller
                 
             ]);
     }
-    public function update($staffId)
+    public function update($staffId,GymManagerRequest $request)
     {
         $requestData = request()->all();
         if(isset($requestData['avatar']))
@@ -63,9 +64,7 @@ class GymManagerController extends Controller
         }
         else{
             $imageName = Staff::find($staffId)->avatar;
-        }
-        // $requestData['avatar']->validate([
-        //     'avatar' => 'required|mimes:jpeg,png,jpg|max:2048']);
+        } 
          Staff::find($staffId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
@@ -95,7 +94,7 @@ class GymManagerController extends Controller
         'gyms' => $gyms,
     ]);
     }
-    public function store()
+    public function store(GymManagerRequest $request)
     {
         $requestData = request()->all();
         if(isset($requestData['avatar']))
