@@ -1,15 +1,14 @@
 @extends('layouts.app')
 @section('third_party_stylesheets')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
 <div class="text-center mydiv">
     <h1> User Attendance</h1>
 
-    <table id="attendanceTable" class="table table-bordered table-striped bg-light">
+    <table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark">
         <thead>
-            <tr>
+            <tr class="text-white">
                 <th>City</th>
                 <th>Gym</th>
                 <th>User Name</th>
@@ -30,7 +29,7 @@
     <script>
          $(document).ready( function () {
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-        $('#attendanceTable').DataTable({
+        $('#table_id').DataTable({
             processing: true,
             serverSide: true,
             ajax:{
