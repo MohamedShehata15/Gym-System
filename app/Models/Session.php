@@ -24,6 +24,12 @@ class Session extends Model {
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function gym()
+    {
+        return $this->belongsTo(Gym::class);
+    }
+
     public function coaches() {
         return $this->belongsToMany(Staff::class, 'session_staff', 'session_id', 'staff_id');
     }
