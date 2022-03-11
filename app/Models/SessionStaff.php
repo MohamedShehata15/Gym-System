@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class SessionStaff extends Model
 {
     use HasFactory;
+    protected $table = 'session_staff';
 }

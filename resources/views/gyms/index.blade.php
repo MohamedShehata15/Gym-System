@@ -109,11 +109,6 @@
                 {
                   data:'gymImage',
                   name: 'gymImage',
-                //   render:function(data,type,full,meta)
-                //     {
-                //         return "<img src='../uploads/gyms/data'" width='70' class='img-thumbnail'  />";
-                //     }
-                //   orderable:false,
                 },
                
                 {
@@ -127,40 +122,6 @@
         });
     });
 
-    function editFunc(id) {
-        var id = id;
-        $.ajax({
-            type: "GET",
-            url: `{{ url('gyms/${id}/edit') }}`,
-            data: {
-                id: id
-            },
-            dataType: 'json',
-            success: function (data) {
-                data.citieManagers.forEach(manager =>  {
-
-                    $('#cityManager').append(`<option value="${manager.id}">${manager.name}</option>`);
-
-                })
-                data.gymManagers.forEach(manager =>  {
-
-                    $('#gymManagers').append(`<option value="${manager.id}">${manager.name}</option>`);
-
-                })
-
-               $('#name').val(data.gym);
-
-            //    $('#cityManager').val(data.citieManagers.name);
-               $('#image').val(data.gym.image);
-               $('#gymManagers').val(data.gymManagers.name);
-           
-                //show the modal
-                var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
-               myModal.show();
-            }
-            
-        });
-    }  
 
 
     function DeleteGym(id) {
@@ -168,7 +129,7 @@
             var id = id;
             $.ajax({
                 type: "POST",
-                url: "{{ url('destroy') }}",
+                url: "{{ url('destroy-gym') }}",
                 data: {
                     id: id
                 },
