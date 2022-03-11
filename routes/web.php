@@ -16,6 +16,7 @@ use App\Http\Controllers\GymManagerController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\BuyPackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -202,3 +203,9 @@ Route::group(['middleware' => 'auth'], function () {
     /* ======================= Revenue Routes ========================= */
     Route::get('revenue',[RevenueController::class,'show']);
 });
+
+
+/* ======================= Buy Package Routes ========================= */
+
+    Route::get('buypackage',[BuyPackageController::class,'create']);
+
