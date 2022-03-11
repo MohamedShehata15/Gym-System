@@ -2,25 +2,16 @@
 @extends('layouts.app')
 
 @section('content')
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
-<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
-
-</head>
-<body>
-
-	<h2>Create GYM :</h2>
-  <div class="container">  
-	<form method="post" action="{{route("gyms.store")}}" enctype="multipart/form-data">
+<div class=" mydiv">
+	<h2 class="text-center">Create New GYM </h2>
+	<form method="post" class="row d-flex flex-column justify-content-center align-items-center" action="{{route("gyms.store")}}" enctype="multipart/form-data">
 		@csrf
-		<div class="mb-3">
+		<div class="mb-3 col-sm-6">
 		  <label for="gymName" class="form-label">Name</label>
 		  <input type="text" class="form-control" id="gymName" name="name" value="{{ old('name') }}">
 		</div>
 		@role('Super-Admin')
-		<div class="mb-3">
+		<div class="mb-3 col-sm-6">
 			<label for="cities" class="form-label">Choose city</label>
 			<select id="cities" class="form-select"  name="city_id">
 				
@@ -30,11 +21,11 @@
 			  </select>			
 		</div>
 		@endrole
-		<div class="mb-3">
+		<div class="mb-3 col-sm-6">
 			<label for="formFile" class="form-label">Choose Image</label>
 			<input class="form-control" type="file" id="formFile" name="image"  >
 		</div>
-		<button class="btn btn-primary">Add</button>
+		<button class="btn btn-success">Create</button>
 	  </form>
   </div>  
  

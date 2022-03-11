@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-   
-
-</head>
-<body>
+   <body>
 	<div class=" mydiv">
 	<h2 class="text-center">Edit GYM </h2>
 
