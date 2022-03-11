@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="mydiv">
-<form method="post" action="{{route('users.update',$user->id)}}" class="row d-flex flex-column justify-content-center align-items-center"" >
+<form method="post" action="{{route('users.update',$user->id)}}" class="row d-flex flex-column justify-content-center align-items-center" enctype="multipart/form-data" >
   @csrf
   @method('put')
   <div class="mb-3 col-sm-6">
