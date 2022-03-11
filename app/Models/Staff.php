@@ -43,4 +43,8 @@ class Staff extends Authenticatable implements BannableContract {
     public function coachSessions() {
         return $this->belongsToMany(Session::class, 'session_staff', 'staff_id', 'session_id');
     }
+    public function session()
+    {
+        return $this->belongsToMany(Session::class);
+    }
 }

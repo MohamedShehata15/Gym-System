@@ -16,6 +16,7 @@ use App\Http\Controllers\GymManagerController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\BuyPackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -192,7 +193,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     /* ======================= Attendance Routes ========================= */
-    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendances.index');
 
     /* ======================= Payment Routes ========================= */
     Route::group(['middleware' => ['role_or_permission:Super-Admin|city_manager|gym_manager']], function () {
@@ -201,5 +202,16 @@ Route::group(['middleware' => 'auth'], function () {
     });
     /* ===================================================================== */
     /* ======================= Revenue Routes ========================= */
-    Route::get('revenue', [RevenueController::class, 'show']);
+    Route::get('revenue', [RevenueController::class, 'show'])->name('revenue.show');
+
+    /* ======================= buyPackage Routes ========================= */
+    Route::get('buypackage', [BuyPackageController::class, 'create'])->name('buypackage.create');;
+    Route::get('getUser/{id}', function ($id) {
+        $users = App\Models\User::where('gym_id', $id)->get();
+        return response()->json($users);
+    });
+    Route::get('getpackage/{id}', function ($id) {
+        $packages = App\Models\TrainingPackage::where('gym_id', $id)->get();
+        return response()->json($packages);
+    });
 });

@@ -10,7 +10,9 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-<form class="editCoach" method="post" action="{{route('coaches.update',$coach->id)}}" class="pt-5">
+<div class=" mydiv">
+
+<form method="post" action="{{route('coaches.update',$coach->id)}}" class="row d-flex flex-column justify-content-center align-items-center editCoach" >
     <div class="text-center">
         <label for="avatar" class="form-label" role="button">
             <img class="profile-user-img img-fluid img-circle" src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg" alt="User profile picture">
@@ -19,23 +21,23 @@
     </div>
     @csrf
     @method('PUT')
-    <div class="mb-3">
+    <div class="mb-3  col-sm-6">
         <label for="Name" class="form-label">Name</label>
         <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp"
             value="{{$coach->name}}" />
     </div>
-    <div class="mb-3">
+    <div class="mb-3  col-sm-6">
         <label for="Email" class="form-label">Email</label>
         <input type="email" name="email" id="Email" class="form-control" value="{{$coach->email}}" />
     </div>
 
-    <div class="mb-3 ">
+    <div class="mb-3  col-sm-6">
         <label for="national_id" class="form-label">National_id</label>
         <input type="text" name="national_id" id="national_id" class="form-control" value="{{$coach->national_id}}" />
     </div>
 
 
-    <div class="mb-3" id="cityDiv">
+    <div class="mb-3  col-sm-6" id="cityDiv">
         <label for="city" class="form-label">City</label>
         <select name="city" class="form-control" id="city">
             <option value="" disabled selected>choose a City</option>
@@ -45,7 +47,7 @@
         </select>
     </div>
 
-    <div class="mb-3" id="gymDiv">
+    <div class="mb-3 col-sm-6" id="gymDiv">
         <label for="gym" class="form-label">Gyms</label>
         <select name="gyms" class="form-control" id="gym">
             <option value="" disabled selected>choose a Gym</option>
@@ -62,8 +64,11 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Update</button>
+    <button type="submit" class="btn btn-primary col-sm-6">Update</button>
 </form>
+</div>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
     crossorigin="anonymous"></script>
 

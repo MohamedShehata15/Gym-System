@@ -12,6 +12,12 @@
                 <th scope="col">Start-at</th>
                 <th scope="col">Finish-at</th>
                 <th scope="col">Coaches</th>
+                @can('gym-managers')
+                <th>Gym</th>
+                @endcan
+                @role('Super-Admin')
+                <th>City</th>
+                @endrole
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -118,6 +124,18 @@
                     data: 'Coaches',
                     name: 'Coaches'
                 },
+                @can('gym-managers')
+                {
+                    data:'gym',
+                    name:'gym',
+                },
+                @endcan
+                @role('Super-Admin')
+                {
+                    data:'city',
+                    name:'city',
+                },
+                @endrole
                 {
                     data: 'action',
                     name: 'action',
