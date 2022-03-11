@@ -8,7 +8,7 @@
     }
 @endphp
 <li class="nav-item">
-    <a href="{{ route($route) }}" class="nav-link {{ Request::is($path) ? 'active' : '' }} bg-secondary">
+    <a href="{{ route($route) }}" class="nav-link {{ Request::is($path) ? 'active' : '' }} bg-white">
         <i class="nav-icon  fas fa-home"></i>
         <p>Home</p>
     </a>
@@ -103,7 +103,7 @@
 <!--Gyms Tab-->
 <li class="nav-item has-treeview">
             <a href=".multi-collapse" class="nav-link bg-black text-white" data-toggle="collapsing" aria-expanded="false" aria-controls="CollapseExample1">
-              <i class="nav-icon fas fa fa-building"></i>
+              <i class="nav-icon fas fa fa-gg"></i>
               <p>
                Gyms
                 <i class="right fas fa-angle-left"></i>
@@ -124,10 +124,34 @@
               </li>
             </ul>
           </li>
+<!--Sessions Tab-->
+<li class="nav-item has-treeview">
+            <a href=".multi-collapse" class="nav-link bg-cyan text-white" data-toggle="collapsing" aria-expanded="false" aria-controls="CollapseExample1">
+              <i class="nav-icon fas fa fa-child"></i>
+              <p>
+               Sessions
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('sessions.index') }}" class="nav-link active  multi-collapse" id="CollapseExample1">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>List Sessions</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('sessions.create')}}" class="nav-link active multi-collapse" id="multiCollapseExample2">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create new Session</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
 <!--Training Packages Tab-->
 <li class="nav-item has-treeview">
-            <a href=".multi-collapse" class="nav-link bg-white " data-toggle="collapsing" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
+            <a href=".multi-collapse" class="nav-link bg-secondary " data-toggle="collapsing" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
               <i class="nav-icon fas fa fa-tags"></i>
               <p>
               Training Packages
