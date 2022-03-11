@@ -6,7 +6,7 @@
 @section('content')
 <div class=" mydiv">
 
-<form method="post" action="{{route('gym-managers.update',$staff->id)}}" class="row d-flex flex-column justify-content-center align-items-center" >
+<form method="post" action="{{route('gym-managers.update',$staff->id)}}" class="row d-flex flex-column justify-content-center align-items-center" enctype="multipart/form-data" >
   @csrf
   @method('PUT')
   <div class="mb-3 col-sm-6">

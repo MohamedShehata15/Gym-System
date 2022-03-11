@@ -213,5 +213,5 @@ Route::group(['middleware' => 'auth'], function () {
         $packages = App\Models\TrainingPackage::where('gym_id', $id)->get();
         return response()->json($packages);
     });
-    Route::POST('buyPackage',[BuyPackageController::class, 'store'])->name('buyPackage.store');
+    Route::POST('buypackage',[BuyPackageController::class, 'store'])->name('buypackage.store');
 });
