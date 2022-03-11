@@ -19,7 +19,7 @@ class GymFactory extends Factory {
         $city = $this->faker->randomElement(City::all());
         return [
             'name' => $this->faker->word(),
-            'image' => $this->faker->image(),
+            'image' => "1646764729.jpg",
             'city_id' =>  $city['id'],
             'created_by' => 
                 Staff::role('city_manager')->where('id',$city->staff_id)->first()['name']

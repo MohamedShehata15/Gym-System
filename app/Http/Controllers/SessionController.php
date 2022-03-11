@@ -57,7 +57,7 @@ class SessionController extends Controller {
                 ->addColumn('action', function ($data) {
                     $button = '<a
                 onClick="EditSession(' . $data->id . ')"
-                class="edit btn btn-primary btn-sm mx-2">Edit</a>';
+                class="edit btn btn-primary btn-sm ">Edit</a>';
 
                     $button .= '<a
                 onClick="DeleteSession(' . $data->id . ')"

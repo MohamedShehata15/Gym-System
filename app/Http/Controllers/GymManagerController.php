@@ -56,10 +56,16 @@ class GymManagerController extends Controller
     public function update($staffId)
     {
         $requestData = request()->all();
-        $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
+        if(isset($requestData['avatar']))
+        {
+             $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
+             $requestData['avatar']->move(public_path('images'), $imageName);
+        }
+        else{
+            $imageName = Staff::find($staffId)->avatar;
+        }
         // $requestData['avatar']->validate([
         //     'avatar' => 'required|mimes:jpeg,png,jpg|max:2048']);
-        $requestData['avatar']->move(public_path('images'), $imageName);
          Staff::find($staffId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
@@ -92,8 +98,14 @@ class GymManagerController extends Controller
     public function store()
     {
         $requestData = request()->all();
-        $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
-        $requestData['avatar']->move(public_path('images'), $imageName);
+        if(isset($requestData['avatar']))
+        {
+             $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
+             $requestData['avatar']->move(public_path('images'), $imageName);
+        }
+        else{
+            $imageName = 'user_avatar.png';
+        }
         $gymManager= Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],

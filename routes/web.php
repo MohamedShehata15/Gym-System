@@ -16,7 +16,6 @@ use App\Http\Controllers\GymManagerController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RevenueController;
-use App\Http\Controllers\BuyPackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -132,8 +131,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
     Route::get('/sessions/create', [SessionController::class, 'create'])->name('sessions.create');
     Route::post('/sessions', [SessionController::class, 'store'])->name('sessions.store');
-    Route::post('destroy', [SessionController::class, 'destroy'])->name('sessions.destroy');
-    Route::get('edit', [SessionController::class, 'edit'])->name('sessions.edit');
+    Route::post('destroy-session', [SessionController::class, 'destroy'])->name('sessions.destroy');
+    Route::get('/sessions/edit', [SessionController::class, 'edit'])->name('sessions.edit');
     Route::put('/sessions', [SessionController::class, 'update'])->name('sessions.update');
     /* ===================================================================== */
 
@@ -203,15 +202,4 @@ Route::group(['middleware' => 'auth'], function () {
     /* ======================= Revenue Routes ========================= */
     Route::get('revenue', [RevenueController::class, 'show'])->name('revenue.show');
 
-    /* ======================= buyPackage Routes ========================= */
-    Route::get('buypackage/create', [BuyPackageController::class,'create'])->name('buypackage.create');;
-    Route::get('getUser/{id}', function ($id) {
-        $users = App\Models\User::where('gym_id', $id)->get();
-        return response()->json($users);
-    });
-    Route::get('getPackage/{id}', function ($id) {
-        $packages = App\Models\TrainingPackage::where('gym_id', $id)->get();
-        return response()->json($packages);
-    });
-    Route::POST('buypackage',[BuyPackageController::class, 'store'])->name('buypackage.store');
 });

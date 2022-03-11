@@ -151,7 +151,7 @@
             var id = id;
             $.ajax({
                 type: "POST",
-                url: "{{ url('destroy') }}",
+                url: "{{ route('sessions.destroy') }}",
                 data: {
                     id: id
                 },
@@ -170,7 +170,7 @@
         var id = id;
         $.ajax({
            type:"GET",
-           url: "{{ url('edit') }}",
+           url: "{{ route('sessions.edit') }}",
            data: { id: id },
            dataType: 'json',
            success: function(data){
