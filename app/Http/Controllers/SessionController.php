@@ -73,9 +73,11 @@ class SessionController extends Controller {
     }
 
     public function create() {
+        $cities = City::all();
         $coaches = Staff::role('coach')->get();
         return view('sessions.create', [
-            'coaches' => $coaches
+            'coaches' => $coaches,
+            'cities'=>$cities
         ]);
     }
 
@@ -83,6 +85,21 @@ class SessionController extends Controller {
     public function store(SessionRequest $request) {
         $requestData = request()->all();
 
+        if (Auth::user()->hasRole('Super-Admin')) {
+            $gymId=$requestData['gym'];
+            $cityid=$requestData['city'];
+        }
+
+        elseif (Auth::user()->hasRole('city_manager'))
+        {
+            $gymId=$requestData['gym'];
+        }
+
+        elseif (Auth::user()->hasRole('gym_manager'))
+        {
+            $gymId = GymManager::where('staff_id', Auth::user()->id)->first()['gym_id'];
+        }
+        
         $dataTimeStart = $requestData['day'] . " " . $requestData['start']; //concat date with time
         $dateTimeFinish = $requestData['day'] . " " . $requestData['finish'];
 
@@ -92,7 +109,8 @@ class SessionController extends Controller {
                 'name' => $requestData['name'],
                 'start_at' => $dataTimeStart,
                 'finish_at' => $dateTimeFinish,
-                'gym_id' => 2
+                'gym_id' =>  $gymId
+
             ]);
 
             $coaches = $requestData['coaches'];
