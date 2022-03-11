@@ -4,9 +4,10 @@
 
 </head>
 <body> 
-    <table id="attendace" class="display">
+<div class="text-center mydiv">
+    <table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark">
         <thead>
-            <tr>
+            <tr class="text-white">
                 <th>City</th>
                 <th>Gym</th>
                 <th>User Name</th>
@@ -31,13 +32,14 @@
                  </tr>
             @endforeach     
         </tbody>
-    </table>  
+    </table> 
+</div> 
   @endsection
 
   @section('script')
        <script>
            $(document).ready( function () {
-           $('#attendace').DataTable();
+           $('#table_id').DataTable();
            });
        </script>
    @endsection	    --}}

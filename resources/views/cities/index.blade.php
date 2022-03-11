@@ -4,9 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-<br>
-
-<div class="d-flex justify-content-center mb-2">
+<div class="text-center mydiv">
     <a
       class="btn btn-success"
       onClick="add()"
@@ -14,12 +12,11 @@
     >
       Add New City</a
     >
-  </div>
 
 
-    <table id="table_id" class="table table-bordered table-striped">
+    <table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark">
         <thead>
-            <tr>
+            <tr class="text-white">
                 <th>id</th>
                 <th>name</th>
                 <th>City Manager</th>
@@ -29,6 +26,8 @@
         <tbody>
         </tbody>
     </table>
+    </div>
+
 
     <!-- boostrap City model -->
 <div class="modal fade" id="city-modal" aria-hidden="true">
@@ -64,6 +63,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer></script>
     <script>
+
         $(document).ready( function () {
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $('#table_id').DataTable({

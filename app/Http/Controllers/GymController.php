@@ -4,17 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GmyRequest;
 use App\Models\City;
-use App\Models\SessionStaff;
 use App\Models\Gym;
-use App\Models\GymManager;
-use App\Models\Session;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Nette\Utils\Json;
 
-class GymController extends Controller
-{
+class GymController extends Controller {
 
 //----------------------index--------------------//
     public function index(){
@@ -53,41 +49,41 @@ class GymController extends Controller
         return view('gyms.create',[
             'staff' => $staff ,
             'cities' => $cities
-        ]); 
+        ]);
     }
-//----------------------getImageData--------------------//
-    public function getImageData($imageData){
+    //----------------------getImageData--------------------//
+    public function getImageData($imageData) {
         $file = $imageData->file('image');
         $extenstion = $file->getClientOriginalExtension();
-        $filename = time().'.'.$extenstion;
+        $filename = time() . '.' . $extenstion;
         $file->move('uploads/gyms/', $filename);
         return $filename;
     }
-//----------------------store--------------------//
-    public function store(GmyRequest $request){
+    //----------------------store--------------------//
+    public function store(GmyRequest $request) {
         $gymData = request()->all();
-        $fileName=$this->getImageData($request);
-        $newGym=Gym::create([
-            'name'=>$gymData['name'],          
-            'revenue'=>0,
-            'image'=> $fileName  ,
-            'city_id'=> $gymData['city_id']         
-        ]);
+        $fileName = $this->getImageData($request);
+        $createdBy = Auth::user()-> hasRole('city_manager') ? Auth::user()->name : "Admin";
     
-        GymManager::create([                                              
-            "staff_id"=>$gymData['staff_id'],
-            "gym_id"=>$newGym->id
+        //dd($createdBy);
+        Gym::create([
+            'name' => $gymData['name'],
+            'revenue' => 0,
+            'image' => $fileName,
+            'city_id' => Auth::user()->hasRole('city_manager') ? City::where('staff_id',Auth::user()->id)->first()->id : $gymData['city_id'],
+            'created_by' => $createdBy
         ]);
+
         return redirect()->route("gyms.index");
     }
-//----------------------Show--------------------//
-    public function show($id){
-        $gym=Gym::find($id);
-        $managers=Gym::find($id)->gymManager;
-        return view('gyms.show',[
+    //----------------------Show--------------------//
+    public function show($id) {
+        $gym = Gym::find($id);
+        $managers = Gym::find($id)->gymManager;
+        return view('gyms.show', [
             'gym' => $gym,
-            'managers' =>$managers
-        ]); 
+            'managers' => $managers
+        ]);
     }
 //----------------------edit--------------------//
     public function edit($id){
@@ -102,21 +98,17 @@ class GymController extends Controller
         echo json_encode($output);
 
     }
-//----------------------update--------------------//
-    public function update($id ,GmyRequest $request){
-        $gym=Gym::find($id);
-        $fileName=$this->getImageData($request);
-        $updatedGymData=[
-            'name'=>$request['name'],          
-            'image'=> $fileName  ,
-            'city_id'=> $request['city_id'] ,        
+    //----------------------update--------------------//
+    public function update($id, GmyRequest $request) {
+        $gym = Gym::find($id);
+        $gymData = request()->all();
+        $fileName = $this->getImageData($request);
+        $updatedGymData = [
+            'name' => $request['name'],
+            'image' => $fileName,
+            'city_id' => Auth::user()-> hasRole('city_manager') ? City::where('staff_id',Auth::user()->id)->first()->id :$gymData['city_id'],
         ];
-        $updatedGymManagerData=[
-
-            "staff_id"=>$request['staff_id']
-        ];
-        Gym::where('id',$gym->id)->update($updatedGymData); 
-        GymManager::where('gym_id',$gym->id)->update($updatedGymManagerData);        
+        Gym::where('id', $gym->id)->update($updatedGymData);
         return redirect()->route("gyms.index");
     }
     //----------------------destroy--------------------//

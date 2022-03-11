@@ -4,13 +4,11 @@
     <h1> Training Sessions</h1>
     <a href="{{route('sessions.create')}}" class="btn btn-success btn-lg my-2">Add Session</a>
 
-    <table class="table cell-border compact stripe table-dark my-4 text-dark" id="myTable">
+    <table class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark" id="myTable">
         <thead>
             <tr class="text-white">
                 <th scope="col">#</th>
-                @role('Super-Admin')
                 <th scope="col">Name</th>
-                @endrole
                 <th scope="col">Start-at</th>
                 <th scope="col">Finish-at</th>
                 <th scope="col">Coaches</th>
@@ -104,11 +102,10 @@
                     data: 'id',
                     name: 'id'
                 },
-                @if(Auth::user()->role=='admin')
                 {
                     data: 'name',
                     name: 'name'
-                },@endif
+                },
                 {
                     data: 'start_at',
                     name: 'start_at'
@@ -154,40 +151,44 @@
     function EditSession(id) {
         var id = id;
         $.ajax({
-            type: "GET",
-            url: "{{ url('edit') }}",
-            data: {
-                id: id
-            },
-            dataType: 'json',
-            success: function (data) {
-                //get data and put it into the modal
-                var startdate = (data.start_at).split(" ");
-                var finishdate = (data.finish_at).split(" ");
-                var day = startdate[0];
-                var StartTime = startdate[1];
-                var FinishTime = finishdate[1];
-                var selectedCoaches = data.selectedCoaches;
-                var coachesid = data.coachesid;
-                var options = data.coaches;
-                $('#id').val(id);
-                $('#name').val(data.name);
-                $('#day').val(day);
-                $('#start').val(StartTime);
-                $('#finish').val(FinishTime);
-                $("#coaches").empty();
-                for (var j = 0; j < options.length; j++) {
-                    if (jQuery.inArray(coachesid[j], selectedCoaches) !== -1) {
-                        $("#coaches").append(new Option(options[j], coachesid[j], true, true));
-                    } else {
+           type:"GET",
+           url: "{{ url('edit') }}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(data){
+             //get data and put it into the modal
+               var startdate=(data.start_at).split(" ");
+               var finishdate=(data.finish_at).split(" ");
+               var day=startdate[0];
+               var StartTime=startdate[1];
+               var FinishTime=finishdate[1];
+               var selectedCoaches=data.selectedCoaches;
+               var coachesid=data.coachesid; 
+               var options=data.coaches;
+
+               $('#id').val(id);
+               $('#name').val(data.name);
+               $('#day').val(day);
+               $('#start').val(StartTime);
+               $('#finish').val(FinishTime);
+               $("#coaches").empty();
+
+               for (var j = 0; j< options.length; j++) {
+                      if(jQuery.inArray(coachesid[j], selectedCoaches) !== -1){
+                         $("#coaches").append(new Option(options[j], coachesid[j],true, true));
+                       }
+                      else{
                         $("#coaches").append(new Option(options[j], coachesid[j]));
-                    }
-                }
-                //show the modal
-                var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
-                myModal.show();
-            }
-        });
+
+                       }
+                   }
+               //show the modal
+               var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+               myModal.show();
+           }
+
+          });   
+
     }
 
 </script>

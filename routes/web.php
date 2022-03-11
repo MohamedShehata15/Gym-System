@@ -11,9 +11,12 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\TrainingPackageController;
-use App\Http\Controllers\cityManagerController;
-use App\Http\Controllers\gymManagerController;
+use App\Http\Controllers\CityManagerController;
+use App\Http\Controllers\GymManagerController;
+use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\BuyPackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +38,20 @@ Route::GET('/', function () {
 Auth::routes(['register' => false]);
 
 
+Route::get('/test', function () {
 
+
+    return view('test');
+
+    // $staff = Staff::role('coach')->get();
+    // dd($staff);
+
+    // -----------------------
+
+    // $cities = City::find(10)->gyms;
+
+    // dd($cities);
+});
 
 
 Route::get('logout', [LoginController::class, 'logout']);
@@ -48,15 +64,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     //------------------------- Cities Routes ------------------------------
     Route::get('cities', [CityController::class, 'index'])->name('cities.index');
-    //Route::get('update/{city}',[CityController::class,'update'])->name('cities.update');
     Route::post('edit-city', [CityController::class, 'edit'])->name('cities.edit');
     Route::post('destroy-city', [CityController::class, 'destroy'])->name('cities.destroy');
     Route::post('store-city', [CityController::class, 'store'])->name('cities.store');
 
     //-------------------------- City Managers Routes --------------------------------
 
-    Route::get('city-managers', [cityManagerController::class, 'index'])->name('city-managers.index');
-    Route::get('city-managers/create', [cityManagerController::class, 'create'])->name('city-managers.create');
+    Route::get('city-managers', [CityManagerController::class, 'index'])->name('city-managers.index');
+    Route::get('city-managers/create', [CityManagerController::class, 'create'])->name('city-managers.create');
     Route::post('city-managers', [cityManagerController::class, 'store'])->name('city-managers.store');
     Route::get('city-managers/{cityManagerId}/edit', [cityManagerController::class, 'edit'])->name('city-managers.edit');
     Route::put('city-managers/{cityManagerId}', [cityManagerController::class, 'update'])->name('city-managers.update');
@@ -64,12 +79,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     //-------------------------- Gym Managers Routes --------------------------------
 
-    Route::get('gym-managers', [gymManagerController::class, 'index'])->name('gym-managers.index');
-    Route::get('gym-managers/create', [gymManagerController::class, 'create'])->name('gym-managers.create');
-    Route::post('gym-managers', [gymManagerController::class, 'store'])->name('gym-managers.store');
-    Route::get('gym-managers/{gymManagerId}/edit', [gymManagerController::class, 'edit'])->name('gym-managers.edit');
-    Route::put('gym-managers/{gymManagerId}', [gymManagerController::class, 'update'])->name('gym-managers.update');
-    Route::post('destroy-gym-manager', [gymManagerController::class, 'destroy'])->name('gym-managers.destroy');
+    Route::get('gym-managers', [GymManagerController::class, 'index'])->name('gym-managers.index');
+    Route::get('gym-managers/create', [GymManagerController::class, 'create'])->name('gym-managers.create');
+    Route::post('gym-managers', [GymManagerController::class, 'store'])->name('gym-managers.store');
+    Route::get('gym-managers/{gymManagerId}/edit', [GymManagerController::class, 'edit'])->name('gym-managers.edit');
+    Route::put('gym-managers/{gymManagerId}', [GymManagerController::class, 'update'])->name('gym-managers.update');
+    Route::post('destroy-gym-manager', [GymManagerController::class, 'destroy'])->name('gym-managers.destroy');
+    Route::post('ban-gym-manager', [GymManagerController::class, 'ban'])->name('gym-managers.ban');
     Route::get('getGym/{id}', function ($id) {
         $gym = App\Models\Gym::where('city_id', $id)->get();
         return response()->json($gym);
@@ -112,7 +128,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-    /* ======================= Gym Manager Routes ========================= */
+    /* ======================= Sessions Routes ========================= */
     Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
     Route::get('/sessions/create', [SessionController::class, 'create'])->name('sessions.create');
     Route::post('/sessions', [SessionController::class, 'store'])->name('sessions.store');
@@ -127,7 +143,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
-    Route::post('destroy-purchase', [cityManagerController::class, 'destroy'])->name('destroy-purchase');
+    Route::post('destroy-purchase', [PurchaseController::class, 'destroy'])->name('destroy-purchase');
 
 
 
@@ -137,9 +153,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['auth', 'isBanned'], function () {
 
-        Route::GET('/coaches', function () {
-            return view('coaches.index');
-        });
         Route::GET('/gyms', [GymController::class, 'index'])->name('gyms.index');
         Route::GET('/gyms/create', [GymController::class, 'create'])->name('gyms.create');
         Route::POST('/gyms', [GymController::class, 'store'])->name('gyms.store');
@@ -147,6 +160,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::GET('/gyms/{id}/edit', [GymController::class, 'edit'])->name('gyms.edit');
         Route::PUT('/gyms/{id}', [GymController::class, 'update'])->name('gyms.update');
         Route::DELETE('/gyms/{id}', [GymController::class, 'destroy'])->name('gyms.destroy');
+        Route::get('/gyms/{id}/users', [GymController::class, 'users']);
+        Route::get('/gyms/{id}/packages', [GymController::class, 'packages']);
 
         Route::GET('/cityManagers', [CityManagerController::class, 'index'])->name('cityManagers.index');
         Route::GET('/cityManagers/create', [CityManagerController::class, 'create'])->name('cityManagers.create');
@@ -163,19 +178,39 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     /* ======================= Coaches Routes ========================= */
-    Route::get('/coaches', [CoachController::class, 'index'])->name('coaches.index');
 
-    Route::get('/coaches/profile/show', [CoachController::class, 'profile'])->name('coaches.profile');
+    Route::get('/coaches/{id}/profile', [CoachController::class, 'profile'])->name('coaches.profile');
+    Route::get('/coaches/{id}', [CoachController::class, 'show'])->name('coaches.show');
 
-    Route::get("/coaches/profile/edit", [CoachController::class, 'edit'])->name('coaches.edit');
+    Route::get("/coaches/{id}/profile/edit", [CoachController::class, 'edit'])->name('coaches.edit');
 
-    Route::get('/coaches/sessions', [CoachController::class, 'sessions'])->name('coaches.sessions');
+    Route::get('/coaches/{id}/sessions', [CoachController::class, 'sessions'])->name('coaches.sessions');
 
-    Route::get("/coaches/password", [CoachController::class, 'password'])->name('coaches.password');
+    Route::get("/coaches/{id}/password", [CoachController::class, 'password'])->name('coaches.password');
 
     /* ===================================================================== */
 
-  
-   /* ======================= Attendance Routes ========================= */
-   Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
+
+    /* ======================= Attendance Routes ========================= */
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendances.index');
+
+    /* ======================= Payment Routes ========================= */
+    Route::group(['middleware' => ['role_or_permission:Super-Admin|city_manager|gym_manager']], function () {
+        Route::get('stripe', [StripePaymentController::class, 'stripe']);
+        Route::post('stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+    });
+    /* ===================================================================== */
+    /* ======================= Revenue Routes ========================= */
+    Route::get('revenue',[RevenueController::class,'show'])->name('revenue.show');
+
+    /* ======================= buyPackage Routes ========================= */
+    Route::get('buypackage',[BuyPackageController::class,'create'])->name('buypackage.create');;
+    Route::get('getUser/{id}', function ($id) {
+        $users = App\Models\User::where('gym_id', $id)->get();
+        return response()->json($users);
+    });
+    Route::get('getpackage/{id}', function ($id) {
+        $packages = App\Models\TrainingPackage::where('gym_id', $id)->get();
+        return response()->json($packages);
+    });
 });

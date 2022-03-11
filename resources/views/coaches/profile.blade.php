@@ -2,32 +2,46 @@
 
 @section('content')
 
-<div class="card card-primary card-outline">
-    <div class="card-body box-profile">
-        <div class="text-center">
-            <img class="profile-user-img img-fluid img-circle" src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg"
+<div class="p-16 bg-surface-secondary">
+    <div class="row">
+        <div class="col-lg-4 mx-auto">
+            <!-- Component -->
+            <div class="card shadow">
+                <div class="card-body bg-dark">
+                <div class="text-center">
+                <img class="profile-user-img img-fluid img-circle" src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg"
                 alt="User profile picture">
-        </div>
-        <h3 class="profile-username text-center">{{$coach->name}}</h3>
-        <p class="text-muted text-center">Coach</p>
-        <ul class="list-group list-group-unbordered mb-3">
-            <li class="list-group-item">
-                <b>Email</b> <a class="float-right">{{$coach->email}}</a>
-            </li>
-            <li class="list-group-item">
-                <b>National ID</b> <a class="float-right">{{$coach->national_id}}</a>
-            </li>
-            <li class="list-group-item d-flex align-items-center justify-content-between">
-                <b>Gyms</b> <ul class="float-right list-unstyled text-primary">
+                         <h3 class="d-block h5 mb-0">{{$coach->name}}</h3>
+             <div class="d-grid gap-3 my-4">
+                <div class="p-2 bg-light border">
+                  <li class="list-group-item d-flex align-items-center justify-content-between">
+                  <b>Email</b> <a>{{$coach->email}}</a>
+                  </li>
+               </div>
+               <div class="p-2 bg-light border">
+               <li class="list-group-item d-flex align-items-center justify-content-between">
+                <b>National ID</b> <a>{{$coach->national_id}}</a>
+               </li>
+               </div>
+
+               <div class="p-2 bg-light border">
+               <li class="list-group-item d-flex align-items-center justify-content-between ">
+                <b>Gyms</b> <ul class="list-unstyled text-primary">
                     @foreach($coach->coachGyms as $gym) 
                     <li>{{$gym->name}}</li>
                     @endforeach
                 </ul>
             </li>
-        </ul>
-        <a href="{{route('coaches.edit')}}" class="btn btn-primary btn-block"><b>Edit</b></a>
+               </div>
+
+        </div>
+
+        <a href="{{route('coaches.edit', ['id' => $coach->id])}}" class="btn btn-success btn-block offset-3 col-6"><b>Edit</b></a>
+                </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-
 </div>
-
 @endsection

@@ -16,6 +16,9 @@
     </div>
     {{Session()->forget('fail')}}
     @endif
+<!-- 
+    <div class="text-center mydiv">
+    <a href="{{route('gyms.create')}}" class="btn btn-success">Add New Gym </a>
     <table id="gyms" class="display">
         <thead>
             <tr>
@@ -28,8 +31,8 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody class="text-dark">
-            @foreach ( $gyms as $gym )
+        <tbody class="text-dark"> -->
+            <!-- @foreach ( $gyms as $gym )
                 <tr>
                     <td>{{$gym->name}}</td>
                     <td>{{\Carbon\Carbon::parse($gym->created_at)->format('Y-M-D')}}</td>
@@ -68,14 +71,16 @@
                             </div>
                         </div>
                     </td>    
-                </tr> 
-            @endforeach  
-        </tbody>
+                </tr> -->
+            <!-- @endforeach    -->
+        <!-- </tbody>
     </table>  
+    </div> -->
+
   @endsection
 
   @section('script')
-       <script>
+       <!-- <script>
            $(document).ready( function () {
            $('#gyms').DataTable();
            });

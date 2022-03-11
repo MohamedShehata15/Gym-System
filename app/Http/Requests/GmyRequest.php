@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class GmyRequest extends FormRequest
 {
@@ -23,12 +24,21 @@ class GmyRequest extends FormRequest
      */
     public function rules()
     {
-        return [ 
-            'name' => ['required','min:4','max:15'],
-            'image' => ['required','image','mimes:jpg,png,jpeg,gif,svg'],
-            'city_id' => ['required'],
-            'staff_id' => ['required'],  
-        ];
+        if(Auth::user()->hasRole('Super-Admin')){
+            return [ 
+                'name' => ['required','min:4','max:15'],
+                'image' => ['required','image','mimes:jpg,png,jpeg,gif,svg'],
+                'city_id' => ['required'],  
+            ];
+        }
+        else
+        {
+            return [ 
+                'name' => ['required','min:4','max:15'],
+                'image' => ['required','image','mimes:jpg,png,jpeg,gif,svg'],  
+            ];
+        }
+        
     }
 
     /**

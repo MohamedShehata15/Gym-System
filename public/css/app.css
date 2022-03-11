@@ -14,7 +14,7 @@
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
-  --purple: #6f42c1;
+  --purple: #2c233d;
   --pink: #e83e8c;
   --red: #dc3545;
   --orange: #fd7e14;
@@ -69,9 +69,24 @@ body {
   text-align: left;
   background-color: #fff;
 }
+.revDiv{
+  width:20%;
+  text-align: center;
+  margin-left: 870px;
+  margin-top:2px;
+  height:30px;
+}
+.revBody{
+  color:lightgray;
+}
+.selectBody{
+  width:50%;
+  margin:50px auto;
+}
+
 
 .con{
-  background-image: url('gym4.jpeg');
+  background-image: url('/photos/gym4.jpeg');
   background-position: center;
   background-repeat: no-repeat;
   background-size:cover;  
@@ -2982,7 +2997,7 @@ input[type=button].btn-block {
   position: relative;
   height: 0;
   overflow: hidden;
-  transition: height 0.35s ease;
+  transition: height 0.50s ease;
 }
 @media (prefers-reduced-motion: reduce) {
   .collapsing {
@@ -43130,9 +43145,8 @@ a.text-muted:hover {
   color: #3f474e;
 }
 .mydiv{
-  width:100%;
   height:100%;
-  padding: 4%;
+  padding: 2%;
 }
 .dataTables_filter{
   color:white !important;
@@ -43155,11 +43169,15 @@ a.text-muted:hover {
 
 
 }
-#myTable_previous{
+#myTable_previous,#table_id_previous{
   color:white !important;
 
 }
-#myTable_next{
+#myTable_next,#table_id_next{
   color:white !important;
 
+}
+
+#table_id,#myTable{
+width: 100% !important
 }

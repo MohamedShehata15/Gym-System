@@ -18,6 +18,9 @@ return new class extends Migration {
             $table->string('image');
             $table->integer('revenue')->default(0);
             $table->foreignId('city_id')->constrained()->onDelete('cascade');
+            $table->string('created_by')->default('Admin');
+
+
         });
     }
 

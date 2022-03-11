@@ -20,8 +20,7 @@ return new class extends Migration {
             $table->rememberToken();
             $table->timestamps();
             $table->string("avatar")->default('user_avatar.png');
-            $table->integer('national_id');
-            $table->boolean('is_baned')->default(false);
+            $table->integer('national_id'); 
         });
     }
 

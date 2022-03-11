@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class UserCoachSession extends Model
 {
     use HasFactory;
+
+
 }
