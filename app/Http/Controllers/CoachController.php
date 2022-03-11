@@ -7,13 +7,14 @@ use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymCoach;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class coachController extends Controller {
     public function index() {
         if (request()->ajax()) {
             return datatables()->of(Staff::role('coach')->get())
                 ->addColumn('action', function ($data) {
-                    $button = '<a href="' . route('coaches.edit', $data->id) . '" class="btn btn-info btn-sm mx-2">Edit</a>';
+                    $button = '<a href="' . route('coaches.show', $data->id) . '" class="btn btn-info btn-sm mx-2">Edit</a>';
                     $button .= '<a href="javascript:void(0);" onClick = "deleteFunc(' . $data->id . ')"class="btn btn-danger btn-sm mx-2">Delete</a>';
                     return $button;
                 })
@@ -50,37 +51,44 @@ class coachController extends Controller {
 
         return view('coaches.edit', [
             'staff' => $staff,
+            // 'gyms' => $gyms,
             'cities' => $cities,
             'gymsCollection' => $gymsCollection,
             'gymsCity' => $gymsCity
 
         ]);
     }
+
+    public function show($id) {
+        if (Auth::user()->hasRole('coach'))
+            return view('coaches.show', ['coach' => Auth::user()]);
+
+        $coach = Staff::find($id);
+        return view('coaches.show', ['coach' => $coach]);
+    }
+
     public function update($staffId) {
+        // print_r(request()->all()['avatar']);
         $requestData = request()->all();
-        $post = Staff::find($staffId)->update([
-            'name' => $requestData['name'],
-            'email' => $requestData['email'],
-            'password' => $requestData['password'],
-            'avatar' => $requestData['avatar'],
-            'national_id' => $requestData['national_id'],
-            'is_baned' => 0,
-            
-        ]);
+
+        if (!$requestData['avatar']) $requestData['avatar'] = "user_avatar.png";
+
+        Staff::find($staffId)->update($requestData);
+
+        if (isset($requestData['gyms'])) {
+            $gymIds = $requestData['gyms'];
+            gymCoach::where('staff_id', $staffId)->delete();
+
+            foreach ($gymIds as $gymId) {
+                gymCoach::Create(
+                    [
+                        'staff_id' => $staffId,
 
 
-        $gymIds = $requestData['gyms'];
-        gymCoach::where('staff_id', $staffId)->delete();
-
-        foreach ($gymIds as $gymId) {
-            gymCoach::Create(
-                [
-                    'staff_id' => $staffId,
-
-
-                    'gym_id' => $gymId
-                ]
-            );
+                        'gym_id' => $gymId
+                    ]
+                );
+            }
         }
         // $gym->gym_id = $requestData['gym'];
         // $gym->save();
@@ -102,14 +110,14 @@ class coachController extends Controller {
     public function store() {
         $requestData = request()->all();
         $gymIds = $requestData['gyms'];
-        $coach=Staff::create([
+        $coach = Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
             'avatar' => $requestData['avatar'],
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
-            
+
         ]);
         $coach->assignRole('coach');
         $staffMember = Staff::where('name', $requestData['name'])->first();
@@ -138,8 +146,11 @@ class coachController extends Controller {
         return Response()->json($member);
     }
 
-    public function profile() {
-        $coach = Staff::find(9);
+    public function profile($id) {
+        if (Auth::user()->hasRole('coach'))
+            return view('coaches.profile', ['coach' => Auth::user()]);
+
+        $coach = Staff::find($id);
         return view('coaches.profile', ['coach' => $coach]);
     }
     public function sessions() {

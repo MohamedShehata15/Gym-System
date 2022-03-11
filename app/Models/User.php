@@ -23,9 +23,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'gender',
         'remaining_sessions',
+<<<<<<< HEAD
         'avatar',
         'birth_date',
         'gym_id'
+=======
+        'avatar'
+>>>>>>> fafbb258fe17050ff13bdce10db2f9653a6d3a54
     ];
 
     /**
@@ -47,13 +51,20 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function sessions()
-    {
-        return $this->belongsToMany(Session::class, 'user_coach_sessions', 'user_id', 'session_id');
+    public function sessions() {
+        return $this->belongsToMany(Session::class, 'session_user', 'user_id', 'session_id');
     }
 
     public function trainingPackage()
     {
         return $this->belongsToMany(TrainingPackage::class, 'user_training_packages', 'user_id', 'training_package_id');
+    }
+    public function session()
+    {
+        return $this->belongsToMany(Session::class);
+    }
+    public function gym()
+    {
+        return $this->belongsTo(Gym::class);
     }
 }

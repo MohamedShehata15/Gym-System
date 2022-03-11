@@ -6,15 +6,14 @@
 @section('content')
 <br>
 <div class="text-center mydiv">
-    <a href="{{route('users.create')}}" class="btn btn-success" > Add New User </a>
     <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
         <thead>
             <tr class="text-white">
                 <th>ID</th>
+                <th>Avatar</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Gender</th>
-                <th>Avatar</th>
                 <th>Gym</th>
                 <th></th>
             </tr>
@@ -25,10 +24,7 @@
     </div>
 
 @endsection
-@section('third_party_scripts')
-    <script src="{{ mix('js/app.js') }}" defer></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer></script>
+@section('javascripts')
     <script>
         $(document).ready( function () {
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -44,6 +40,15 @@
                     name:'id',
                 },
                 {
+                    data:'avatar',
+                    name:'avatar',
+                    render:function(data,type,full,meta)
+                    {
+                        return "<img src='images/"+data+"' width='60' style='border-radius:50%;' class='img-thumbnail'  />";
+                    },
+                    orderable:false
+                },
+                {
                     data:'name',
                     name:'name',
                 },
@@ -55,15 +60,6 @@
                 {
                     data:'gender',
                     name:'gender',
-                },
-                {
-                    data:'avatar',
-                    name:'avatar',
-                    render:function(data,type,full,meta)
-                    {
-                        return "<img src="+data+" width='70' class='img-thumbnail'  />";
-                    },
-                    orderable:false
                 },
                 {
                     data:'gym',

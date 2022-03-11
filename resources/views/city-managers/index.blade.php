@@ -4,19 +4,16 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-<br>
-<div class="d-flex justify-content-center mb-2">
+<div class="text-center mydiv">
     <a href="{{route('city-managers.create')}}" class="btn btn-success">Add New Manager </a>
-  </div>
 
-
-    <table id="table_id" class="table table-bordered table-striped">
+    <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
         <thead>
-            <tr>
+            <tr class="text-white">
                 <th>id</th>
+                <th>Avatar</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Avatar</th>
                 <th>National_ID</th>
                 <th>City</th>
                 <th></th>
@@ -25,11 +22,11 @@
         <tbody>
         </tbody>
     </table>
+    </div>
+
 @endsection
-@section('third_party_scripts')
-    <script src="{{ mix('js/app.js') }}" defer></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer></script>
+@section('javascripts')
+
     <script>
         $(document).ready( function () {
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -45,21 +42,21 @@
                     name:'id',
                 },
                 {
+                    data:'avatar',
+                    name:'avatar',
+                    render:function(data,type,full,meta)
+                    {
+                        return "<img src='images/"+data+"'width='60' style='border-radius:50%;' class='img-thumbnail'  />";
+                    },
+                    orderable:false
+                },
+                {
                     data:'name',
                     name:'name',
                 },
                 {
                     data:'email',
                     name:'email',
-                },
-                {
-                    data:'avatar',
-                    name:'avatar',
-                    render:function(data,type,full,meta)
-                    {
-                        return "<img src="+data+" width='70' class='img-thumbnail' />";
-                    },
-                    orderable:false
                 },
                 {
                     data:'national_id',

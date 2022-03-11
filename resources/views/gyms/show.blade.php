@@ -2,31 +2,49 @@
 
 @section('content')
 
-    <div class="container card card-primary mt-3  card-outline w-50 ">
-        <div class="card-header ">
-          <h3 class="card-title">Gym Name:- {{$gym->name}}</h3>
+<div class="p-16 bg-surface-secondary">
+    <div class="row">
+        <div class="col-lg-4 mx-auto">
+            <!-- Component -->
+            <div class="card shadow">
+            <div class="card-header bg-secondary">
+            <h3 class="d-block text-center h5 mb-0">{{$gym->name}}</h3>
           <div class="card-tools">
-            <a href="{{route('gyms.index')}}"" class="badge badge-primary">Back</a>
+            <a href="{{route('gyms.index')}}" class="badge badge-primary">Back</a>
           </div>
         </div>
-        <div class="card-body d-flex justify-content-center align-items-center flex-column">
+        <div class="card-body bg-dark">
+                <div class="text-center">
           <img src="../uploads/gyms/{{$gym->image}}" alt="notFounded" class="w-25 rounded-circle shadow">
-          <h3>Gym Name:- {{$gym->name}}</h3>
-          <h3>Gym Revenue:- {{$gym->revenue}}</h3>
-          <h3>Gym Manager:-</h3>
-          <ol>
-            @foreach ($managers as $manager )
-
-              <li><h4>{{$manager->name}}</h4></li> 
-               
-            @endforeach
-          
-          </ol>
+          <div class="d-grid gap-3 my-4">
+                <div class="p-2 bg-light border">
+                  <li class="list-group-item d-flex align-items-center justify-content-between">
+                  <b>Gym Name </b> <a>{{$gym->name}}</a>
+                  </li>
+               </div>
+               <div class="p-2 bg-light border">
+                  <li class="list-group-item d-flex align-items-center justify-content-between">
+                  <b>Gym Revenue</b> <a> {{$gym->revenue}}</a>
+                  </li>
+               </div>
+               <div class="p-2 bg-light border">
+               <li class="list-group-item d-flex align-items-center justify-content-between ">
+                <b>Gym Manager</b> <ul class="list-unstyled text-primary">
+                @foreach ($managers as $manager )
+                    <li>{{$manager->name}}</li>
+                    @endforeach
+                </ul>
+            </li>
+               </div>
+          </div>
         </div>
-        <div class="card-footer">
+        <div class="card-footer text-center bg-secondary">
           Our Gym System 
         </div> 
     </div>
-     
+    </div> 
+    </div>
+    </div> 
+    </div>
 
 @endsection

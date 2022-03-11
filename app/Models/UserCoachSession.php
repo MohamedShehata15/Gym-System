@@ -9,9 +9,5 @@ class UserCoachSession extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'session_id',
-        'user_id',
-        'staff_id'
-    ];
+
 }

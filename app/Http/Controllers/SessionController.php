@@ -9,30 +9,59 @@ use App\Models\GymCoaches;
 use App\Models\User;
 use App\Models\SessionUser;
 use App\Models\SessionStaff;
-use App\DataTables\SessionDataTable;
 use App\Http\Requests\SessionRequest;
-
-
+use App\Models\City;
+use App\Models\Gym;
+use App\Models\GymManager;
+use Illuminate\Support\Facades\Auth;
 
 class SessionController extends Controller {
     public function index() {
+        if (Auth::user()->hasRole('Super-Admin')) {
+            $sessions = Session::with('gym')->get();
+        } elseif (Auth::user()->hasRole('city_manager')) {
+
+            $cityId = City::where('staff_id', Auth::user()->id)->first()['id'];
+            $gymIds = Gym::where('city_id', $cityId)->pluck('id');
+            $sessions = collect();
+            foreach ($gymIds as $gymId) {
+                $gymSessions = Session::where('gym_id', $gymId)->get();
+                foreach ($gymSessions as $gymSession) {
+                    $sessions->push($gymSession);
+                };
+            }
+        } elseif (Auth::user()->hasRole('gym_manager')) {
+            $gymId = GymManager::where('staff_id', Auth::user()->id)->first()['gym_id'];
+            $sessions = Session::with('gym')->where('gym_id', $gymId)->get();
+        }
+
+
         if (request()->ajax()) {
-            return datatables()->of(Session::latest()->get())
+            return datatables()->of($sessions)
                 ->addColumn('Coaches', function (Session $session) {
-                    $coaches = $session->staff->pluck('name'); //extract name keys from data
-                    foreach ($coaches as $coach) {
-                        return  $coaches->implode(' , ');
-                    }
+                    $coaches = $session->coaches->pluck('name'); //extract name keys from data
+
+                    return count($coaches) > 0 ? $coaches->implode(' , ') : "None";
+                })
+                ->addColumn('gym', function (Session $session) {
+                    //extract name keys from data
+
+                    return $session->gym->name;
+                })
+                ->addColumn('city', function (Session $session) {
+                    $cityId = $session->gym->city_id; //extract name keys from data
+
+                    return City::find($cityId)->name;
                 })
 
                 ->addColumn('action', function ($data) {
                     $button = '<a
                 onClick="EditSession(' . $data->id . ')"
-                class="edit btn btn-primary mx-4">Edit</a>';
+                class="edit btn btn-primary btn-sm ">Edit</a>';
 
                     $button .= '<a
                 onClick="DeleteSession(' . $data->id . ')"
-                class="delete btn btn-danger mx-4">Delete</a>';
+                class="delete btn btn-danger btn-sm">Delete</a>';
                     return $button;
                 })
 
@@ -44,9 +73,9 @@ class SessionController extends Controller {
     }
 
     public function create() {
-        $coaches = Staff::all()->where('role', '=', 'coach');
+        $cities = City::all();
         return view('sessions.create', [
-            'coaches' => $coaches
+            'cities' => $cities,
         ]);
     }
 
@@ -54,6 +83,21 @@ class SessionController extends Controller {
     public function store(SessionRequest $request) {
         $requestData = request()->all();
 
+        if (Auth::user()->hasRole('Super-Admin')) {
+            $gymId=$requestData['gym'];
+            $cityid=$requestData['city'];
+        }
+
+        elseif (Auth::user()->hasRole('city_manager'))
+        {
+            $gymId=$requestData['gym'];
+        }
+
+        elseif (Auth::user()->hasRole('gym_manager'))
+        {
+            $gymId = GymManager::where('staff_id', Auth::user()->id)->first()['gym_id'];
+        }
+        
         $dataTimeStart = $requestData['day'] . " " . $requestData['start']; //concat date with time
         $dateTimeFinish = $requestData['day'] . " " . $requestData['finish'];
 
@@ -63,12 +107,14 @@ class SessionController extends Controller {
                 'name' => $requestData['name'],
                 'start_at' => $dataTimeStart,
                 'finish_at' => $dateTimeFinish,
+                'gym_id' =>  $gymId
+
             ]);
 
             $coaches = $requestData['coaches'];
             $coaches = array_values($coaches);
             $data = Staff::find($coaches);
-            $session->staff()->attach($data); //assign coaches to the session
+            $session->coaches()->attach($data); //assign coaches to the session
 
 
             return redirect()->route('sessions.index');
@@ -89,8 +135,8 @@ class SessionController extends Controller {
 
 
     public function edit(Request $request) {
-        $coaches = Staff::where('role', '=', 'coach')->pluck('name');
-        $coachesid = Staff::where('role', '=', 'coach')->pluck('id');
+        $coaches = Staff::role('coach')->pluck('name');
+        $coachesid = Staff::role('coach')->pluck('id');
         $session = Session::find($request->id);
         $selectedCoaches = SessionStaff::where('session_id', '=', $session->id)->pluck('staff_id');
 

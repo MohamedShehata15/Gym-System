@@ -14,7 +14,7 @@
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
-  --purple: #6f42c1;
+  --purple: #2c233d;
   --pink: #e83e8c;
   --red: #dc3545;
   --orange: #fd7e14;
@@ -69,6 +69,21 @@ body {
   text-align: left;
   background-color: #fff;
 }
+.revDiv{
+  width:20%;
+  text-align: center;
+  margin-left: 870px;
+  margin-top:2px;
+  height:30px;
+}
+.revBody{
+  color:lightgray;
+}
+.selectBody{
+  width:50%;
+  margin:50px auto;
+}
+
 
 .con{
   background-image: url('/photos/gym4.jpeg');

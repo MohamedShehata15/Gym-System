@@ -26,13 +26,14 @@ class PermissionSeeder extends Seeder
         $coach = Role::create(['name' => 'coach']);
 
         //creating permissions
-       $gyms = Permission::create(['name'=>'gyms']);
-       $gymManagers = Permission::create(['name'=>'gym-managers']);
-       $sessions = Permission::create(['name'=>'sessions']);
-       $buyPackage = Permission::create(['name'=>'buy-package']);
+        Permission::create(['name'=>'gyms']);
+        Permission::create(['name'=>'gym-managers']);
+        Permission::create(['name'=>'sessions']);
+        Permission::create(['name'=>'buy-package']);
+        
 
-       $gymManager->syncPermissions([$gyms,$sessions,$buyPackage]);
-       $cityManager->syncPermissions([$gyms,$sessions,$buyPackage,$gymManagers]);
+       $gymManager->syncPermissions(['gyms','sessions','buy-package']);
+       $cityManager->syncPermissions(['gym-managers','buy-package']);
 
 
 

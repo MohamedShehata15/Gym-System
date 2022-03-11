@@ -12,4 +12,7 @@ class SessionUser extends Model {
         'session_id',
         'user_id',
     ];
+    
+    protected $table = 'session_user';
 }
+

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\City;
-use App\Models\Staff;
 use App\Models\Gym;
 
 class CityController extends Controller {
@@ -71,5 +70,11 @@ class CityController extends Controller {
             $city = City::where('id', $request->id)->delete();
             return Response()->json($city);
         }
+    }
+
+    //-----------------------  City Gyms -------------------------------------
+    public function gyms($id) {
+        $gyms = Gym::where('city_id', $id)->get();
+        return response()->json(['gyms' => $gyms]);
     }
 }

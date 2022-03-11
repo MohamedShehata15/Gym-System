@@ -6,7 +6,7 @@
 @section('content')
 <div class="mydiv ">
 
-<form method="post" action="{{route('gym-managers.store')}}" class="row d-flex flex-column justify-content-center align-items-center"  id="form">
+<form method="post" action="{{route('gym-managers.store')}}" class="row d-flex flex-column justify-content-center align-items-center"  id="form" enctype="multipart/form-data">
   @csrf
   <div class="mb-3 col-sm-6 ">
     <label for="Name" class="form-label">Name</label>
@@ -50,14 +50,6 @@
 
     </select>
   </div>
-  
-  {{-- <div class="mb-3 col-sm-6">
-    <label for="ban" class="form-label">IsBaned</label>
-    <select name="ban" class="form-control" id="ban">
-        <option value="not_baned">0</option>
-        <option value="is_baned">1</option>
-</select>
-  </div> --}}
   <div class="mb-3 col-sm-6 offset-2">
   <button type="submit" class="btn btn-success offset-3">Create</button>
   </div>

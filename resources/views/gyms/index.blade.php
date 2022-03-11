@@ -1,74 +1,96 @@
 @extends('layouts.app')
-
+@section('third_party_stylesheets')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('content')
-   
+<div class="text-center mydiv">
+    <h1> Gyms</h1>
+    <a href="{{route('gyms.create')}}" class="btn btn-success btn-lg my-2">Add Gym</a>
 
-</head>
-<body> 
-    @if(Session::has('fail'))
-        <div class="alert alert-danger">
-        {{Session('fail')}}
-    </div>
-    {{Session()->forget('fail')}}
-    @endif
-    <table id="gyms" class="display">
-        <thead>
-            <tr>
-                <th>Name</th>
+<table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
+    <thead>
+        <tr class="text-white">
+            <th>Name</th>
                 <th>Created at</th>
-                <th>updated time</th>
-                <th>revenue</th>
+                @if(Auth::user()->hasRole("Super-Admin"))
+                    <th>City Manager</th>
+                @endif 
+                <th>Cover_Image</th>
                 <th>Action</th>
-            </tr>
-        </thead>
-        <tbody class="text-dark">
-            @foreach ( $gyms as $gym )
-                <tr>
-                    <td>{{$gym->name}}</td>
-                    <td>{{\Carbon\Carbon::parse($gym->created_at)->format('Y-M-D')}}</td>
-                    <td>{{\Carbon\Carbon::parse($gym->updated_at)->format('Y-M-D')}}</td>
-                    <td>{{$gym->revenue}}</td>
-                    <td>
-                        <a href="{{route('gyms.show',['id' => $gym->id])}}" class="btn btn-info">Show</a>
-                        <a href="{{route('gyms.edit',['id' => $gym->id])}}" class="btn btn-warning">Edit</a>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{$gym->id}}">
-                            Delete
-                        </button>
-                       {{-- //Model For Delete :) // --}}
-                        <div class="modal fade" id="exampleModal{{$gym->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered"">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure that you want to delete this GYM? 
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">No</button>
-                                        <form action="{{route('gyms.destroy',['id' => $gym->id])}}" method="POST">
-                                            @csrf
-                                            @method('DELEtE')
-                                            <button type="submit" class="btn btn-danger">Yes</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>    
-                </tr> 
-            @endforeach  
-        </tbody>
-    </table>  
-  @endsection
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</div>
 
-  @section('script')
-       <script>
-           $(document).ready( function () {
-           $('#gyms').DataTable();
-           });
-       </script>
-   @endsection	   
+
+
+@endsection
+@section('javascripts')
+    
+    <script>
+         $(document).ready( function () {
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $('#table_id').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax:{
+                url: "{{ route('gyms.index') }}"
+            },
+            columns:[
+                {
+                    data:'name',
+                    name:'gym.name',
+                },
+                {
+                    data:'created_at',
+                    name:'created_at',
+                },
+                @role('Super-Admin')
+                {
+                  data:'cityManager',
+                  name: 'cityManager',
+                  orderable:false,
+                },
+                @endrole
+                {
+                  data:'gymImage',
+                  name: 'gymImage',
+                },
+               
+                {
+                    data:'action',
+                    name:'action',
+                    orderable:false,
+
+                },
+                
+            ]
+        });
+    });
+
+
+
+    function DeleteGym(id) {
+        if (confirm("Do you want to delete this gym?") == true) {
+            var id = id;
+            $.ajax({
+                type: "POST",
+                url: "{{ url('destroy-gym') }}",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function (res) {
+                    $('#table_id').DataTable().ajax.reload();
+                },
+                error: function () {
+                    alert("There are sessions in this gym you cannot delete it");
+                }
+            });
+        }
+    }
+
+  </script>  
+@endsection
