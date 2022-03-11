@@ -84,10 +84,10 @@
                 //     data:'cityName',
                 //     name:'cityName',
                 // },
-                {
-                    data:'gymName',
-                    name:'gymName',
-                },
+                // {
+                //     data:'gymName',
+                //     name:'gymName',
+                // },
                 {
                   data:'userName',
                   name: 'userName',
@@ -97,12 +97,11 @@
                   name: 'userEmail',
                 },
                
-                // {
-                //     data:'action',
-                //     name:'action',
-                //     orderable:false,
+                {
+                    data:'sessionName',
+                    name:'sessionName',
 
-                // },
+                },
                 
             ]
         });

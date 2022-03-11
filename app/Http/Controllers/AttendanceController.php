@@ -9,39 +9,35 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    // public function index(){
       public function index(){
-        $userTrainingPackages=UserTrainingPackage::with('user')->get();
-        $gymTrainingPackages=UserTrainingPackage::with('gyms')->get();
-        
+        $users=User::all();
+        // dd($users[0]->sessions);
         if(request()->ajax()){
-            return Datatables()->of($userTrainingPackages)->addIndexColumn()
-            ->addColumn('userName', function (UserTrainingPackage $userTrainingPackage) {
-                return $userTrainingPackage->user->name;
+            return Datatables()->of($users)->addIndexColumn()
+            ->addColumn('userName', function (User $user) {
+                return $user->name;
             })
-            ->addColumn('userEmail', function (UserTrainingPackage $userTrainingPackage) {
-                return $userTrainingPackage->user->email;
+            ->addColumn('userEmail', function (User $user) {
+                return $user->email;
             })
-            ->addColumn('Name', function (UserTrainingPackage $gymTrainingPackages) {
-                return $gymTrainingPackages->gyms->all()->name;
+            ->addColumn('sessionName', function (User $user) {
+                $sessionName="";
+                if(count($user->sessions) == 0){
+                    return "NO Session attendent";
+                }
+
+                foreach($user->sessions as $session){
+                    $sessionName .= $session->name;
+                    $sessionName .="<br>";
+                }
+                return  $sessionName;
             })
-            // ->addColumn('gymName', function (UserTrainingPackage $userTrainingPackage) {
-            //     return $userTrainingPackage->gyms->name;
-            // })
-                ->rawColumns(['action'])
+
+                ->rawColumns(['action','sessionName'])
                 ->make(true);
          }
          return view('attendances.index',[
-         'userTrainingPackages' => $userTrainingPackages,
+         'userTrainingPackages' => $users,
         ]);
-      
-      
-    //   $users=User::all();
-    //   // dd($users);     ` 
-    //   return view('attendances.index',[
-    //     'userTrainingPackages' => $userTrainingPackages,
-    //     'users' => $users
-    //   ]);
-    // }
     }
   }

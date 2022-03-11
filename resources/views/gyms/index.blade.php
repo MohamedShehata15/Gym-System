@@ -135,7 +135,7 @@
 
                     <div>
                         <label class="form-label text-dark" for="cityManager">City Manager</label>
-                        <select name="cityManager" multiple class="form-control" id="cityManager">
+                        <select name="cityManager" class="form-control" id="cityManager">
 
                         </select>
                     </div>
@@ -216,14 +216,26 @@
         var id = id;
         $.ajax({
             type: "GET",
-            url: "{{ url('gyms/{id}/edit') }}",
+            url: `{{ url('gyms/${id}/edit') }}`,
             data: {
                 id: id
             },
             dataType: 'json',
             success: function (data) {
-               $('#name').val(data.gym.name);
-               $('#cityManager').val(data.citieManagers.name);
+                data.citieManagers.forEach(manager =>  {
+
+                    $('#cityManager').append(`<option value="${manager.id}">${manager.name}</option>`);
+
+                })
+                data.gymManagers.forEach(manager =>  {
+
+                    $('#gymManagers').append(`<option value="${manager.id}">${manager.name}</option>`);
+
+                })
+
+               $('#name').val(data.gym);
+
+            //    $('#cityManager').val(data.citieManagers.name);
                $('#image').val(data.gym.image);
                $('#gymManagers').val(data.gymManagers.name);
            

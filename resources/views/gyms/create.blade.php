@@ -1,3 +1,4 @@
+{{-- @dd($staff); --}}
 @extends('layouts.app')
 
 @section('content')
@@ -9,19 +10,19 @@
 
 </head>
 <body>
+
 	<h2>Create GYM :</h2>
   <div class="container">  
 	<form method="post" action="{{route("gyms.store")}}" enctype="multipart/form-data">
 		@csrf
 		<div class="mb-3">
 		  <label for="gymName" class="form-label">Name</label>
-		  <input type="text" class="form-control" id="gymName" name="name"value="{{ old('name') }}">
+		  <input type="text" class="form-control" id="gymName" name="name" value="{{ old('name') }}">
 		</div>
 		<div class="mb-3">
 			<label for="manager" class="form-label select-label">Choose Managers</label>
 			<select id="manager" class="form-select select" multiple  name="staff_id[]">
 				@foreach ($staff as $manager )
-				@dd($manager)
 				<option value="{{$manager->id}}" {{ old('staff_id')== $manager->id? "selected": "" }}>{{$manager->name}}</option>
 				@endforeach
 			</select>			
@@ -41,28 +42,6 @@
 		<button class="btn btn-primary">Add</button>
 	  </form>
   </div>  
-  {{-- <script type="text/javascript">
-    $(document).ready(function() {
-        $('#example').multiselect();
-    });
-</script> 
-
-  <select name="states" id="example" class="form-control w-50 m-auto"  multiple="multiple">
-   
-	<option value="AL">Alabama</option>
-	  <option value="AK">Alaska</option>
-	  <option value="AZ">Arizona</option>
-	  <option value="AR">Arkansas</option>
-	  <option selected value="CA">California</option>
-	 
-	</select>
-  <label class="form-label select-label">Example label</label> --}}
+ 
  @endsection
- {{-- @section("script")
- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
- <script type="text/javascript">
-    $(document).ready(function() {
-        $('#example').multiselect();
-    });
-</script>
-@endsection --}}
+ 

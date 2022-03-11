@@ -37,10 +37,8 @@ class GymController extends Controller
             ->addColumn('gymImage', function (Gym $gym) {
                 $imageGym='<img src="../uploads/gyms/'.$gym->image.'" alt="notFounded" class="rounded-circle shadow"/>';
                 return $imageGym;
-                // $url= url("storage/uploads/users/".$gym->image. "");
-                // return '<img src="'. $url .'" alt="notFounded" class="rounded-circle shadow/>';
             })
-                ->rawColumns(['action'])
+                ->rawColumns(['gymImage','action'])
                 ->make(true);
          }
          return view('gyms.index',[
@@ -50,7 +48,7 @@ class GymController extends Controller
     }
 //----------------------create--------------------//
     public function create(){
-        $staff=Staff::role('gym_manager');                            //to return array
+        $staff=Staff::role('gym_manager')->get();                            //to return array
         $cities=City::all();
         return view('gyms.create',[
             'staff' => $staff ,
@@ -94,9 +92,8 @@ class GymController extends Controller
 //----------------------edit--------------------//
     public function edit($id){
         $gym=Gym::find($id);
-        $staff=Staff::role('gym_manager');  //gymManager             //return array of names   
-        $cities=City::all();   //cityManager
-        $citieManagers=$cities->cityManager->get();
+        $staff=Staff::role('gym_manager')->get();  //gymManager             //return array of names   
+        $citieManagers=Staff::role('city_manager')->get();  //gymManager             //return array of names   
         $output=array(
            'citieManagers'=>$citieManagers,
            'gymManagers'=>$staff,
