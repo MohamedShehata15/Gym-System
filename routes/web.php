@@ -119,7 +119,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     //-------------------------- Users Routes --------------------------------
-
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('users', [UserController::class, 'store'])->name('users.store');
@@ -152,7 +151,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* ======================= City Manager Routes ========================= */
 
-    Route::group(['auth', 'isBanned'], function () {
+    // Route::group(['auth', 'isBanned'], function () {
 
         Route::GET('/gyms', [GymController::class, 'index'])->name('gyms.index');
         Route::GET('/gyms/create', [GymController::class, 'create'])->name('gyms.create');
@@ -160,7 +159,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::GET('/gyms/{id}', [GymController::class, 'show'])->name('gyms.show');
         Route::GET('/gyms/{id}/edit', [GymController::class, 'edit'])->name('gyms.edit');
         Route::PUT('/gyms/{id}', [GymController::class, 'update'])->name('gyms.update');
-        Route::DELETE('/gyms/{id}', [GymController::class, 'destroy'])->name('gyms.destroy');
+        Route::post('destroy-gym', [GymController::class, 'destroy'])->name('gyms.destroy');
         Route::get('/gyms/{id}/users', [GymController::class, 'users']);
         Route::get('/gyms/{id}/packages', [GymController::class, 'packages']);
 
@@ -172,7 +171,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::PUT('/cityManagers/{id}', [CityManagerController::class, 'update'])->name('cityManagers.update');
         Route::DELETE('/cityManagers/{id}', [CityManagerController::class, 'destroy'])->name('cityManagers.destroy');
         Route::GET('/cityManagers/{id}/ban', [CityManagerController::class, 'ban'])->name('cityManagers.ban');
-    });
+    // });
 
 
     /* ===================================================================== */
@@ -205,13 +204,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('revenue', [RevenueController::class, 'show'])->name('revenue.show');
 
     /* ======================= buyPackage Routes ========================= */
-    Route::get('buypackage', [BuyPackageController::class, 'create'])->name('buypackage.create');;
+    Route::get('buypackage/create', [BuyPackageController::class,'create'])->name('buypackage.create');;
     Route::get('getUser/{id}', function ($id) {
         $users = App\Models\User::where('gym_id', $id)->get();
         return response()->json($users);
     });
-    Route::get('getpackage/{id}', function ($id) {
+    Route::get('getPackage/{id}', function ($id) {
         $packages = App\Models\TrainingPackage::where('gym_id', $id)->get();
         return response()->json($packages);
     });
+    Route::POST('buypackage',[BuyPackageController::class, 'store'])->name('buypackage.store');
 });

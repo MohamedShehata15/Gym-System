@@ -41,11 +41,13 @@ class CityManagerController extends Controller
     public function update($staffId)
     {
         $requestData = request()->all();
+        $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
+        $requestData['avatar']->move(public_path('images'), $imageName);
         Staff::find($staffId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
-            'avatar' => $requestData['avatar'],
+            'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
             
@@ -71,12 +73,13 @@ class CityManagerController extends Controller
     public function store()
     {
         $requestData = request()->all();
-       
+        $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
+        $requestData['avatar']->move(public_path('images'), $imageName);
         $cityManager= Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
-            'avatar' => $requestData['avatar'],
+            'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
             

@@ -4,7 +4,7 @@
     <h1> Training Sessions</h1>
     <a href="{{route('sessions.create')}}" class="btn btn-success btn-lg my-2">Add Session</a>
 
-    <table class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark" id="myTable">
+    <table class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark" id="myTable">
         <thead>
             <tr class="text-white">
                 <th scope="col">#</th>

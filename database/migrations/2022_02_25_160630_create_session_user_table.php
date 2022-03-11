@@ -11,7 +11,7 @@ return new class extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('session_users', function (Blueprint $table) {
+        Schema::create('session_user', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignId('session_id')->constrained()->onDelete('cascade');

@@ -30,7 +30,6 @@
             <th>email</th>
             <th>avatar</th>
             <th>national_id</th>
-            <th>is_baned</th>
             <th></th>
         </tr>
     </thead>
@@ -82,10 +81,7 @@
                     data:'national_id',
                     name:'national_id',
                 },
-                {
-                    data:"is_baned",
-                    name:"is_baned",
-                },
+                
                 {
                     data: 'action',
                     name: 'action',
