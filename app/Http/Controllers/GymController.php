@@ -6,12 +6,10 @@ use App\Http\Requests\GmyRequest;
 use App\Models\City;
 use App\Models\Gym;
 use App\Models\Session;
-use App\Models\SessionStaff;
 use App\Models\Staff;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Nette\Utils\Json;
+
 
 class GymController extends Controller {
 
@@ -100,7 +98,7 @@ class GymController extends Controller {
         $gym = Gym::find($id);
         $cities = City::all();
 
-        dd(count(Session::where("gym_id", $id)->get())==0);
+
         return view('gyms.edit', [
             'gym' => $gym,
             'cities' => $cities
