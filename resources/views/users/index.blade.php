@@ -6,7 +6,6 @@
 @section('content')
 <br>
 <div class="text-center mydiv">
-    <a href="{{route('users.create')}}" class="btn btn-success" > Add New User </a>
     <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
         <thead>
             <tr class="text-white">

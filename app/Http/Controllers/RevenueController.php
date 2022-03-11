@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Gym;
 use App\Models\City;
+use App\Models\User;
 use App\Models\GymManager;
+use App\Models\UserTrainingPackage;
 
 class RevenueController extends Controller
 {

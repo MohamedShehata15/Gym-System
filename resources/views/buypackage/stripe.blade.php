@@ -188,7 +188,7 @@
                 success: function (response) {
                     response.packages.forEach(package => {
                         $('.packages').append(`<option value="${package.id}">
-                            <span>${package.name}  $${package.price}</span>
+                            <span>${package.name}  $${package.price * 0.01}</span>
                         </option>`);
                     })
                 }

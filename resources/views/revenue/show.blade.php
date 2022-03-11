@@ -7,7 +7,7 @@
     <div class="card p-5 bg-success">
         <div class="pricing  rounded  d-flex ">
                 <i class="nav-icon fas fa  fa-credit-card"></i> 
-                <div class="d-flex flex-column ml-4"> <span class="business">Revenue : {{$revenue}}</span> </div>
+                <div class="d-flex flex-column ml-4"> <span class="business">Revenue : ${{$revenue * 0.01}}</span> </div>
                 </div>
 
         </div>

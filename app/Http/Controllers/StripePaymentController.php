@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use App\Models\TrainingPackage;
 use App\Models\User;
+use App\Models\Gym;
 use App\Models\UserTrainingPackage;
 use Illuminate\Http\Request;
 use Session;
@@ -20,9 +21,7 @@ class StripePaymentController extends Controller {
 
         $trainingPackage = TrainingPackage::find($request->training_package);
         $user = User::find($request->user);
-
-        // dd($user);
-
+        
         if ($user->remaining_sessions > 0) {
             Session::flash('error', "You have already remaining sessions");
             return back();
@@ -43,6 +42,11 @@ class StripePaymentController extends Controller {
             'price' => $trainingPackage->price,
             'training_package_id' => $trainingPackage->id,
             'user_id' => $user->id
+        ]);
+        $oldRevenue = Gym::where('id',$user->gym_id)->get()[0]->revenue;
+        $newRevenue = $oldRevenue + $trainingPackage->price;
+        Gym::find($user->gym_id)->update([
+            'revenue' => $newRevenue,
         ]);
 
         Session::flash('success', 'Payment successful!');
