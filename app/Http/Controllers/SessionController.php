@@ -17,30 +17,22 @@ use Illuminate\Support\Facades\Auth;
 
 class SessionController extends Controller {
     public function index() {
-        if(Auth::user()->hasRole('Super-Admin'))
-        {
+        if (Auth::user()->hasRole('Super-Admin')) {
             $sessions = Session::with('gym')->get();
-        }
-        elseif(Auth::user()->hasRole('city_manager'))
-        {
-           
+        } elseif (Auth::user()->hasRole('city_manager')) {
+
             $cityId = City::where('staff_id', Auth::user()->id)->first()['id'];
-            $gymIds = Gym::where('city_id',$cityId)->pluck('id');
+            $gymIds = Gym::where('city_id', $cityId)->pluck('id');
             $sessions = collect();
-            foreach($gymIds as $gymId)
-            {
-                $gymSessions = Session::where('gym_id',$gymId)->get();
-                 foreach($gymSessions as $gymSession)
-                 {
-                     $sessions->push($gymSession);
-                 };
+            foreach ($gymIds as $gymId) {
+                $gymSessions = Session::where('gym_id', $gymId)->get();
+                foreach ($gymSessions as $gymSession) {
+                    $sessions->push($gymSession);
+                };
             }
-            
-        }
-        elseif(Auth::user()->hasRole('gym_manager'))
-        {
-            $gymId = GymManager::where('staff_id',Auth::user()->id)->first()['gym_id'];
-            $sessions = Session::with('gym')->where('gym_id',$gymId)->get();
+        } elseif (Auth::user()->hasRole('gym_manager')) {
+            $gymId = GymManager::where('staff_id', Auth::user()->id)->first()['gym_id'];
+            $sessions = Session::with('gym')->where('gym_id', $gymId)->get();
         }
 
 
@@ -48,21 +40,18 @@ class SessionController extends Controller {
             return datatables()->of($sessions)
                 ->addColumn('Coaches', function (Session $session) {
                     $coaches = $session->coaches->pluck('name'); //extract name keys from data
-                    
-                        return count($coaches)>0? $coaches->implode(' , '):"None";
-                    
+
+                    return count($coaches) > 0 ? $coaches->implode(' , ') : "None";
                 })
                 ->addColumn('gym', function (Session $session) {
-                     //extract name keys from data
-                    
-                        return $session->gym->name;
-                    
+                    //extract name keys from data
+
+                    return $session->gym->name;
                 })
                 ->addColumn('city', function (Session $session) {
                     $cityId = $session->gym->city_id; //extract name keys from data
-                    
-                        return City::find($cityId)->name;
-                    
+
+                    return City::find($cityId)->name;
                 })
 
                 ->addColumn('action', function ($data) {
@@ -103,7 +92,7 @@ class SessionController extends Controller {
                 'name' => $requestData['name'],
                 'start_at' => $dataTimeStart,
                 'finish_at' => $dateTimeFinish,
-                'gym_id'=>2
+                'gym_id' => 2
             ]);
 
             $coaches = $requestData['coaches'];
