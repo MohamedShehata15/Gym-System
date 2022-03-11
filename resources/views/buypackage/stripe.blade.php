@@ -197,7 +197,7 @@
                     $('.packages').append(`<option value="" disabled selected hidden>Select a Package</option>`);
                     response.packages.forEach(package => {
                         $('.packages').append(`<option value="${package.id}">
-                            <span>${package.name}  $${package.price}</span>
+                            <span>${package.name}  $${package.price * 0.01}</span>
                         </option>`);
                     })
                 }
