@@ -8,14 +8,14 @@ use App\Models\Gym;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Nette\Utils\Json;
 
 class GymController extends Controller {
 
 //----------------------index--------------------//
     public function index(){
-        $gyms=Gym::with('city')->get();
-       
+        $gyms=Gym::with('city')->get();       
         if(request()->ajax()){
             return Datatables()->of($gyms)->addIndexColumn()
             ->addColumn('action',function($data){

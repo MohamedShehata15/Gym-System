@@ -1,72 +1,27 @@
-{{-- @extends('layouts.app')
-@section('content')
-   
-
-</head>
-<body> 
-<div class="text-center mydiv">
-    <table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark">
-        <thead>
-            <tr class="text-white">
-                <th>City</th>
-                <th>Gym</th>
-                <th>User Name</th>
-                <th>User Email</th>
-                <th>Session Name</th>
-                <th>Session Time</th>
-                <th>Session Date</th>
-                
-            </tr>
-        </thead>
-        <tbody class="text-dark">
-            @foreach ($userTrainingPackages as $userTrainingPackage ) --}}
-                 {{-- @dd(User::where('id',$UserTrainin->user_id)->get()); --}}
-                 {{-- <tr>`
-                     <td>City</td>
-                     <td>Gym</td>
-                     <td>{{$users::find($userTrainingPackage->user_id)}}</td> --}}
-                     {{-- <td>{{$userTrainingPackage->users->name}}</td> --}}
-                     {{-- <td>{{$userTrainingPackage->training_package_id}}</td>
-                     <td>{{\Carbon\Carbon::parse($userTrainingPackage->date)->format('H:i:s') }}</td>
-                     <td>{{\Carbon\Carbon::parse($userTrainingPackage->date)->format('Y-M-D') }}</td>                       
-                 </tr>
-            @endforeach     
-        </tbody>
-    </table> 
-</div> 
-  @endsection
-
-  @section('script')
-       <script>
-           $(document).ready( function () {
-           $('#table_id').DataTable();
-           });
-       </script>
-   @endsection	    --}}
-
-   @extends('layouts.app')
+@extends('layouts.app')
 @section('third_party_stylesheets')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
+<div class="text-center mydiv">
+    <h1> User Attendance</h1>
 
-
-<table id="attendanceTable" class="table table-bordered table-striped bg-light">
-    <thead>
-        <tr>
-            <th>City</th>
-            <th>Gym</th>
-            <th>User Name</th>
-            <th>User Email</th>
-            <th>Session Name</th>
-            <th>Session Time</th>
-            <th>Session Date</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+    <table id="attendanceTable" class="table table-bordered table-striped bg-light">
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Gym</th>
+                <th>User Name</th>
+                <th>User Email</th>
+                <th>Session Name</th>
+                <th>Session Start At</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
 @endsection
 @section('third_party_scripts')
     <script src="{{ mix('js/app.js') }}" defer></script>
@@ -82,14 +37,14 @@
                 url: "{{ route('attendances.index') }}"
             },
             columns:[
-                // {
-                //     data:'cityName',
-                //     name:'cityName',
-                // },
-                // {
-                //     data:'gymName',
-                //     name:'gymName',
-                // },
+                {
+                    data:'cityName',
+                    name:'cityName',
+                },
+                {
+                    data:'gymName',
+                    name:'gymName',
+                },
                 {
                   data:'userName',
                   name: 'userName',
@@ -102,6 +57,11 @@
                 {
                     data:'sessionName',
                     name:'sessionName',
+
+                },
+                {
+                    data:'sessionTime',
+                    name:'sessionTime',
 
                 },
                 

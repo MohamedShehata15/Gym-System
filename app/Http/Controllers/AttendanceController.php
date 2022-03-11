@@ -9,11 +9,31 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
+
+    //==================Session Data============//
+    public function sessionData($dataType ,User $user){
+        $sessionData="";
+        if(count($user->sessions) == 0){
+            return "NO Session attendent";
+        }
+        foreach($user->sessions as $session){
+            $sessionData .= $session->$dataType;
+            $sessionData .="<br>";
+        }
+        return $sessionData;
+    }
+   //====================index===================//
       public function index(){
         $users=User::all();
         // dd($users[0]->sessions);
         if(request()->ajax()){
             return Datatables()->of($users)->addIndexColumn()
+            ->addColumn('cityName', function (User $user) {
+                return $user->gym->city->name;
+            })
+            ->addColumn('gymName', function (User $user) {
+                return $user->gym->name;
+            })
             ->addColumn('userName', function (User $user) {
                 return $user->name;
             })
@@ -21,19 +41,15 @@ class AttendanceController extends Controller
                 return $user->email;
             })
             ->addColumn('sessionName', function (User $user) {
-                $sessionName="";
-                if(count($user->sessions) == 0){
-                    return "NO Session attendent";
-                }
-
-                foreach($user->sessions as $session){
-                    $sessionName .= $session->name;
-                    $sessionName .="<br>";
-                }
+                $sessionName=$this->sessionData('name',$user);
                 return  $sessionName;
             })
+            ->addColumn('sessionTime', function (User $user) {
+                $sessionTime=$this->sessionData('start_at',$user);
+                return  $sessionTime;
+            })
 
-                ->rawColumns(['action','sessionName'])
+                ->rawColumns(['action','sessionName','sessionTime','sessionDate'])
                 ->make(true);
          }
          return view('attendances.index',[

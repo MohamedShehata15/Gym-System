@@ -54,4 +54,8 @@ class User extends Authenticatable {
     {
         return $this->belongsToMany(Session::class);
     }
+    public function gym()
+    {
+        return $this->belongsTo(Gym::class);
+    }
 }
