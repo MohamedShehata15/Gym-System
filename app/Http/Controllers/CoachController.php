@@ -6,6 +6,8 @@ use App\Models\Staff;
 use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymCoach;
+use App\Models\GymManager;
+use App\Models\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -153,7 +155,61 @@ class coachController extends Controller {
         $coach = Staff::find($id);
         return view('coaches.profile', ['coach' => $coach]);
     }
-    public function sessions() {
+    public function sessions($id) {
+        // $coachSession = Staff::find($id)->coachSessions;
+        // dd($coachSession);
+        if (Auth::user()->hasRole('Super-Admin')) {
+            $sessions = Session::with('gym')->get();
+        } elseif (Auth::user()->hasRole('city_manager')) {
+
+            $cityId = City::where('staff_id', Auth::user()->id)->first()['id'];
+            $gymIds = Gym::where('city_id', $cityId)->pluck('id');
+            $sessions = collect();
+            foreach ($gymIds as $gymId) {
+                $gymSessions = Session::where('gym_id', $gymId)->get();
+                foreach ($gymSessions as $gymSession) {
+                    $sessions->push($gymSession);
+                };
+            }
+        } elseif (Auth::user()->hasRole('gym_manager')) {
+            $gymId = GymManager::where('staff_id', Auth::user()->id)->first()['gym_id'];
+            $sessions = Session::with('gym')->where('gym_id', $gymId)->get();
+        }
+
+
+        if (request()->ajax()) {
+            return datatables()->of($sessions)
+                ->addColumn('Coaches', function (Session $session) {
+                    $coaches = $session->coaches->pluck('name'); //extract name keys from data
+
+                    return count($coaches) > 0 ? $coaches->implode(' , ') : "None";
+                })
+                ->addColumn('gym', function (Session $session) {
+                    //extract name keys from data
+
+                    return $session->gym->name;
+                })
+                ->addColumn('city', function (Session $session) {
+                    $cityId = $session->gym->city_id; //extract name keys from data
+
+                    return City::find($cityId)->name;
+                })
+
+                ->addColumn('action', function ($data) {
+                    $button = '<a
+                onClick="EditSession(' . $data->id . ')"
+                class="edit btn btn-primary btn-sm ">Edit</a>';
+
+                    $button .= '<a
+                onClick="DeleteSession(' . $data->id . ')"
+                class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $button;
+                })
+
+
+                ->rawColumns(array('action')) //for cells have html
+                ->make(true);
+        }
         return view('coaches.sessions');
     }
     public function password() {

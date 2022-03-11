@@ -17,6 +17,7 @@ class GymController extends Controller {
 
     //----------------------index--------------------//
     public function index() {
+        
         if (Auth::user()->hasRole('city_manager')) {
             $city = City::where('staff_id', Auth::user()->id)->first();
             $gyms = Gym::with('city')->where('city_id', $city->id)->get();
@@ -46,6 +47,7 @@ class GymController extends Controller {
         }
         return view('gyms.index', [
             'gyms' => $gyms,
+            
         ]);
     }
     //----------------------create--------------------//
@@ -109,7 +111,7 @@ class GymController extends Controller {
         ]);
     }
     //----------------------update--------------------//
-    public function update($id, GmyRequest $request) {
+    public function update($id,GmyRequest $request) {
         $gym = Gym::find($id);
         $gymData = request()->all();
         if(isset($request['image']))
@@ -147,5 +149,9 @@ class GymController extends Controller {
     public function packages($gymId) {
         $packages = TrainingPackage::where('gym_id', $gymId)->get();
         return response()->json(['packages' => $packages]);
+    }
+    public function coaches($gymId) {
+        $coaches = Gym::find($gymId)->gymCoaches;
+        return response()->json(['coaches' => $coaches]);
     }
 }

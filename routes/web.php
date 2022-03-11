@@ -161,6 +161,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('destroy-gym', [GymController::class, 'destroy'])->name('gyms.destroy');
         Route::get('/gyms/{id}/users', [GymController::class, 'users']);
         Route::get('/gyms/{id}/packages', [GymController::class, 'packages']);
+        Route::get('/gyms/{id}/coaches', [GymController::class, 'coaches']);
 
         Route::GET('/cityManagers', [CityManagerController::class, 'index'])->name('cityManagers.index');
         Route::GET('/cityManagers/create', [CityManagerController::class, 'create'])->name('cityManagers.create');

@@ -36,7 +36,7 @@
         <input type="text" name="national_id" id="national_id" class="form-control" value="{{$coach->national_id}}" />
     </div>
 
-
+    @role('Super-Admin')
     <div class="mb-3  col-sm-6" id="cityDiv">
         <label for="city" class="form-label">City</label>
         <select name="city" class="form-control" id="city">
@@ -64,11 +64,13 @@
         </div>
     </div>
 
+    @endrole
+
     <button type="submit" class="btn btn-primary col-sm-6">Update</button>
 </form>
 </div>
 
-
+@role('Super-Admin')
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
     crossorigin="anonymous"></script>
 
@@ -114,6 +116,6 @@
     document.querySelector('#gymDiv #gym').addEventListener('input', e => tags(e, ".gymsTags"));
 
 </script>
-
+@endrole
 
 @endsection
