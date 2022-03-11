@@ -1,17 +1,31 @@
+{{-- @dd($staff); --}}
 @extends('layouts.app')
 
 @section('content')
-   
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
 
 </head>
 <body>
+
 	<h2>Create GYM :</h2>
   <div class="container">  
 	<form method="post" action="{{route("gyms.store")}}" enctype="multipart/form-data">
 		@csrf
 		<div class="mb-3">
 		  <label for="gymName" class="form-label">Name</label>
-		  <input type="text" class="form-control" id="gymName" name="name"value="{{ old('name') }}">
+		  <input type="text" class="form-control" id="gymName" name="name" value="{{ old('name') }}">
+		</div>
+		<div class="mb-3">
+			<label for="manager" class="form-label select-label">Choose Managers</label>
+			<select id="manager" class="form-select select" multiple  name="staff_id[]">
+				@foreach ($staff as $manager )
+				<option value="{{$manager->id}}" {{ old('staff_id')== $manager->id? "selected": "" }}>{{$manager->name}}</option>
+				@endforeach
+			</select>			
 		</div>
 		@role('Super-Admin')
 		<div class="mb-3">
@@ -30,6 +44,7 @@
 		</div>
 		<button class="btn btn-primary">Add</button>
 	  </form>
-  </div>   
-
+  </div>  
+ 
  @endsection
+ 

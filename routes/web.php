@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //------------------------- Cities Routes ------------------------------
     Route::get('cities', [CityController::class, 'index'])->name('cities.index');
+    Route::get('/cities/{id}/gyms', [CityController::class, 'gyms']);
     Route::post('edit-city', [CityController::class, 'edit'])->name('cities.edit');
     Route::post('destroy-city', [CityController::class, 'destroy'])->name('cities.destroy');
     Route::post('store-city', [CityController::class, 'store'])->name('cities.store');
@@ -191,7 +192,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     /* ======================= Attendance Routes ========================= */
-    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendances.index');
 
     /* ======================= Payment Routes ========================= */
     Route::group(['middleware' => ['role_or_permission:Super-Admin|city_manager|gym_manager']], function () {
@@ -200,10 +201,10 @@ Route::group(['middleware' => 'auth'], function () {
     });
     /* ===================================================================== */
     /* ======================= Revenue Routes ========================= */
-    Route::get('revenue',[RevenueController::class,'show']);
+    Route::get('revenue', [RevenueController::class, 'show'])->name('revenue.show');
 
     /* ======================= buyPackage Routes ========================= */
-    Route::get('buypackage',[BuyPackageController::class,'create']);
+    Route::get('buypackage', [BuyPackageController::class, 'create'])->name('buypackage.create');;
     Route::get('getUser/{id}', function ($id) {
         $users = App\Models\User::where('gym_id', $id)->get();
         return response()->json($users);

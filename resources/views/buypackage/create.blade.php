@@ -1,27 +1,35 @@
 @extends('layouts.app')
-@section('third_party_stylesheets')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-@endsection
+
 @section('content')
-<div class="selectDiv">
+<div class="selectDiv mydiv">
 @role('Super-Admin')
-<select class="selectBody form-select" id="city" >
+<form class="row d-flex flex-column justify-content-center align-items-center" >
+<div class="mb-3 col-sm-6" id="cityDiv">
+ <label for="city" class="form-label">City</label>
+  <select class="form-control" id="city" >
     <option selected disabled hidden> Select City </option>
     @foreach($cities as $city)
     <option value={{$city->id}}>{{$city->name}}</option>
     @endforeach
 </select>
+</div>
 @endrole
+
 @can('gym-managers')
-<select class="selectBody form-select" id="gym" >
+<div class="mb-3 col-sm-6" id="gymDiv">
+ <label for="gym" class="form-label">Gym</label>
+<select class="form-control" id="gym" >
     <option selected disabled hidden> Select Gym </option>
     @foreach($gyms as $gym)
     <option value={{$gym->id}}>{{$gym->name}}</option>
     @endforeach
 </select>
+</div>
 @endcan
-<select class=" selectBody form-select " id="user" >
+
+<div class="mb-3 col-sm-6" id="userDiv">
+<label for="user" class="form-label">User</label>
+<select class="form-control" id="user" >
     <option selected disabled hidden> Select User </option>
     @role('gym_manager')
     @foreach($users as $user)
@@ -29,7 +37,11 @@
     @endforeach
     @endrole
 </select>
-<select class="selectBody form-select " id="package">
+</div>
+
+<div class="mb-3 col-sm-6" id="packageDiv">
+<label for="package" class="form-label">Package</label>
+<select class="form-control " id="package">
     <option selected disabled hidden> Select Training Package </option>
     @role('gym_manager')
     @foreach($packages as $package)
@@ -38,8 +50,15 @@
     @endrole
 </select>
 </div>
+
+<button type="submit" class="btn btn-success">Buy</button>
+
+</form>
+</div>
 @endsection
 @section('third_party_scripts')
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
 integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
 crossorigin="anonymous"></script>

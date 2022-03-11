@@ -1,116 +1,21 @@
-{{-- @extends('layouts.app')
-
-@section('content')
-   
-<style>
-    img {
-        width:75px;
-    }
-</style>
-
-</head>
-<body> 
-    @if(Session::has('fail'))
-        <div class="alert alert-danger">
-        {{Session('fail')}}
-    </div>
-    {{Session()->forget('fail')}}
-    @endif
-    <br>
-    <div class="d-flex justify-content-center mb-2">
-    <a href="{{route('gyms.create')}}" class="btn btn-success">Add New Gym </a>
-    </div>
-    <table id="gyms" class="display">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Created at</th>
-                @if(Auth::user()->role=="admin")
-                    <th>City Manager</th>
-                @endif
-                <th>Cover_Image</th>
-                <th>Cover Image</th>
-                @role('Super-Admin')
-                <th>City Manager Name</th>
-                @endrole
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody class="text-dark">
-            @foreach ( $gyms as $gym )
-                <tr>
-                    <td>{{$gym->name}}</td>
-                    <td>{{\Carbon\Carbon::parse($gym->created_at)->format('Y-M-D')}}</td>
-                    @if(Auth::user()->role=="admin")
-                         <td>{{$gym->city->cityManager->name}}</td>
-                    @endif
-                    <td><img src="../uploads/gyms/{{$gym->image}}" alt="notFounded" class="rounded-circle shadow"/></td>
-                    <td>{{$gym->image}}</td>
-                    @role('Super-Admin')
-                    <td>{{$gym->created_by}}</td>
-                    @endrole
-                    <td>
-                        <a href="{{route('gyms.show',['id' => $gym->id])}}" class="btn btn-info">Show</a>
-                        <a href="{{route('gyms.edit',['id' => $gym->id])}}" class="btn btn-warning">Edit</a>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{$gym->id}}">
-                            Delete
-                        </button> --}}
-                       {{-- //Model For Delete :) // --}}
-                        {{-- <div class="modal fade" id="exampleModal{{$gym->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered"">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure that you want to delete this GYM? 
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">No</button>
-                                        <form action="{{route('gyms.destroy',['id' => $gym->id])}}" method="POST">
-                                            @csrf
-                                            @method('DELEtE')
-                                            <button type="submit" class="btn btn-danger">Yes</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>    
-                </tr> 
-            @endforeach  
-        </tbody>
-    </table>  
-  @endsection
-
-  @section('script')
-       <script>
-           $(document).ready( function () {
-           $('#gyms').DataTable();
-           });
-       </script>
-   @endsection	    --}}
-
-
 @extends('layouts.app')
 @section('third_party_stylesheets')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-
+<div class="text-center mydiv">
+    <h1> Gyms</h1>
+    <a href="{{route('gyms.create')}}" class="btn btn-success btn-lg my-2">Add Gym</a>
 
 <table id="gymsTable" class="table table-bordered table-striped bg-light">
     <thead>
         <tr>
             <th>Name</th>
                 <th>Created at</th>
-                {{-- @if(Auth::user()->hasrole=="admin") --}}
+                @if(Auth::user()->hasRole("Super-Admin"))
                     <th>City Manager</th>
-                {{-- @endif --}}
+                @endif 
                 <th>Cover_Image</th>
                 <th>Action</th>
         </tr>
@@ -144,18 +49,10 @@
                     </div>
 
                     <div>
-                        <label class="form-label text-dark" for="city">City</label>
-                        <select class="form-control"  name="City" id="city">
-                            
-                           </select>	
-                    </div>
+                        <label class="form-label text-dark" for="cityManager">City Manager</label>
+                        <select name="cityManager" class="form-control" id="cityManager">
 
-                    <div>
-                        <label class="form-label text-dark" for="managers">Gym Managers</label>
-                        <select class="form-control" multiple  name="managers[]" id="managers">
-                           
-                            
-                          </select>	
+                        </select>
                     </div>
 
                     <div>
@@ -163,7 +60,12 @@
                         <input name="image" type="file" id="image" class="form-control" />
                     </div>
 
+                    <div class="form-group">
+                        <label class="form-label text-dark" for="exampleFormControlSelect2">Choose Gym Managers</label>
+                        <select name="gymManagers[]" multiple class="form-control" id="gymManagers">
 
+                        </select>
+                     </div>
                     <form>
             </div>
 
@@ -197,7 +99,7 @@
                 },
                 {
                     data:'created_at',
-                    name:'gym.create_at',
+                    name:'created_at',
                 },
                 {
                   data:'cityManager',
@@ -224,32 +126,61 @@
             ]
         });
     });
+
     function editFunc(id) {
         var id = id;
         $.ajax({
-           type:"GET",
-           url: "{{ url('gyms/{id}/edit') }}",
-           data: { id: id },
-           dataType: 'json',
-           success: function(data){
-             //get data and put it into the modal
-             var cities=data.cities;
-             var gymManagers=data.gymManagers;
-             $('#id').val(id);
-             $('#name').val(data.gym);
-             for (var j = 0; j< cities.length; j++) {      
-                 $("#city").append(new Option(cities[j]));                       
-                   }
-            for (var j = 0; j< gymManagers.length; j++) {      
-                 $("#managers").append(new Option(gymManagers[j]));                       
-                   }
-               //show the modal
-               var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+            type: "GET",
+            url: `{{ url('gyms/${id}/edit') }}`,
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function (data) {
+                data.citieManagers.forEach(manager =>  {
+
+                    $('#cityManager').append(`<option value="${manager.id}">${manager.name}</option>`);
+
+                })
+                data.gymManagers.forEach(manager =>  {
+
+                    $('#gymManagers').append(`<option value="${manager.id}">${manager.name}</option>`);
+
+                })
+
+               $('#name').val(data.gym);
+
+            //    $('#cityManager').val(data.citieManagers.name);
+               $('#image').val(data.gym.image);
+               $('#gymManagers').val(data.gymManagers.name);
+           
+                //show the modal
+                var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
                myModal.show();
-           }
+            }
+            
+        });
+    }  
 
-          });   
 
+    function DeleteGym(id) {
+        if (confirm("Do you want to delete this session?") == true) {
+            var id = id;
+            $.ajax({
+                type: "POST",
+                url: "{{ url('destroy') }}",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function (res) {
+                    $('#gymsTable').DataTable().ajax.reload();
+                },
+                error: function () {
+                    alert("There are people will attend this session you cannot delete it...");
+                }
+            });
+        }
     }
 
-  </script>
+  </script>  

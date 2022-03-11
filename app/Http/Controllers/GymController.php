@@ -8,34 +8,33 @@ use App\Models\Gym;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Nette\Utils\Json;
-use App\Models\UserCoachSession;
 use Illuminate\Support\Facades\Auth;
+use Nette\Utils\Json;
 
 class GymController extends Controller {
 
 //----------------------index--------------------//
     public function index(){
-        $gyms=Gym::with('city')->get();
-       
+        $gyms=Gym::with('city')->get();       
         if(request()->ajax()){
             return Datatables()->of($gyms)->addIndexColumn()
             ->addColumn('action',function($data){
                     $actionBtn = '<a href="'.route('gyms.show', $data->id).'"  class="show btn btn-info btn-sm">Show</a>
-                                 <a onClick="editFunc(' . $data->id . ')" class="edit btn btn-warning btn-sm">Edit</a>
-                                 <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-                    
-                                 return $actionBtn;
+                                 <a onClick="editFunc('.$data->id.')" class="edit btn btn-warning btn-sm">Edit</a>
+                                 <a onClick="DeleteGym('.$data->id.')" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
             })
             ->addColumn('cityManager', function (Gym $gym) {
                 return $gym->city->cityManager->name;
             })
-            ->addColumn('gymImage', function (Gym $gym) {
-                // $imageGym=<img src="../uploads/gyms/{{$gym->image}}" alt="notFounded" class="rounded-circle shadow"/>
-                // <img src="../uploads/gyms/{{$gym->image}}" alt="notFounded" class="rounded-circle shadow"/>
-                return $gym->image;
+            ->addColumn('created_at', function ($gym) {
+                return $gym->created_at->format('Y-M-D');
             })
-                ->rawColumns(['action'])
+            ->addColumn('gymImage', function (Gym $gym) {
+                $imageGym='<img src="../uploads/gyms/'.$gym->image.'" alt="notFounded" class="rounded-circle shadow"/>';
+                return $imageGym;
+            })
+                ->rawColumns(['gymImage','action'])
                 ->make(true);
          }
          return view('gyms.index',[
@@ -43,12 +42,12 @@ class GymController extends Controller {
         ]);
         
     }
-    //----------------------create--------------------//
-    public function create() {
-        $staff = Staff::role("gym_manager")->get();                            //to return array
-        $cities = City::all();
-        return view('gyms.create', [
-            'staff' => $staff,
+//----------------------create--------------------//
+    public function create(){
+        $staff=Staff::role('gym_manager')->get();                            //to return array
+        $cities=City::all();
+        return view('gyms.create',[
+            'staff' => $staff ,
             'cities' => $cities
         ]);
     }
@@ -87,14 +86,14 @@ class GymController extends Controller {
         ]);
     }
 //----------------------edit--------------------//
-    public function edit(Request $request){
-        $gym=Gym::find($request->id);
-        $staff=Staff::select('name')->get()->pluck('name');; //gymManager     
-        $citiesNames=City::select('name')->get()->pluck('name'); //city names   
+    public function edit($id){
+        $gym=Gym::find($id);
+        $staff=Staff::role('gym_manager')->get();  //gymManager             //return array of names   
+        $citieManagers=Staff::role('city_manager')->get();  //gymManager             //return array of names   
         $output=array(
-            'gym'=> $gym->name,
-            'cities'=>$citiesNames,
-            'gymManagers'=>$staff
+           'citieManagers'=>$citieManagers,
+           'gymManagers'=>$staff,
+            'gym'=> $gym->name
         );
         echo json_encode($output);
 
@@ -113,33 +112,21 @@ class GymController extends Controller {
         return redirect()->route("gyms.index");
     }
     //----------------------destroy--------------------//
-    public function destroy($id) {
-        $flag = 0;
-        $gymCoaches = Gym::find($id)->gymCoaches;
-        foreach ($gymCoaches as $gymCoach) {
-            $gymSession = UserCoachSession::where('staff_id', $gymCoach->id)->get();
-            if ($gymSession != NULL) {
-                $flag = 1;
+    public function destroy(Request $request){ 
+       $flag=0;
+       $gymCoaches= Gym::find($request->id)->gymCoaches;
+        foreach($gymCoaches as $gymCoache){
+            $gymSession= SessionStaff::where('staff_id',$gymCoache->id)->get();
+            if($gymSession != NULL){
+                $flag=1;
             }
         }
-        if ($flag == 0) {
-            Gym::find($id)->delete();
-            return redirect()->route("gyms.index");
-        } else {
-            Session(['fail' => "You Can't Delete this GYM it had a sessions."]);
+        if($flag==0){
+            $gym=Gym::find($request->id)->delete();
+            return (Response()->json($gym));
+        }else{
             return redirect()->route("gyms.index");
         }
     }
 
-    //----------------------Get Gym users--------------------//
-    public function users($id) {
-        $users = Gym::find($id)->users->all();
-        return $users;
-    }
-
-    //----------------------Get Gym Packages--------------------//
-    public function packages($id) {
-        $packages = Gym::find($id)->trainingPackages->all();
-        return $packages;
-    }
 }

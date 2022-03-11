@@ -145,12 +145,14 @@
                 headers: {
                     'Accept': 'application/json'
                 },
-                url: 'http://127.0.0.1:8000/cities',
+                url: `http://127.0.0.1:8000/cities/${$(this).val()}/gyms`,
                 success: function (response) {
-                    response.data.forEach(gym => {
-                        $('.gyms').append(
-                            `<option value="${gym.id}">${gym.name}</option>`);
-                    })
+                    if(response.gyms.length > 0) {
+                        response.gyms.forEach(gym => {
+                            $('.gyms').append(
+                                `<option value="${gym.id}">${gym.name}</option>`);
+                        })
+                    }
                 }
             })
         });
@@ -165,6 +167,7 @@
                 },
                 url: `http://127.0.0.1:8000/gyms/${$(this).val()}/users`,
                 success: function (response) {
+                    console.log(response);
                     response.forEach(user => {
                         $('.users').append(`<option value="${user.id}">
                             <span>${user.name}</span>
