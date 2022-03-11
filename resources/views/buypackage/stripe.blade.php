@@ -147,6 +147,8 @@
                 },
                 url: `http://127.0.0.1:8000/cities/${$(this).val()}/gyms`,
                 success: function (response) {
+                    $('.gyms').empty();
+                    $('.gyms').append(`<option value="" disabled selected hidden>Select a Gym</option>`);
                     if(response.gyms.length > 0) {
                         response.gyms.forEach(gym => {
                             $('.gyms').append(
@@ -167,7 +169,13 @@
                 },
                 url: `http://127.0.0.1:8000/gyms/${$(this).val()}/users`,
                 success: function (response) {
+<<<<<<< HEAD
+=======
+                    $('.users').empty();
+                    $('.users').append(`<option value="" disabled selected hidden>Select a user name</option>`);
+>>>>>>> 4f485d8737ff4861ea3bc07f27a1d9b75f4f4be9
                     response.users.forEach(user => {
+
                         $('.users').append(`<option value="${user.id}">
                             <span>${user.name}</span>
                         </option>`);
@@ -185,6 +193,8 @@
                 },
                 url: `http://127.0.0.1:8000/gyms/${$(this).val()}/packages`,
                 success: function (response) {
+                    $('.packages').empty();
+                    $('.packages').append(`<option value="" disabled selected hidden>Select a Package</option>`);
                     response.packages.forEach(package => {
                         $('.packages').append(`<option value="${package.id}">
                             <span>${package.name}  $${package.price}</span>
