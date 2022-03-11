@@ -27,7 +27,7 @@ class GmyRequest extends FormRequest
         if(Auth::user()->hasRole('Super-Admin')){
             return [ 
                 'name' => ['required','min:4','max:15'],
-                'image' => ['image','mimes:jpg,png,jpeg,gif,svg'],
+                'image' => ['image','mimes:jpg,png,jpeg'],
                 'city_id' => ['required'],  
             ];
         }
@@ -35,7 +35,7 @@ class GmyRequest extends FormRequest
         {
             return [ 
                 'name' => ['required','min:4','max:15'],
-                'image' => ['image','mimes:jpg,png,jpeg,gif,svg'],  
+                'image' => ['image','mimes:jpg,png,jpeg'],  
             ];
         }
         
@@ -51,7 +51,7 @@ class GmyRequest extends FormRequest
         return [
             'title.required' => 'A title is required.',
             'image.required' => 'The Gym image field can not be empty value.',
-            'image.mimes' => 'The Gym image extention shloud be in (pg,png,jpeg,gif,svg)',
+            'image.mimes' => 'The Gym image extention shloud be in (pg,png,jpeg)',
         ];
     }
 }

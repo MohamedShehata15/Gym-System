@@ -9,6 +9,7 @@
 <form method="post" action="{{route('city-managers.update',$staff->id)}}" class="row d-flex flex-column justify-content-center align-items-center" enctype="multipart/form-data">
   @csrf
   @method('PUT')
+  <input type="hidden" name="id" value="{{ $staff->id }}">
   <div class="mb-3 col-sm-6">
     <label for="Name" class="form-label">Name</label>
     <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" value="{{$staff->name}}"/>
@@ -23,7 +24,7 @@
   </div>
   <div class="mb-3 col-sm-6">
     <label for="confirm" class="form-label">Confrim Password</label>
-    <input type="password" name="confirm" id="confirm" class="form-control"/>
+    <input type="password" name="confirm" id="confirm" class="form-control" value="{{$staff->password}}"/>
   </div>
   <div class="mb-3 col-sm-6">
     <label for="avatar" class="form-label">Avatar</label>

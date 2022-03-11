@@ -21,8 +21,8 @@
     <input type="text" name="sessionNum" id="sessionNum" class="form-control" value="{{$trainingPackage['session_number']}}"/>
   </div>
   <div class="mb-3 col-sm-6">
-    <label for="gymName" class="form-label">Gym Name</label>
-    <select name="gymId" class="form-control" id="gymId">
+    <label for="gym" class="form-label">Gym Name</label>
+    <select name="gym" class="form-control" id="gym">
       @foreach ($gyms as $gym)
       <option value="{{$gym->id}}" {{$gym->id == $trainingPackage->gym_id ? "selected" : ""}}>{{$gym->name}}</option>   
       @endforeach

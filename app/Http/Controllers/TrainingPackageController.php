@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\TrainingPackageRequest;
 use App\Models\TrainingPackage;
 use App\Models\Gym;
 use App\Models\UserTrainingPackage;
@@ -39,13 +40,13 @@ class TrainingPackageController extends Controller
             "gyms" => $gyms,
         ]);
     }
-    public function update($trainingId)
+    public function update($trainingId,TrainingPackageRequest $request)
     {
         $requestData = request()->all();
         $trainingPackage = TrainingPackage::find($trainingId)->update(['name' => $requestData['Name'],
         'price' => ($requestData['Price']/0.01),
         'session_number' => $requestData['sessionNum'],
-        'gym_id' => $requestData['gymId']]);
+        'gym_id' => $requestData['gym']]);
         return redirect()->route('training-packages.index');
     }
     //-------------------------- create training package --------------------------------
@@ -56,7 +57,7 @@ class TrainingPackageController extends Controller
             'gyms'=> $gyms
         ]);
     }
-    public function store()
+    public function store(TrainingPackageRequest $request)
     {
         $requestData = request()->all();
         TrainingPackage::create(['name' => $requestData['Name'],
