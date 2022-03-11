@@ -9,15 +9,15 @@
 <form method="post" action="{{route('gym-managers.store')}}" class="row d-flex flex-column justify-content-center align-items-center"  id="form" enctype="multipart/form-data">
   @csrf
   <div class="mb-3 col-sm-6 ">
-    <label for="Name" class="form-label">Name</label>
+    <label for="name" class="form-label">Name</label>
     <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" />
   </div>
   <div class="mb-3 col-sm-6">
-    <label for="Email" class="form-label">Email</label>
-    <input type="email" name="email" id="Email" class="form-control" />
+    <label for="email" class="form-label">Email</label>
+    <input type="email" name="email" id="email" class="form-control" />
   </div>
   <div class="mb-3 col-sm-6">
-    <label for="pass" class="form-label">Password</label>
+    <label for="password" class="form-label">Password</label>
     <input type="password" name="password" id="password" class="form-control" />
   </div>
   <div class="mb-3 col-sm-6">

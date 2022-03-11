@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Models\City;
+use App\Http\Requests\CityManagerRequest;
 
 
 class CityManagerController extends Controller
@@ -39,7 +40,7 @@ class CityManagerController extends Controller
                 
             ]);
     }
-    public function update($staffId)
+    public function update($staffId , CityManagerRequest $request)
     {
         $requestData = request()->all();
         if(isset($requestData['avatar']))
@@ -50,7 +51,6 @@ class CityManagerController extends Controller
         else{
             $imageName = Staff::find($staffId)->avatar;
         }
-        $imageName = $this->getImage($requestData);
         Staff::find($staffId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
@@ -78,7 +78,7 @@ class CityManagerController extends Controller
         'cities' => $scities,
     ]);
     }
-    public function store()
+    public function store(CityManagerRequest $request)
     {
         $requestData = request()->all();
         if(isset($requestData['avatar']))

@@ -119,14 +119,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //-------------------------- Users Routes --------------------------------
     Route::get('users', [UserController::class, 'index'])->name('users.index');
-    Route::get('users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('users', [UserController::class, 'store'])->name('users.store');
-    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::post('destroy-user', [UserController::class, 'destroy'])->name('users.destroy');
-
-
-
     /* ======================= Sessions Routes ========================= */
     Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
     Route::get('/sessions/create', [SessionController::class, 'create'])->name('sessions.create');
@@ -135,7 +128,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sessions/edit', [SessionController::class, 'edit'])->name('sessions.edit');
     Route::put('/sessions', [SessionController::class, 'update'])->name('sessions.update');
     /* ===================================================================== */
-
 
 
     //-------------------------- Purchases Routes --------------------------------
