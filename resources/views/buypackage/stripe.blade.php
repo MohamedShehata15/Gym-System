@@ -168,7 +168,7 @@
                 url: `http://127.0.0.1:8000/gyms/${$(this).val()}/users`,
                 success: function (response) {
                     console.log(response);
-                    response.forEach(user => {
+                    response.users.forEach(user => {
                         $('.users').append(`<option value="${user.id}">
                             <span>${user.name}</span>
                         </option>`);
@@ -186,7 +186,7 @@
                 },
                 url: `http://127.0.0.1:8000/gyms/${$(this).val()}/packages`,
                 success: function (response) {
-                    response.forEach(package => {
+                    response.packages.forEach(package => {
                         $('.packages').append(`<option value="${package.id}">
                             <span>${package.name}  $${package.price}</span>
                         </option>`);
