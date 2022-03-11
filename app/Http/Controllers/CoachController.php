@@ -68,17 +68,12 @@ class coachController extends Controller {
     }
 
     public function update($staffId) {
+        // print_r(request()->all()['avatar']);
         $requestData = request()->all();
-        $post = Staff::find($staffId)->update([
-            'name' => $requestData['name'],
-            'email' => $requestData['email'],
-            'password' => $requestData['password'],
-            'avatar' => $requestData['avatar'],
-            'national_id' => $requestData['national_id'],
-            'is_baned' => 0,
 
-        ]);
+        if (!$requestData['avatar']) $requestData['avatar'] = "user_avatar.png";
 
+        Staff::find($staffId)->update($requestData);
 
         $gymIds = $requestData['gyms'];
         gymCoach::where('staff_id', $staffId)->delete();

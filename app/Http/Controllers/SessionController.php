@@ -15,10 +15,11 @@ use App\Models\UserCoachSession;
 
 class SessionController extends Controller {
     public function index() {
+
         if (request()->ajax()) {
             return datatables()->of(Session::latest()->get())
                 ->addColumn('Coaches', function (Session $session) {
-                    $coaches = $session->staff->pluck('name'); //extract name keys from data
+                    $coaches = $session->coaches->pluck('name'); //extract name keys from data
                     foreach ($coaches as $coach) {
                         return  $coach->implode(' , ');
                     }
