@@ -31,8 +31,8 @@
         <div class="mb-3 col-sm-6">
         <label for="finish">finish-time</label>
         <input name="finish" type="time" class="form-control" />
-        </div>        
-
+        </div>    
+            
         <div class="form-group col-sm-6">
         <label for="exampleFormControlSelect2">Choose Coaches</label>
        <select name="coaches[]" multiple class="form-control" id="exampleFormControlSelect2">
