@@ -168,12 +168,12 @@
                   <p>List Packages</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{route('buypackage.create')}}" class="nav-link active multi-collapse" id="multiCollapseExample2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Buy a training Package</p>
                 </a>
-              </li>
+              </li> --}}
             </ul>
           </li>
 <!--Sessions Tab-->

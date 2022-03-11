@@ -30,7 +30,6 @@
             <th>email</th>
             <th>avatar</th>
             <th>national_id</th>
-            <th>is_baned</th>
             <th></th>
         </tr>
     </thead>
@@ -44,10 +43,7 @@
 
 @endsection
 
-@section('third_party_scripts')
-    <script src="{{ mix('js/app.js') }}" defer></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer></script>
+@section('javascripts') 
     <script>
         $(document).ready( function () {
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -82,10 +78,7 @@
                     data:'national_id',
                     name:'national_id',
                 },
-                {
-                    data:"is_baned",
-                    name:"is_baned",
-                },
+                
                 {
                     data: 'action',
                     name: 'action',

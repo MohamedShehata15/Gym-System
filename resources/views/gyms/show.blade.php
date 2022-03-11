@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container card card-primary mt-3  card-outline w-50 text-dark">
+    <div class="container card card-primary card-outline w-50 text-dark">
         <div class="card-header ">
           <h3 class="card-title">Gym Name:- {{$gym->name}}</h3>
           <div class="card-tools">

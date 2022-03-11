@@ -75,18 +75,20 @@ class coachController extends Controller {
 
         Staff::find($staffId)->update($requestData);
 
-        $gymIds = $requestData['gyms'];
-        gymCoach::where('staff_id', $staffId)->delete();
+        if (isset($requestData['gyms'])) {
+            $gymIds = $requestData['gyms'];
+            gymCoach::where('staff_id', $staffId)->delete();
 
-        foreach ($gymIds as $gymId) {
-            gymCoach::Create(
-                [
-                    'staff_id' => $staffId,
+            foreach ($gymIds as $gymId) {
+                gymCoach::Create(
+                    [
+                        'staff_id' => $staffId,
 
 
-                    'gym_id' => $gymId
-                ]
-            );
+                        'gym_id' => $gymId
+                    ]
+                );
+            }
         }
         // $gym->gym_id = $requestData['gym'];
         // $gym->save();

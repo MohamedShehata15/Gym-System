@@ -45,7 +45,7 @@ class User extends Authenticatable {
     ];
 
     public function sessions() {
-        return $this->belongsToMany(Session::class, 'user_coach_sessions', 'user_id', 'session_id');
+        return $this->belongsToMany(Session::class, 'session_user', 'user_id', 'session_id');
     }
 
     public function trainingPackage() {

@@ -13,7 +13,7 @@ use Stripe;
 class StripePaymentController extends Controller {
     public function stripe() {
         $cities = City::all();
-        return view('admin.stripe', ['cities' => $cities]);
+        return view('buypackage.stripe', ['cities' => $cities]);
     }
 
     public function stripePost(Request $request) {
