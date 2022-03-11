@@ -169,11 +169,8 @@
                 },
                 url: `http://127.0.0.1:8000/gyms/${$(this).val()}/users`,
                 success: function (response) {
-<<<<<<< HEAD
-=======
                     $('.users').empty();
                     $('.users').append(`<option value="" disabled selected hidden>Select a user name</option>`);
->>>>>>> 4f485d8737ff4861ea3bc07f27a1d9b75f4f4be9
                     response.users.forEach(user => {
 
                         $('.users').append(`<option value="${user.id}">
@@ -197,7 +194,7 @@
                     $('.packages').append(`<option value="" disabled selected hidden>Select a Package</option>`);
                     response.packages.forEach(package => {
                         $('.packages').append(`<option value="${package.id}">
-                            <span>${package.name}  $${package.price * 0.01}</span>
+                            <span>${package.name}  $${package.price}</span>
                         </option>`);
                     })
                 }
@@ -229,7 +226,7 @@
 
             if (!$form.data('cc-on-file')) {
                 e.preventDefault();
-                Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+                Stripe.setPublishableKey($forms.data('stripe-publishable-key'));
                 Stripe.createToken({
                     number: $('.card-number').val(),
                     cvc: $('.card-cvc').val(),
