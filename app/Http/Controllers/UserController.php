@@ -13,11 +13,6 @@ class UserController extends Controller
         if(request()->ajax())
         {
             return datatables()->of(User::get())
-            ->addColumn('avatar',function($data)
-            {
-                $url = asset("../{$data->avatar}");
-                return '<img src='.$url.' width="70" class="img-thumbnail" />';
-            })
             ->addColumn('gym',function($data)
             {
                 $trainingPack = User::find($data->id)->trainingPackage;
@@ -37,7 +32,7 @@ class UserController extends Controller
              $button .='<a href="javascript:void(0);" onClick = "deleteFunc('.$data->id.')"class="btn btn-danger btn-sm mx-1">Delete</a>';
              return $button;
             })
-               ->rawColumns(['action','avatar'])->make(true);
+               ->rawColumns(['action'])->make(true);
         }
         return view('users.index');
     }
@@ -54,10 +49,10 @@ class UserController extends Controller
     public function update($userId)
     {
         $requestData = request()->all();
-        $imageName = time().'.'.$requestData['avatar']->extension(); 
+        $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
         // $requestData['avatar']->validate([
         //     'avatar' => 'required|mimes:jpeg,png,jpg|max:2048']);
-        dd($requestData['avatar']->move(public_path(), $imageName));
+        $requestData['avatar']->move(public_path(), $imageName);
         $user = User::find($userId)->update(['name' => $requestData['Name'],
         'email' => $requestData['Email'],
         'gender' => $requestData['Gender'],

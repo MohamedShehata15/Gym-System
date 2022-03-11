@@ -54,6 +54,10 @@
                 {
                     data:'avatar',
                     name:'avatar',
+                    render:function(data,type,full,meta)
+                    {
+                        return "<img src="+data+" width='70' class='img-thumbnail' />";
+                    },
                     orderable:false
                 },
                 {
