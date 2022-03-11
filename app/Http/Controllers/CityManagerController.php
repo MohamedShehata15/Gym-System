@@ -9,6 +9,7 @@ use App\Models\City;
 
 class CityManagerController extends Controller
 {
+
     public function index()
     {
         if (request()->ajax()) {
@@ -41,8 +42,15 @@ class CityManagerController extends Controller
     public function update($staffId)
     {
         $requestData = request()->all();
-        $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
-        $requestData['avatar']->move(public_path('images'), $imageName);
+        if(isset($requestData['avatar']))
+        {
+             $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
+             $requestData['avatar']->move(public_path('images'), $imageName);
+        }
+        else{
+            $imageName = Staff::find($staffId)->avatar;
+        }
+        $imageName = $this->getImage($requestData);
         Staff::find($staffId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
@@ -73,16 +81,21 @@ class CityManagerController extends Controller
     public function store()
     {
         $requestData = request()->all();
-        $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
-        $requestData['avatar']->move(public_path('images'), $imageName);
+        if(isset($requestData['avatar']))
+        {
+             $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
+             $requestData['avatar']->move(public_path('images'), $imageName);
+        }
+        else{
+            $imageName = 'user_avatar.png';
+        }
         $cityManager= Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
-            'avatar' => $imageName,
+            'avatar' =>  $imageName,
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
-            
         ]);
         $cityManager->assignRole('city_manager');
         $staffMember = Staff::where('name',$requestData['name'])->first();
@@ -101,5 +114,7 @@ class CityManagerController extends Controller
        
        
    }
+ 
+
 
 }

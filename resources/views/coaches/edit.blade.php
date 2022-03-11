@@ -86,7 +86,7 @@
                 success: function (response) {
                     $('#gymDiv #gym').html(`<option value="" disabled selected>choose a Gym</option>`);
 
-                    let selectedGyms = getSelectedGyms();
+                    let selectedGyms = getSelectedGyms('.editCoach .gymsTags .tag');
 
 
                     if(response.gyms.length > 0) {
@@ -104,61 +104,14 @@
 
     });
 
-    // Get Selected Gyms
-    function getSelectedGyms() {
-        let selectedGyms = [];
-    let tags = document.querySelectorAll('.tag');
-                for(let tag of tags) {
-                    selectedGyms.push(+tag.dataset.tag);
-                }
-                return selectedGyms;
-    }
-
+    // Submit the Data
     document.querySelector('.editCoach').addEventListener('submit', (e) => {
-        let selectedGyms = getSelectedGyms();
-        selectedGyms.forEach(gym => {
-            let inputGymId = document.createElement('input');
-            inputGymId.setAttribute('type', 'hidden');
-            inputGymId.setAttribute('name', 'gyms[]');
-            inputGymId.setAttribute('value', gym);
-            e.target.append(inputGymId);
-        })
+        generateInputSaveTagsID(e, '.editCoach .gymsTags');
     })
 
 
     // Gyms Tags
     document.querySelector('#gymDiv #gym').addEventListener('input', e => tags(e, ".gymsTags"));
-    function handleSelectedTag(element, optionClass) {
-        document.querySelector(`.${optionClass}`)?.classList.remove('d-none');
-       element.parentElement.remove();
-    }
-
-    function tags(e, tagsContainer) {
-        let option = e.target.options[e.target.selectedIndex];
-            let parentSpan = document.createElement('span');
-            let spanTag = document.createElement('span');
-            let textTag = document.createTextNode(option.text + ' ');
-            let deleteTag = document.createElement('span');
-            let deleteText = document.createTextNode(' X');
-            deleteTag.classList.add()
-            deleteTag.addEventListener('click', function() {
-                this.parentElement.remove();
-                option.classList.remove('d-none');
-            });
-            parentSpan.classList.add('bg-dark', 'text-white', 'px-3', 'py-2', 'rounded-pill', 'mt-2', 'mr-2');
-            deleteTag.classList.add('text-danger');
-            deleteTag.setAttribute('role', 'button');
-            spanTag.append(textTag);
-            deleteTag.append(deleteText);
-
-            parentSpan.append(spanTag)
-            parentSpan.append(deleteTag);
-            document.querySelector(tagsContainer).append(parentSpan);
-
-            option.classList.add('d-none');
-
-            e.target.options[0].selected=true
-    }
 
 </script>
 

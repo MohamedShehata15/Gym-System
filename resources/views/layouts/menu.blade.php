@@ -173,7 +173,7 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Buy a training Package</p>
                 </a>
-              </li>
+              </li> --}}
             </ul>
           </li>
 <!--Sessions Tab-->

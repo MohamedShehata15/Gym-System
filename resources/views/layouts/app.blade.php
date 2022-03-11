@@ -104,6 +104,66 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 @yield('javascripts')
+<script>
+
+    // Handle Selected Tags
+    function handleSelectedTag(element, optionClass) {
+        document.querySelector(`.${optionClass}`)?.classList.remove('d-none');
+       element.parentElement.remove();
+    }
+
+    // Get Selected Gyms
+    function getSelectedGyms(elementClass) {
+    let selectedGyms = [];
+    let tags = document.querySelectorAll(elementClass);
+    for(let tag of tags) {
+        selectedGyms.push(+tag.dataset.tag);
+    }
+    return selectedGyms;
+    }
+
+    // Generate Input Hidden for Tags Id
+    function generateInputSaveTagsID(event, elementClass) {
+        let selectedGyms = getSelectedGyms(`${elementClass} .tag`);
+        selectedGyms.forEach(gym => {
+            let inputGymId = document.createElement('input');
+            inputGymId.setAttribute('type', 'hidden');
+            inputGymId.setAttribute('name', 'gyms[]');
+            inputGymId.setAttribute('value', gym);
+            event.target.append(inputGymId);
+        })
+    }
+
+    // Add Tags for mulitpe Select options
+    function tags(e, tagsContainer) {
+       
+        let option = e.target.options[e.target.selectedIndex];
+            let parentSpan = document.createElement('span');
+            let spanTag = document.createElement('span');
+            let textTag = document.createTextNode(option.text + ' ');
+            let deleteTag = document.createElement('span');
+            let deleteText = document.createTextNode(' X');
+            deleteTag.classList.add()
+            deleteTag.addEventListener('click', function() {
+                this.parentElement.remove();
+                option.classList.remove('d-none');
+            });
+            parentSpan.setAttribute('data-tag', option.value);
+            parentSpan.classList.add('tag', 'bg-dark', 'text-white', 'px-3', 'py-2', 'rounded-pill', 'mt-2', 'mr-2');
+            deleteTag.classList.add('text-danger');
+            deleteTag.setAttribute('role', 'button');
+            spanTag.append(textTag);
+            deleteTag.append(deleteText);
+
+            parentSpan.append(spanTag)
+            parentSpan.append(deleteTag);
+            document.querySelector(tagsContainer).append(parentSpan);
+
+            option.classList.add('d-none');
+
+            e.target.options[0].selected=true;
+    }
+</script>
 @yield('script')
 
 @yield('third_party_scripts')
