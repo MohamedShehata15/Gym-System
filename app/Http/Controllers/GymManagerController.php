@@ -28,6 +28,7 @@ class GymManagerController extends Controller {
             }
         }
 
+
         if (request()->ajax()) {
             return datatables()->of($gymManagers)
                 ->addColumn('action', function ($data) {
@@ -62,7 +63,7 @@ class GymManagerController extends Controller {
         $cityGyms = $gym->city->gyms;
         $cities = City::all();
         $gyms = Gym::all();
-        
+
         return view('gym-managers.edit', [
             'staff' => $staff,
             'gyms' => $gyms,
@@ -104,7 +105,7 @@ class GymManagerController extends Controller {
             'email' => $requestData['email'],
             'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
-           
+
 
         ]);
         gymManager::where('staff_id', $staffId)->update([
@@ -142,7 +143,7 @@ class GymManagerController extends Controller {
             'password' => Hash::make($requestData['password']),
             'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
-            
+
 
         ]);
         $gymManager->assignRole('gym_manager');
