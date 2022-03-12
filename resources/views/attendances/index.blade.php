@@ -9,8 +9,12 @@
     <table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark">
         <thead>
             <tr class="text-white">
+            @can('gym-managers')
+            @can('city-managers')
                 <th>City</th>
+             @endcan
                 <th>Gym</th>
+                @endcan
                 <th>User Name</th>
                 <th>User Email</th>
                 <th>Session Name</th>
@@ -33,14 +37,20 @@
                 url: "{{ route('attendances.index') }}"
             },
             columns:[
+                @can('gym-managers')
+                @can('city-managers')
+
                 {
                     data:'cityName',
                     name:'cityName',
                 },
+                @endcan
+
                 {
                     data:'gymName',
                     name:'gymName',
                 },
+                @endcan
                 {
                   data:'userName',
                   name: 'userName',

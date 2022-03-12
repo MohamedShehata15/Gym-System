@@ -19,7 +19,6 @@
 @endsection
 @section('content')
 @if(Auth::user()->hasRole('Super-Admin'))
-<br><br>
 <div class="text-center mydiv">
     <a href="{{route('coaches.create')}}" class="btn btn-success">Add New Coach </a>
 <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
