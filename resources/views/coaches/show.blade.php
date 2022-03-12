@@ -10,7 +10,7 @@
 <div class="card-body text-center mydiv">
     <div class="text-center mb-2">
         <img class="profile-user-img img-fluid img-circle"
-            src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg" alt="User profile picture">
+        src="{{asset('images/'. $coach->avatar . '')}}" alt="User profile picture">
     </div>
     <p class="mb-4">{{$coach->name}}</p>
     <a class="btn btn-app" href="{{route('coaches.profile', ['id' => $coach->id])}}">

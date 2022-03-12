@@ -10,11 +10,11 @@
   @csrf
   <div class="mb-3 col-sm-6">
     <label for="Name" class="form-label">Name</label>
-    <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" />
+    <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}" aria-describedby="emailHelp" />
   </div>
   <div class="mb-3 col-sm-6">
     <label for="Email" class="form-label">Email</label>
-    <input type="email" name="email" id="Email" class="form-control" />
+    <input type="email" name="email" id="Email" class="form-control" value="{{old('email')}}" />
   </div>
   <div class="mb-3 col-sm-6">
     <label for="pass" class="form-label">Password</label>
@@ -30,7 +30,7 @@
   </div>
   <div class="mb-3 col-sm-6 ">
     <label for="national_id" class="form-label">National_id</label>
-    <input type="text" name="national_id" id="national_id" class="form-control" />
+    <input type="text" name="national_id" id="national_id" value="{{old('national_id')}}" class="form-control" />
   </div>
 
  

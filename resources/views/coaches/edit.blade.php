@@ -12,10 +12,10 @@
 @section('content')
 <div class=" mydiv">
 
-<form method="post" action="{{route('coaches.update',$coach->id)}}" class="row d-flex flex-column justify-content-center align-items-center editCoach" >
+<form method="post" action="{{route('coaches.update',$coach->id)}}" class="row d-flex flex-column justify-content-center align-items-center editCoach" enctype="multipart/form-data" >
     <div class="text-center">
         <label for="avatar" class="form-label" role="button">
-            <img class="profile-user-img img-fluid img-circle" src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg" alt="User profile picture">
+            <img class="profile-user-img img-fluid img-circle" src="{{asset('images/'. $coach->avatar . '')}}" alt="User profile picture">
         </label>
         <input type="file" name="avatar" id="avatar" class="d-none" value="{{$coach->avatar}}" />
     </div>

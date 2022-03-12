@@ -72,9 +72,14 @@ class coachController extends Controller {
     public function update($staffId) {
         // print_r(request()->all()['avatar']);
         $requestData = request()->all();
-        
 
-        if (!$requestData['avatar']) $requestData['avatar'] = "user_avatar.png";
+        if (isset($requestData['avatar'])) {
+            $imageName = time() . '.' . $requestData['avatar']->getClientOriginalName();
+            $requestData['avatar']->move(public_path('images'), $imageName);
+            $requestData['avatar'] = $imageName;
+        } else {
+            $imageName = Staff::find($staffId)->avatar;
+        }
 
         Staff::find($staffId)->update($requestData);
 
@@ -112,12 +117,10 @@ class coachController extends Controller {
     }
     public function store() {
         $requestData = request()->all();
-        if(isset($requestData['avatar']))
-        {   
-            $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
+        if (isset($requestData['avatar'])) {
+            $imageName = time() . '.' . $requestData['avatar']->getClientOriginalName();
             $requestData['avatar']->move(public_path('images'), $imageName);
-        }
-        else{
+        } else {
             $imageName = 'user_avatar.png';
         }
         $gymIds = $requestData['gyms'];
