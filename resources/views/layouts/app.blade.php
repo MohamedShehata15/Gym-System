@@ -163,6 +163,18 @@
 
             e.target.options[0].selected=true;
     }
+
+    // Interactive Upload Image
+    function previewImage(preview) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            if(reader.readyState == 2) {
+                preview.src = reader.result;
+            }
+            
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
 </script>
 @yield('javascripts')
 @yield('script')

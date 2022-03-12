@@ -115,6 +115,11 @@
     // Gyms Tags
     document.querySelector('#gymDiv #gym').addEventListener('input', e => tags(e, ".gymsTags"));
 
+    // Interactive Upload Image
+    let avatarInput = document.querySelector("input[name='avatar']");
+    let avatarImg = document.querySelector('.profile-user-img');
+    avatarInput.addEventListener('change', () => previewImage(avatarImg))
+
 </script>
 @endrole
 
