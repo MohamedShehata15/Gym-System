@@ -8,7 +8,7 @@
 
 <form method="post" action="{{route('coaches.store')}}" class="row d-flex flex-column justify-content-center align-items-center"id="form" enctype="multipart/form-data" >
   @csrf
-
+  @method('PUT')
   <div class="text-center">
     <label for="avatar" class="form-label" role="button">
         <img class="profile-user-img img-fluid img-circle" src="{{asset('images/user_avatar.png')}}" alt="User profile picture">
