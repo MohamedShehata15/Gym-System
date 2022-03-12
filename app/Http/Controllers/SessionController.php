@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\SessionUser;
 use App\Models\SessionStaff;
 use App\Http\Requests\SessionRequest;
+use App\Http\Requests\SessionUpdateRequest;
 use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymCoach;
@@ -92,6 +93,7 @@ class SessionController extends Controller {
     public function create() {
         $coaches=Staff::role('coach');
         $cities = City::all();
+
         return view('sessions.create', [
             'cities' => $cities,
             'coaches'=>$coaches
@@ -151,38 +153,29 @@ class SessionController extends Controller {
         }
     }
 
+    public function edit(Request $request)
+    {
+      $coaches=Staff::role('coach')->pluck('name');
+      $coachesid=Staff::role('coach')->pluck('id');
+      $session=Session::find($request->id);
+      $selectedCoaches=SessionStaff::where('session_id','=',$session->id)->pluck('staff_id');
 
-    public function edit(Request $request) {
-        $coaches = Staff::role('coach')->pluck('name');
-        $coachesid = Staff::role('coach')->pluck('id');
-        $session = Session::find($request->id);
-        $selectedCoaches = SessionStaff::where('session_id', '=', $session->id)->pluck('staff_id');
-
-        $output = array(
-            'name' => $session->name,
-            'start_at' => $session->start_at,
-            'finish_at' => $session->finish_at,
-            'coaches' => $coaches,
-            'coachesid' => $coachesid,
-            'selectedCoaches' => $selectedCoaches,
-            'selectedGym'=>$session->gym_id
-
-        );
+      $output=array(
+        'name' => $session->name,
+        'start_at' => $session->start_at,
+        'finish_at' => $session->finish_at,
+        'coaches' => $coaches,
+        'coachesid'=>$coachesid,
+        'selectedCoaches'=>$selectedCoaches
+      );
         echo json_encode($output);
-        
+
     }
 
 
-    public function update(SessionRequest $request) {
+    public function update(SessionUpdateRequest $request) {
         $requestData = request()->all();
-        if (Auth::user()->hasRole('Super-Admin') || Auth::user()->hasRole('city_manager')) {
-            $gymId=$requestData['gym'];
-        }
-
-        elseif (Auth::user()->hasRole('gym_manager'))
-        {
-            $gymId = GymManager::where('staff_id', Auth::user()->id)->first()['gym_id'];
-        }
+        
         //check if any one attend this session 
         $SomeoneAttend = SessionUser::where('session_id', '=', $requestData['id'])->exists();
         $CurrentSession = Session::find($request->id);
@@ -198,7 +191,7 @@ class SessionController extends Controller {
                 'name' => $requestData['name'],
                 'start_at' => $requestData['day'] . " " . $requestData['start'],
                 'finish_at' => $requestData['day'] . " " . $requestData['finish'],
-                 'gym_id'=>$gymId
+                 
             ]);
             $coaches = $requestData['coaches'];
             $coaches = array_values($coaches);
