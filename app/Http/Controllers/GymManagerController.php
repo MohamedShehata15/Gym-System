@@ -59,7 +59,8 @@ class GymManagerController extends Controller
         $requestData = request()->all();
         if(isset($requestData['avatar']))
         {
-             $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
+            $image = $requestData['avatar']->file('image');
+             $imageName = time().'.'.$image->getClientOriginalName(); 
              $requestData['avatar']->move(public_path('images'), $imageName);
         }
         else{

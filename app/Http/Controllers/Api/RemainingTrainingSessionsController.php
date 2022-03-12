@@ -75,7 +75,6 @@ class RemainingTrainingSessionsController extends Controller
                 SessionUser::create([
                     'session_id' => $session->id,
                     'user_id' => $user->id,
-                    'staff_id' => 10
                 ]);
                 $user->update([
                     'remaining_sessions' => ($user->remaining_sessions - 1)

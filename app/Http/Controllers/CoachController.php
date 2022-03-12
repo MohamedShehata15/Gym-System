@@ -72,6 +72,7 @@ class coachController extends Controller {
     public function update($staffId) {
         // print_r(request()->all()['avatar']);
         $requestData = request()->all();
+        
 
         if (!$requestData['avatar']) $requestData['avatar'] = "user_avatar.png";
 
@@ -111,12 +112,20 @@ class coachController extends Controller {
     }
     public function store() {
         $requestData = request()->all();
+        if(isset($requestData['avatar']))
+        {   
+            $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
+            $requestData['avatar']->move(public_path('images'), $imageName);
+        }
+        else{
+            $imageName = 'user_avatar.png';
+        }
         $gymIds = $requestData['gyms'];
         $coach = Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
-            'avatar' => $requestData['avatar'],
+            'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
 
