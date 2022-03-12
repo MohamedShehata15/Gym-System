@@ -70,7 +70,7 @@
                     name:'avatar',
                     render:function(data,type,full,meta)
                     {
-                        return "<img src="+data+" width='70' class='img-thumbnail' />";
+                        return "<img src='images/"+data+"'width='60' style='border-radius:50%;' class='img-thumbnail'  />";
                     },
                     orderable: false
                 },

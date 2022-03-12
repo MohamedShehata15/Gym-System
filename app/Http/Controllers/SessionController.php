@@ -69,7 +69,10 @@ class SessionController extends Controller {
                 ->rawColumns(array('action')) //for cells have html
                 ->make(true);
         }
-        return view('sessions.index');
+        $cities = City::all();
+        return view('sessions.index', [
+            'cities' => $cities,
+        ]);
     }
 
     public function create() {
@@ -85,7 +88,6 @@ class SessionController extends Controller {
 
         if (Auth::user()->hasRole('Super-Admin')) {
             $gymId=$requestData['gym'];
-            $cityid=$requestData['city'];
         }
 
         elseif (Auth::user()->hasRole('city_manager'))
@@ -146,9 +148,12 @@ class SessionController extends Controller {
             'finish_at' => $session->finish_at,
             'coaches' => $coaches,
             'coachesid' => $coachesid,
-            'selectedCoaches' => $selectedCoaches
+            'selectedCoaches' => $selectedCoaches,
+            'selectedGym'=>$session->gym_id
+
         );
         echo json_encode($output);
+        
     }
 
 
@@ -169,7 +174,8 @@ class SessionController extends Controller {
             Session::where('id', $requestData['id'])->update([
                 'name' => $requestData['name'],
                 'start_at' => $requestData['day'] . " " . $requestData['start'],
-                'finish_at' => $requestData['day'] . " " . $requestData['finish']
+                'finish_at' => $requestData['day'] . " " . $requestData['finish'],
+                 'gym_id'=>$requestData['gym']
             ]);
             $coaches = $requestData['coaches'];
             $coaches = array_values($coaches);
