@@ -73,7 +73,7 @@ class coachController extends Controller {
         return view('coaches.show', ['coach' => $coach]);
     }
 
-    public function update($staffId , CoachRequest $request) {
+    public function update($staffId, CoachRequest $request) {
         // print_r(request()->all()['avatar']);
         $requestData = request()->all();
 
@@ -229,33 +229,33 @@ class coachController extends Controller {
     }
     public function password($staffId) {
 
-        
-        return view('coaches.password',
-    [
-        'coachId' => $staffId,
-    ]);
+
+        return view(
+            'coaches.password',
+            [
+                'coachId' => $staffId,
+            ]
+        );
     }
 
-    public function passwordUpdate(Request $request,$staffId)
-    {
-        $this->validate($request, [ 
+    public function passwordUpdate(Request $request, $staffId) {
+        $this->validate($request, [
             'old_password' => ['nullable'],
-            'password' => ['min:6','max:20','nullable'],
-            'confirm'=>['same:password','nullable'],
+            'password' => ['min:6', 'max:20', 'nullable'],
+            'confirm' => ['same:password', 'nullable'],
         ]);
-        
-        $hashedPassword = Staff::find($staffId)->password;
-        if (Hash::check($request->oldpassword , $hashedPassword)) {
-            
+
+        if (isset($request->oldpassword)) {
+            $hashedPassword = Staff::find($staffId)->password;
+            if (Hash::check($request->oldpassword, $hashedPassword)) {
+
                 $user = Staff::find($staffId);
                 $user->password = bcrypt($request->password);
                 $user->save();
-
-           
+            } else {
+                return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
+            }
         }
-        else{
-          return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
-        }
-        return redirect()->route('coaches.show',$staffId);
+        return redirect()->route('coaches.show', $staffId);
     }
 }

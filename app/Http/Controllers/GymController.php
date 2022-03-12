@@ -17,7 +17,7 @@ class GymController extends Controller {
 
     //----------------------index--------------------//
     public function index() {
-        
+
         if (Auth::user()->hasRole('city_manager')) {
             $city = City::where('staff_id', Auth::user()->id)->first();
             $gyms = Gym::with('city')->where('city_id', $city->id)->get();
@@ -47,7 +47,7 @@ class GymController extends Controller {
         }
         return view('gyms.index', [
             'gyms' => $gyms,
-            
+
         ]);
     }
     //----------------------create--------------------//
@@ -70,16 +70,14 @@ class GymController extends Controller {
     //----------------------store--------------------//
     public function store(GmyRequest $request) {
         $gymData = request()->all();
-        if(isset($request['image']))
-        {
+        if (isset($request['image'])) {
             $fileName = $this->getImageData($request);
-        }
-        else{
+        } else {
             $fileName = '1646963019.jpeg';
         }
-        $createdBy = Auth::user()-> hasRole('city_manager') ? Auth::user()->name : "Admin";
-    
-        
+        $createdBy = Auth::user()->hasRole('city_manager') ? Auth::user()->name : "Admin";
+
+
         Gym::create([
             'name' => $gymData['name'],
             'revenue' => 0,
@@ -93,6 +91,7 @@ class GymController extends Controller {
     //----------------------Show--------------------//
     public function show($id) {
         $gym = Gym::find($id);
+
         $managers = Gym::find($id)->gymManager;
         return view('gyms.show', [
             'gym' => $gym,
@@ -104,21 +103,19 @@ class GymController extends Controller {
         $gym = Gym::find($id);
         $cities = City::all();
 
-       
+
         return view('gyms.edit', [
             'gym' => $gym,
             'cities' => $cities
         ]);
     }
     //----------------------update--------------------//
-    public function update($id,GmyRequest $request) {
+    public function update($id, GmyRequest $request) {
         $gym = Gym::find($id);
         $gymData = request()->all();
-        if(isset($request['image']))
-        {
+        if (isset($request['image'])) {
             $fileName = $this->getImageData($request);
-        }
-        else{
+        } else {
             $fileName = Gym::find($id)->image;
         }
         $updatedGymData = [

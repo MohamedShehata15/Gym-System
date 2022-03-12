@@ -11,64 +11,57 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\Console\Input\Input;
 
-class CityManagerController extends Controller
-{
+class CityManagerController extends Controller {
 
-    public function index()
-    {
+    public function index() {
         if (request()->ajax()) {
             return datatables()->of(Staff::role('city_manager')->get())
-               ->addColumn('action', function ($data) {
-                   $button ='<a href="'.route('city-managers.edit',$data->id).'" class="btn btn-info btn-sm mx-2">Edit</a>';
-                   $button .='<a href="javascript:void(0);" onClick = "deleteFunc('.$data->id.')"class="btn btn-danger btn-sm mx-2">Delete</a>';
-                   return $button;
-               })
-               ->addColumn('city', function ($data) {
-               $city = City::where('staff_id', '=', $data->id)->first();
-               return $city? $city->name : "None";
-            })
-               ->rawColumns(['action'])->make(true);
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('city-managers.edit', $data->id) . '" class="btn btn-info btn-sm mx-2">Edit</a>';
+                    $button .= '<a href="javascript:void(0);" onClick = "deleteFunc(' . $data->id . ')"class="btn btn-danger btn-sm mx-2">Delete</a>';
+                    return $button;
+                })
+                ->addColumn('city', function ($data) {
+                    $city = City::where('staff_id', '=', $data->id)->first();
+                    return $city ? $city->name : "None";
+                })
+                ->rawColumns(['action'])->make(true);
         }
         return view('city-managers.index');
     }
     //--------------------------- edit staff member -----------------------
-    public function edit($staffId)
-    {
-        
+    public function edit($staffId) {
+
         $staff = Staff::find($staffId);
         $cities = City::all();
-            return view('city-managers.edit',[
-                'staff' => $staff,
-                'cities' => $cities,
-                
-            ]);
+        return view('city-managers.edit', [
+            'staff' => $staff,
+            'cities' => $cities,
+
+        ]);
     }
-    public function update($staffId , CityManagerUpdateRequest $request)
-    {
+    public function update($staffId, CityManagerUpdateRequest $request) {
         $requestData = request()->all();
-        if(isset($requestData['avatar']))
-        {
-             $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
-             $requestData['avatar']->move(public_path('images'), $imageName);
-        }
-        else{
+        if (isset($requestData['avatar'])) {
+            $imageName = time() . '.' . $requestData['avatar']->getClientOriginalName();
+            $requestData['avatar']->move(public_path('images'), $imageName);
+        } else {
             $imageName = Staff::find($staffId)->avatar;
         }
 
-       
-        $hashedPassword = Staff::find($staffId)->password;
-        if (Hash::check($request->oldpassword , $hashedPassword)) {
-            
+
+        if (isset($request->oldpassword)) {
+            $hashedPassword = Staff::find($staffId)->password;
+            if (Hash::check($request->oldpassword, $hashedPassword)) {
+
                 $user = Staff::find($staffId);
                 $user->password = bcrypt($request->password);
                 $user->save();
+            } else {
+                return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
+            }
+        }
 
-           
-        }
-        else{
-          return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
-        }
-    
 
 
 
@@ -77,19 +70,18 @@ class CityManagerController extends Controller
             'email' => $requestData['email'],
             'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
-            
+
         ]);
-    
 
 
-        $oldCity = City::where('staff_id',$staffId)->first();
-        if(!empty($oldCity))
-        {
+
+        $oldCity = City::where('staff_id', $staffId)->first();
+        if (!empty($oldCity)) {
             $oldCity->update([
                 'staff_id' => NULL
             ]);
         }
-       
+
         $city = City::find($requestData['city']);
         $city->staff_id =  $staffId;
         $city->save();
@@ -97,27 +89,25 @@ class CityManagerController extends Controller
         return redirect()->route('city-managers.index');
     }
     //----------------------- create new member -------------------------
-    public function create()
-    {
-    
+    public function create() {
+
         $cities = City::all();
-        return view('city-managers.create',
-    [
-        'cities' => $cities,
-    ]);
+        return view(
+            'city-managers.create',
+            [
+                'cities' => $cities,
+            ]
+        );
     }
-    public function store(CityManagerRequest $request)
-    {
+    public function store(CityManagerRequest $request) {
         $requestData = request()->all();
-        if(isset($requestData['avatar']))
-        {
-             $imageName = time().'.'.$requestData['avatar']->getClientOriginalName(); 
-             $requestData['avatar']->move(public_path('images'), $imageName);
-        }
-        else{
+        if (isset($requestData['avatar'])) {
+            $imageName = time() . '.' . $requestData['avatar']->getClientOriginalName();
+            $requestData['avatar']->move(public_path('images'), $imageName);
+        } else {
             $imageName = 'user_avatar.png';
         }
-        $cityManager= Staff::create([
+        $cityManager = Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => Hash::make($requestData['password']),
@@ -125,23 +115,17 @@ class CityManagerController extends Controller
             'national_id' => $requestData['national_id'],
         ]);
         $cityManager->assignRole('city_manager');
-        $staffMember = Staff::where('name',$requestData['name'])->first();
-        
+        $staffMember = Staff::where('name', $requestData['name'])->first();
+
         $city = City::find($requestData['city']);
         $city->staff_id =  $staffMember->id;
         $city->save();
         return redirect()->route('city-managers.index');
     }
-   //-------------------- delete member -------------------------------
-   public function destroy(Request $request)
-   {
-       
-           $member = Staff::where('id', $request->id)->delete();
-           return Response()->json($member);
-       
-       
-   }
- 
+    //-------------------- delete member -------------------------------
+    public function destroy(Request $request) {
 
-
+        $member = Staff::where('id', $request->id)->delete();
+        return Response()->json($member);
+    }
 }

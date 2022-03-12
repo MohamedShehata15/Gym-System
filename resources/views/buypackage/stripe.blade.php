@@ -173,12 +173,20 @@
         @endif
 
         $('.gyms').on('change', function () {
+            getGymPackages($(this).val());
+        });
+
+        @role('gym_manager')
+        let gymId = {{Auth::user()->gymManger->first()->id}}
+        getGymPackages(gymId)
+        @endrole
+        function getGymPackages(gymId) {
             $.ajax({
                 type: 'get',
                 headers: {
                     'Accept': 'application/json'
                 },
-                url: `http://127.0.0.1:8000/gyms/${$(this).val()}/packages`,
+                url: `http://127.0.0.1:8000/gyms/${gymId}/packages`,
                 success: function (response) {
                     $('.packages').empty();
                     $('.packages').append(`<option value="" disabled selected hidden>Select a Package</option>`);
@@ -189,7 +197,8 @@
                     })
                 }
             })
-        });
+        }
+        
 
         var $form = $(".require-validation");
 

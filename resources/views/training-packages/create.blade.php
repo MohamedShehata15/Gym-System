@@ -22,10 +22,15 @@
   <div class="mb-3 col-sm-6" id="gymDiv">
     <label for="gym" class="form-label">Gym</label>
     <select name="gym" class="form-control" id="gym">
+      @role('city_manager|Super-Admin')
       <option value="" disabled selected hidden>choose a Gym</option>  
       @foreach($gyms as $gym) 
       <option value="{{$gym->id}}">{{$gym->name}}</option>
       @endforeach
+      @endrole
+      @role('gym_manager')
+      <option value="{{Auth::user()->gymManger->first()->id}}">{{Auth::user()->gymManger->first()->name}}</option>
+      @endrole
     </select>
   </div>
   <button type="submit" class="btn btn-success btn-lg">Create</button>

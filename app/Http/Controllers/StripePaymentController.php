@@ -21,7 +21,7 @@ class StripePaymentController extends Controller {
 
         $trainingPackage = TrainingPackage::find($request->training_package);
         $user = User::find($request->user);
-        
+
         if ($user->remaining_sessions > 0) {
             Session::flash('error', "You have already remaining sessions");
             return back();
@@ -41,9 +41,10 @@ class StripePaymentController extends Controller {
             'date' => $trainingPackage->updated_at,
             'price' => $trainingPackage->price,
             'training_package_id' => $trainingPackage->id,
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'session_number' => $trainingPackage->session_number
         ]);
-        $oldRevenue = Gym::where('id',$user->gym_id)->get()[0]->revenue;
+        $oldRevenue = Gym::where('id', $user->gym_id)->get()[0]->revenue;
         $newRevenue = $oldRevenue + $trainingPackage->price;
         Gym::find($user->gym_id)->update([
             'revenue' => $newRevenue,
