@@ -38,7 +38,7 @@ Auth::routes(['register' => false]);
 Route::get('logout', [LoginController::class, 'logout']);
 
 
-Route::group(['middleware' => 'auth','middleware' => 'forbid-banned-user','middleware' =>'logs-out-banned-user'], function () {
+Route::group(['middleware' => 'auth', 'middleware' => 'forbid-banned-user', 'middleware' => 'logs-out-banned-user'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     /* ======================= Admin Routes ========================= */
@@ -127,11 +127,7 @@ Route::group(['middleware' => 'auth','middleware' => 'forbid-banned-user','middl
         Route::put('coaches/{coachId}', [coachController::class, 'update'])->name('coaches.update');
     });
 
-    Route::get('/coaches/{id}/sessions', [CoachController::class, 'sessions'])->name('coaches.sessions');
-    Route::get('/coaches/{id}', [CoachController::class, 'show'])->name('coaches.show');
-    Route::get('/coaches/{id}/profile', [CoachController::class, 'profile'])->name('coaches.profile');
-    Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
-    /* ===================================================================== */
+
 
     Route::group(['middleware' => ['role_or_permission:Super-Admin|city_manager|gym_manager']], function () {
         /* ======================= Payment Routes ========================= */
@@ -169,6 +165,12 @@ Route::group(['middleware' => 'auth','middleware' => 'forbid-banned-user','middl
         $gym = App\Models\Gym::where('city_id', $id)->get();
         return response()->json($gym);
     });
+
+    Route::get('/coaches/{id}/sessions', [CoachController::class, 'sessions'])->name('coaches.sessions');
+    Route::get('/coaches/{id}', [CoachController::class, 'show'])->name('coaches.show');
+    Route::get('/coaches/{id}/profile', [CoachController::class, 'profile'])->name('coaches.profile');
+    Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
+    /* ===================================================================== */
 
 
     Route::get("/coaches/{id}/password", [CoachController::class, 'password'])->name('coaches.password');

@@ -1,3 +1,5 @@
+
+
 @extends('layouts.app')
 
 @section('content')
@@ -6,7 +8,6 @@
     if(Auth::user()->hasRole('coach'))
         $coach = Auth::user();
 @endphp
-
 <div class="card-body text-center mydiv">
     <div class="text-center mb-2">
         <img class="profile-user-img img-fluid img-circle"
