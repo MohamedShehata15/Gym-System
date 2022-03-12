@@ -9,6 +9,8 @@ use App\Models\GymCoach;
 use App\Models\GymManager;
 use App\Models\Session;
 use Illuminate\Http\Request;
+use App\Http\Requests\CoachRequest;
+use App\Http\Requests\CityManagerRequest;
 use Illuminate\Support\Facades\Auth;
 
 class coachController extends Controller {
@@ -69,7 +71,7 @@ class coachController extends Controller {
         return view('coaches.show', ['coach' => $coach]);
     }
 
-    public function update($staffId) {
+    public function update($staffId , CoachRequest $request) {
         // print_r(request()->all()['avatar']);
         $requestData = request()->all();
 
@@ -115,7 +117,7 @@ class coachController extends Controller {
             ]
         );
     }
-    public function store() {
+    public function store(CityManagerRequest $request) {
         $requestData = request()->all();
         if (isset($requestData['avatar'])) {
             $imageName = time() . '.' . $requestData['avatar']->getClientOriginalName();

@@ -13,6 +13,7 @@
 <div class=" mydiv">
 
 <form method="post" action="{{route('coaches.update',$coach->id)}}" class="row d-flex flex-column justify-content-center align-items-center editCoach" enctype="multipart/form-data" >
+    <input type="hidden" name="id" value="{{ $coach->id }}">
     <div class="text-center">
         <label for="avatar" class="form-label" role="button">
             <img class="profile-user-img img-fluid img-circle" src="{{asset('images/'. $coach->avatar . '')}}" alt="User profile picture">
