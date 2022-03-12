@@ -9,13 +9,13 @@
 
 
 @section('content')  
-<div class=" mydiv">
+<div class="coachesSession">
         <form  method="POST"  action="{{route('sessions.store')}}" class="row d-flex flex-column justify-content-center align-items-center" >
 
             @csrf
             <div class="mb-3 col-sm-6 ">
               <label for="exampleInputEmail1" class="form-label">Name</label>
-              <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Session Name">
             </div>
 
         <div class="mb-3 col-sm-6">
@@ -76,7 +76,7 @@
 
         <div class="form-group col-sm-6">
         <label for="exampleFormControlSelect2">Choose Coaches</label>
-       <select name="coaches[]" multiple class="form-control" id="coaches">
+       <select name="coaches[]" class="form-control coachesSelect" id="coaches">
        @role('gym_manager')
        @php
        $coaches = Auth::user()->gymManger->first()->gymCoaches;
@@ -90,6 +90,7 @@
         @endrole
        </select>
       </div>
+      <div class="coachesTags my-3 d-flex flex-wrap"></div>
                 <div class="mb-3 col-sm-6 offset-5">
             <button type="submit" class="btn btn-success btn-lg ">Add</button>
             </div>
@@ -100,7 +101,6 @@
 @section('script')
 <script type="text/javascript">
   $(function () {
-
       @if(Auth::user() -> hasRole('Super-Admin'))
       // Handle City
       $('.cities').on('change', function () {
@@ -124,7 +124,6 @@
           })
       });
       @endif
-
       @if(Auth::user()->hasRole('Super-Admin') || Auth::user()->hasRole('city_manager'))
       $('.gyms').on('change', function () {
           $.ajax({
@@ -137,7 +136,6 @@
                   $('#coaches').empty();
                   $('#coaches').append(`<option value="" disabled selected hidden>Select a Coach</option>`);
                   response.coaches.forEach(coach => {
-
                       $('#coaches').append(`<option value="${coach.id}">
                           <span>${coach.name}</span>
                       </option>`);
@@ -146,7 +144,12 @@
           })
       });
       @endif
-
+      // Gyms Tags
+      document.querySelector('.coachesSession .coachesSelect').addEventListener('input', e => tags(e, ".coachesTags"));
+    // Submit the Data with Data of tags
+    document.querySelector('.coachesSession').addEventListener('submit', (e) => {
+        generateInputSaveTagsID(e, '.coachesSession .coachesTags', 'coaches');
+    })
   });
     </script>
 @endsection

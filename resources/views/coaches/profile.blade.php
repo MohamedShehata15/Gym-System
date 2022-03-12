@@ -9,7 +9,7 @@
             <div class="card shadow">
                 <div class="card-body bg-dark">
                 <div class="text-center">
-                <img class="profile-user-img img-fluid img-circle" src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg"
+                <img class="profile-user-img img-fluid img-circle" src="{{asset('images/'. $coach->avatar . '')}}"
                 alt="User profile picture">
                          <h3 class="d-block h5 mb-0">{{$coach->name}}</h3>
              <div class="d-grid gap-3 my-4">

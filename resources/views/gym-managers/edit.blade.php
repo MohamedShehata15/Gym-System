@@ -19,12 +19,16 @@
     <input type="email" name="email" id="Email" class="form-control" value="{{$staff->email}}"/>
   </div>
   <div class="mb-3 col-sm-6">
-    <label for="pass" class="form-label">Password</label>
-    <input type="password" name="password" id="password" class="form-control" value="{{$staff->password}}"/>
+    <label for="pass" class="form-label">Old Password</label>
+    <input type="password" name="oldpassword" id="password" class="form-control" value=""/>
   </div>
   <div class="mb-3 col-sm-6">
-    <label for="confirm" class="form-label">Confrim Password</label>
-    <input type="password" name="confirm" id="confirm" class="form-control" value="{{$staff->password}}"/>
+    <label for="confirm" class="form-label">New Password</label>
+    <input type="password" name="password" id="confirm" class="form-control" value=""/>
+  </div>
+  <div class="mb-3 col-sm-6">
+    <label for="confirm" class="form-label">Confrim New Password</label>
+    <input type="password" name="confirm" id="confirm" class="form-control" value=""/>
   </div>
   <div class="mb-3 col-sm-6">
     <label for="avatar" class="form-label">Avatar</label>

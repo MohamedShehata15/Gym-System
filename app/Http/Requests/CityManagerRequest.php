@@ -23,14 +23,14 @@ class CityManagerRequest extends FormRequest
      */
     public function rules()
     {
-        $id = request()->all()['id'] ?? "";
+      
         return [ 
             'name' => ['required','min:4','max:15'],
-            'email' => 'required|email|unique:staff,email,'.$id,
+            'email' => 'required|email|unique:staff,email,',
             'password' => ['required','min:6','max:20'],
             'confirm'=>['required','same:password'],
             'avatar' =>['image','mimes:jpg,png,jpeg'],
-            'national_id'=> 'required|numeric|digits:10|unique:staff,national_id,'.$id,
+            'national_id'=> 'required|numeric|digits:10|unique:staff,national_id,',
             'city' => ['required'],
         ];
     }

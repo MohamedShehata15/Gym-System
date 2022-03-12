@@ -239,7 +239,16 @@
                 </a>
               </li>
             </ul>
-          </li>  
+          </li> 
+ <!--purchases history-->
+ <li class="nav-item">
+    <a href="{{ route('purchases.index') }}" class="nav-link {{ Request::is($path) ? 'active' : '' }} bg-white">
+        <i class="nav-icon  fas fa  fa-credit-card"></i>
+        <p>purchases history</p>
+    </a>
+</li>         
+          
+
 @endif         
 
 

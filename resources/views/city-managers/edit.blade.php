@@ -9,6 +9,14 @@
 <form method="post" action="{{route('city-managers.update',$staff->id)}}" class="row d-flex flex-column justify-content-center align-items-center" enctype="multipart/form-data">
   @csrf
   @method('PUT')
+
+  <div class="text-center">
+    <label for="avatar" class="form-label" role="button">
+        <img class="profile-user-img img-fluid img-circle" src="{{asset('images/'. $staff->avatar . '')}}" alt="User profile picture">
+    </label>
+    <input type="file" name="avatar" id="avatar" class="d-none" value="{{$staff->avatar}}" />
+  </div>
+
   <input type="hidden" name="id" value="{{ $staff->id }}">
   <div class="mb-3 col-sm-6">
     <label for="Name" class="form-label">Name</label>
@@ -19,17 +27,18 @@
     <input type="email" name="email" id="Email" class="form-control" value="{{$staff->email}}"/>
   </div>
   <div class="mb-3 col-sm-6">
-    <label for="pass" class="form-label">Password</label>
-    <input type="password" name="password" id="password" class="form-control" value="{{$staff->password}}"/>
+    <label for="pass" class="form-label">Old Password</label>
+    <input type="password" name="oldpassword" id="password" class="form-control" value=""/>
   </div>
   <div class="mb-3 col-sm-6">
-    <label for="confirm" class="form-label">Confrim Password</label>
-    <input type="password" name="confirm" id="confirm" class="form-control" value="{{$staff->password}}"/>
+    <label for="confirm" class="form-label">New Password</label>
+    <input type="password" name="password" id="confirm" class="form-control" value=""/>
   </div>
   <div class="mb-3 col-sm-6">
-    <label for="avatar" class="form-label">Avatar</label>
-    <input type="file" name="avatar" id="avatar" class="form-control" value="{{$staff->avatar}}" />
+    <label for="confirm" class="form-label">Confrim New Password</label>
+    <input type="password" name="confirm" id="confirm" class="form-control" value=""/>
   </div>
+
   <div class="mb-3 col-sm-6 ">
     <label for="national_id" class="form-label">National_id</label>
     <input type="text" name="national_id" id="national_id" class="form-control" value="{{$staff->national_id}}"/>
@@ -61,6 +70,11 @@
   
     
 });
+
+    // Interactive Upload Image
+    let avatarInput = document.querySelector("input[name='avatar']");
+    let avatarImg = document.querySelector('.profile-user-img');
+    avatarInput.addEventListener('change', () => previewImage(avatarImg))
 </script>
 
 

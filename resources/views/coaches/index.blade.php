@@ -19,7 +19,6 @@
 @endsection
 @section('content')
 @if(Auth::user()->hasRole('Super-Admin'))
-<br><br>
 <div class="text-center mydiv">
     <a href="{{route('coaches.create')}}" class="btn btn-success">Add New Coach </a>
 <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
@@ -70,7 +69,7 @@
                     name:'avatar',
                     render:function(data,type,full,meta)
                     {
-                        return "<img src="+data+" width='70' class='img-thumbnail' />";
+                        return "<img src='images/"+data+"'width='60' style='border-radius:50%;' class='img-thumbnail'  />";
                     },
                     orderable: false
                 },

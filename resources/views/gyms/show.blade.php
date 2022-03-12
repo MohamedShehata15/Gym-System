@@ -24,7 +24,7 @@
                </div>
                <div class="p-2 bg-light border">
                   <li class="list-group-item d-flex align-items-center justify-content-between">
-                  <b>Gym Revenue</b> <a> {{$gym->revenue}}</a>
+                  <b>Gym Revenue</b> <a> {{$gym->revenue * 0.01}} $</a>
                   </li>
                </div>
                <div class="p-2 bg-light border">

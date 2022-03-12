@@ -102,17 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-    //-------------------------- Coaches Routes --------------------------------
-    Route::get('coaches', [coachController::class, 'index'])->name('coaches.index');
-    Route::get('coaches/create', [coachController::class, 'create'])->name('coaches.create');
-    Route::post('coaches', [coachController::class, 'store'])->name('coaches.store');
-    Route::get('coaches/{coachId}/edit', [coachController::class, 'edit'])->name('coaches.edit');
-    Route::put('coaches/{coachId}', [coachController::class, 'update'])->name('coaches.update');
-    Route::post('destroy-coach', [coachController::class, 'destroy'])->name('coaches.destroy');
-    Route::get('getGym/{id}', function ($id) {
-        $gym = App\Models\Gym::where('city_id', $id)->get();
-        return response()->json($gym);
-    });
+   
 
 
 
@@ -155,6 +145,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/gyms/{id}/packages', [GymController::class, 'packages']);
         Route::get('/gyms/{id}/coaches', [GymController::class, 'coaches']);
 
+        
         Route::GET('/cityManagers', [CityManagerController::class, 'index'])->name('cityManagers.index');
         Route::GET('/cityManagers/create', [CityManagerController::class, 'create'])->name('cityManagers.create');
         Route::POST('/cityManagers', [CityManagerController::class, 'store'])->name('cityManagers.store');
@@ -171,14 +162,28 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* ======================= Coaches Routes ========================= */
 
-    Route::get('/coaches/{id}/profile', [CoachController::class, 'profile'])->name('coaches.profile');
+    Route::get('coaches', [coachController::class, 'index'])->name('coaches.index');
+    Route::get('coaches/create', [coachController::class, 'create'])->name('coaches.create');
+    Route::post('coaches', [coachController::class, 'store'])->name('coaches.store');
+    // Route::get('coaches/{coachId}/edit', [coachController::class, 'edit'])->name('coaches.edit');
+    Route::post('destroy-coach', [coachController::class, 'destroy'])->name('coaches.destroy');
+    Route::get('getGym/{id}', function ($id) {
+        $gym = App\Models\Gym::where('city_id', $id)->get();
+        return response()->json($gym);
+    });
     Route::get('/coaches/{id}', [CoachController::class, 'show'])->name('coaches.show');
 
+    Route::get('/coaches/{id}/profile', [CoachController::class, 'profile'])->name('coaches.profile');
+
     Route::get("/coaches/{id}/profile/edit", [CoachController::class, 'edit'])->name('coaches.edit');
+    Route::put('coaches/{coachId}', [coachController::class, 'update'])->name('coaches.update');
 
     Route::get('/coaches/{id}/sessions', [CoachController::class, 'sessions'])->name('coaches.sessions');
 
     Route::get("/coaches/{id}/password", [CoachController::class, 'password'])->name('coaches.password');
+    Route::PUT("coach-password/{id}", [CoachController::class, 'passwordUpdate'])->name('coaches.passwordUpdate');
+    
+
 
     /* ===================================================================== */
 

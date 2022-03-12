@@ -4,14 +4,9 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-<div class="text-center mydiv">
-    <a
-      class="btn btn-success"
-      onClick="add()"
-      
-    >
-      Add New City</a
-    >
+<div class="text-center mydiv ">
+    <a class="btn btn-success " onClick="add()" >
+      Add New City</a>
 
 
     <table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark">
@@ -34,19 +29,19 @@
     <div class="modal-dialog modal-lg">
     <div class="modal-content">
     <div class="modal-header">
-    <h4 class="modal-title" id="CityModal"></h4>
+    <h4 class="modal-title text-dark" id="CityModal"></h4>
     </div>
     <div class="modal-body">
     <form action="javascript:void(0)" id="CityForm" name="CityForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="id" id="id">
     <div class="form-group">
-    <label for="name" class="col-sm-2 control-label">City Name</label>
+    <label for="name" class="col-sm-2 control-label text-dark">City Name</label>
     <div class="col-sm-12">
     <input type="text" class="form-control" id="name" name="name" placeholder="Enter City Name" maxlength="50" required="">
     </div>
     </div>
     <div class="col-sm-offset-2 col-sm-10">
-    <button type="submit" class="btn btn-primary" id="btn-save">Save changes
+    <button type="submit" class="btn btn-primary offset-6" id="btn-save">Save changes
     </button>
     </div>
     </form>

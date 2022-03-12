@@ -6,8 +6,16 @@
 @section('content')
 <div class=" mydiv">
 
-<form method="post" action="{{route('coaches.store')}}" class="row d-flex flex-column justify-content-center align-items-center"id="form">
+<form method="post" action="{{route('coaches.store')}}" class="row d-flex flex-column justify-content-center align-items-center"id="form" enctype="multipart/form-data" >
   @csrf
+  @method('PUT')
+  <div class="text-center">
+    <label for="avatar" class="form-label" role="button">
+        <img class="profile-user-img img-fluid img-circle" src="{{asset('images/user_avatar.png')}}" alt="User profile picture">
+    </label>
+    <input type="file" name="avatar" id="avatar" class="d-none" />
+  </div>
+
   <div class="mb-3 col-sm-6">
     <label for="Name" class="form-label">Name</label>
     <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" />
@@ -23,10 +31,6 @@
   <div class="mb-3 col-sm-6">
     <label for="confirm" class="form-label">Confrim Password</label>
     <input type="password" name="confirm" id="confirm" class="form-control" />
-  </div>
-  <div class="mb-3 col-sm-6">
-    <label for="avatar" class="form-label">Avatar</label>
-    <input type="file" name="avatar" id="avatar" class="form-control" />
   </div>
   <div class="mb-3 col-sm-6">
     <label for="national_id" class="form-label">National_id</label>
@@ -94,6 +98,10 @@
           });
          
          
+    // Interactive Upload Image
+    let avatarInput = document.querySelector("input[name='avatar']");
+    let avatarImg = document.querySelector('.profile-user-img');
+    avatarInput.addEventListener('change', () => previewImage(avatarImg))
 
 });
 </script>

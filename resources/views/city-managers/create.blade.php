@@ -8,13 +8,21 @@
 
 <form method="post" action="{{route('city-managers.store')}}" class="row d-flex flex-column justify-content-center align-items-center" enctype="multipart/form-data">
   @csrf
+
+  <div class="text-center">
+    <label for="avatar" class="form-label" role="button">
+        <img class="profile-user-img img-fluid img-circle" src="{{asset('images/user_avatar.png')}}" alt="User profile picture">
+    </label>
+    <input type="file" name="avatar" id="avatar" class="d-none" />
+  </div>
+
   <div class="mb-3 col-sm-6">
     <label for="Name" class="form-label">Name</label>
-    <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" />
+    <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}" aria-describedby="emailHelp" />
   </div>
   <div class="mb-3 col-sm-6">
     <label for="Email" class="form-label">Email</label>
-    <input type="email" name="email" id="Email" class="form-control" />
+    <input type="email" name="email" id="Email" class="form-control" value="{{old('email')}}" />
   </div>
   <div class="mb-3 col-sm-6">
     <label for="pass" class="form-label">Password</label>
@@ -24,13 +32,10 @@
     <label for="confirm" class="form-label">Confrim Password</label>
     <input type="password" name="confirm" id="confirm" class="form-control" />
   </div>
-  <div class="mb-3 col-sm-6">
-    <label for="avatar" class="form-label">Avatar</label>
-    <input type="file" name="avatar" id="avatar" class="form-control" />
-  </div>
+
   <div class="mb-3 col-sm-6 ">
     <label for="national_id" class="form-label">National_id</label>
-    <input type="text" name="national_id" id="national_id" class="form-control" />
+    <input type="text" name="national_id" id="national_id" value="{{old('national_id')}}" class="form-control" />
   </div>
 
  
@@ -44,19 +49,6 @@
     </select>
   </div>
 
-  {{-- <div class="mb-3 col-sm-6" id="gymDiv">
-    <label for="gym" class="form-label">Gyms</label>
-    <select name="gym" class="form-control" id="gym">      
-    </select>
-  </div>
-   --}}
-  {{-- <div class="mb-3 col-sm-6">
-    <label for="ban" class="form-label">IsBaned</label>
-    <select name="ban" class="form-control" id="ban">
-        <option value="not_baned">0</option>
-        <option value="is_baned">1</option>
-</select>
-  </div> --}}
   <button type="submit" class="btn btn-success">Create</button>
 </form>  
 </div>
@@ -74,6 +66,10 @@
         
     
 });
+    // Interactive Upload Image
+    let avatarInput = document.querySelector("input[name='avatar']");
+    let avatarImg = document.querySelector('.profile-user-img');
+    avatarInput.addEventListener('change', () => previewImage(avatarImg))
 </script>
 
 

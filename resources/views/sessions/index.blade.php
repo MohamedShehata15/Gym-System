@@ -2,8 +2,11 @@
 @section('content')
 <div class="text-center mydiv">
     <h1> Training Sessions</h1>
-    <a href="{{route('sessions.create')}}" class="btn btn-success btn-lg my-2">Add Session</a>
-
+    @can('gyms')
+    <div>
+        <a href="{{route('sessions.create')}}" class="btn btn-success btn-lg my-2">Add Session</a>
+    </div>
+    @endcan
     <table class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark" id="myTable">
         <thead>
             <tr class="text-white">
@@ -241,17 +244,6 @@
                $('#day').val(day);
                $('#start').val(StartTime);
                $('#finish').val(FinishTime);
-            //    $("#coaches").empty();
-
-            //    for (var j = 0; j< options.length; j++) {
-            //           if(jQuery.inArray(coachesid[j], selectedCoaches) !== -1){
-            //              $("#coaches").append(new Option(options[j], coachesid[j],true, true));
-            //            }
-            //           else{
-            //             $("#coaches").append(new Option(options[j], coachesid[j]));
-
-            //            }
-            //        }
                //show the modal
                var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
                myModal.show();

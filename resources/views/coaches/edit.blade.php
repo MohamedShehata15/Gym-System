@@ -12,10 +12,11 @@
 @section('content')
 <div class=" mydiv">
 
-<form method="post" action="{{route('coaches.update',$coach->id)}}" class="row d-flex flex-column justify-content-center align-items-center editCoach" >
+<form method="post" action="{{route('coaches.update',$coach->id)}}" class="row d-flex flex-column justify-content-center align-items-center editCoach" enctype="multipart/form-data" >
+    <input type="hidden" name="id" value="{{ $coach->id }}">
     <div class="text-center">
         <label for="avatar" class="form-label" role="button">
-            <img class="profile-user-img img-fluid img-circle" src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg" alt="User profile picture">
+            <img class="profile-user-img img-fluid img-circle" src="{{asset('images/'. $coach->avatar . '')}}" alt="User profile picture">
         </label>
         <input type="file" name="avatar" id="avatar" class="d-none" value="{{$coach->avatar}}" />
     </div>
@@ -36,7 +37,7 @@
         <input type="text" name="national_id" id="national_id" class="form-control" value="{{$coach->national_id}}" />
     </div>
 
-
+    @role('Super-Admin')
     <div class="mb-3  col-sm-6" id="cityDiv">
         <label for="city" class="form-label">City</label>
         <select name="city" class="form-control" id="city">
@@ -64,11 +65,13 @@
         </div>
     </div>
 
+    @endrole
+
     <button type="submit" class="btn btn-primary col-sm-6">Update</button>
 </form>
 </div>
 
-
+@role('Super-Admin')
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
     crossorigin="anonymous"></script>
 
@@ -106,14 +109,19 @@
 
     // Submit the Data
     document.querySelector('.editCoach').addEventListener('submit', (e) => {
-        generateInputSaveTagsID(e, '.editCoach .gymsTags');
+        generateInputSaveTagsID(e, '.editCoach .gymsTags', 'gyms');
     })
 
 
     // Gyms Tags
     document.querySelector('#gymDiv #gym').addEventListener('input', e => tags(e, ".gymsTags"));
 
-</script>
+    // Interactive Upload Image
+    let avatarInput = document.querySelector("input[name='avatar']");
+    let avatarImg = document.querySelector('.profile-user-img');
+    avatarInput.addEventListener('change', () => previewImage(avatarImg))
 
+</script>
+@endrole
 
 @endsection
