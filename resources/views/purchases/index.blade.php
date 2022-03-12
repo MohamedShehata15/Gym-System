@@ -59,6 +59,7 @@
                 {
                     data:'price',
                     name:'price',
+                    render: function(data) {return `$${data * 0.01}`}
                 },
                 @can('gym-managers')
                 {

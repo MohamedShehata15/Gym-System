@@ -260,7 +260,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{route('coaches.sessions', ['id' => Auth::user()->id])}}" class="nav-link {{Request::is('coaches/sessions') ? 'active' : ''}}">
+    <a href="{{route('sessions.index', ['id' => Auth::user()->id])}}" class="nav-link {{Request::is('/sessions') ? 'active' : ''}}">
         <i class="nav-icon fas fa-calendar-check"></i>
         <p>Sessions</p>
     </a>

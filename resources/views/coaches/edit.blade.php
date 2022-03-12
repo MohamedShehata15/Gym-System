@@ -1,8 +1,6 @@
 @php
     $coachGyms = $coach->coachGyms->pluck('id')->all();
 @endphp
-
-
 @extends('layouts.app')
 
 @section('third_party_stylesheets')
@@ -48,6 +46,8 @@
         </select>
     </div>
 
+    <input type="hidden" name="id" value={{$coach->id}}>
+
     <div class="mb-3 col-sm-6" id="gymDiv">
         <label for="gym" class="form-label">Gyms</label>
         <select name="gyms" class="form-control" id="gym">
@@ -66,7 +66,6 @@
     </div>
 
     @endrole
-
     <button type="submit" class="btn btn-primary col-sm-6">Update</button>
 </form>
 </div>

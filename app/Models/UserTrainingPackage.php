@@ -13,7 +13,8 @@ class UserTrainingPackage extends Model {
         'name',
         'price',
         'training_package_id',
-        'user_id'
+        'user_id',
+        'session_number',
     ];
 
     // public function users()
