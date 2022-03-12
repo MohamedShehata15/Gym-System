@@ -14,7 +14,7 @@
     <label for="avatar" class="form-label" role="button">
         <img class="profile-user-img img-fluid img-circle" src="{{asset('images/'. $staff->avatar . '')}}" alt="User profile picture">
     </label>
-    <input type="file" name="avatar" id="avatar" class="d-none" value="{{$staff->avatar}}" />
+    <input type="file" name="avatar" id="avatar" class="d-none" accept="image/x-png,image/gif,image/jpeg" value=" {{$staff->avatar}}" />
   </div>
 
   <input type="hidden" name="id" value="{{ $staff->id }}">

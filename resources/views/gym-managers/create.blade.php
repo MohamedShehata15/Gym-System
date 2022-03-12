@@ -8,6 +8,14 @@
 
 <form method="post" action="{{route('gym-managers.store')}}" class="row d-flex flex-column justify-content-center align-items-center"  id="form" enctype="multipart/form-data">
   @csrf
+
+  <div class="text-center">
+    <label for="avatar" class="form-label" role="button">
+        <img class="profile-user-img img-fluid img-circle" src="{{asset('images/user_avatar.png')}}" alt="User profile picture">
+    </label>
+    <input type="file" name="avatar" id="avatar" class="d-none" accept="image/x-png,image/gif,image/jpeg" />
+  </div>
+
   <div class="mb-3 col-sm-6 ">
     <label for="name" class="form-label">Name</label>
     <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" />
@@ -24,10 +32,7 @@
     <label for="confirm" class="form-label">Confrim Password</label>
     <input type="password" name="confirm" id="confirm" class="form-control" />
   </div>
-  <div class="mb-3 col-sm-6">
-    <label for="avatar" class="form-label">Avatar</label>
-    <input type="file" name="avatar" id="avatar" class="form-control" />
-  </div>
+ 
   <div class="mb-3 col-sm-6 ">
     <label for="national_id" class="form-label">National_id</label>
     <input type="text" name="national_id" id="national_id" class="form-control" />

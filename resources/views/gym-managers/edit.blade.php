@@ -7,8 +7,17 @@
 <div class=" mydiv">
 
 <form method="post" action="{{route('gym-managers.update',$staff->id)}}" class="row d-flex flex-column justify-content-center align-items-center" enctype="multipart/form-data" >
+  
   @csrf
   @method('PUT')
+  <div class="text-center">
+      <label for="avatar" class="form-label" role="button">
+          <img class="profile-user-img img-fluid img-circle" src="{{asset('images/'. $staff->avatar . '')}}" alt="User profile picture">
+      </label>
+      <input type="file" name="avatar" id="avatar" class="d-none" value="{{$staff->avatar}}" accept="image/x-png,image/gif,image/jpeg"/>
+  </div>
+
+
   <input type="hidden" name="id" value="{{ $staff->id }}">
   <div class="mb-3 col-sm-6">
     <label for="Name" class="form-label">Name</label>
@@ -29,10 +38,6 @@
   <div class="mb-3 col-sm-6">
     <label for="confirm" class="form-label">Confrim New Password</label>
     <input type="password" name="confirm" id="confirm" class="form-control" value=""/>
-  </div>
-  <div class="mb-3 col-sm-6">
-    <label for="avatar" class="form-label">Avatar</label>
-    <input type="file" name="avatar" id="avatar" class="form-control" value="{{$staff->avatar}}" />
   </div>
   <div class="mb-3 col-sm-6">
     <label for="national_id" class="form-label">National_id</label>

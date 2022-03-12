@@ -13,14 +13,15 @@
 <div class=" mydiv">
 
 <form method="post" action="{{route('coaches.update',$coach->id)}}" class="row d-flex flex-column justify-content-center align-items-center editCoach" enctype="multipart/form-data" >
+    @csrf
+    @method('PUT')
     <div class="text-center">
         <label for="avatar" class="form-label" role="button">
             <img class="profile-user-img img-fluid img-circle" src="{{asset('images/'. $coach->avatar . '')}}" alt="User profile picture">
         </label>
-        <input type="file" name="avatar" id="avatar" class="d-none" value="{{$coach->avatar}}" />
+        <input type="file" name="avatar" id="avatar" class="d-none" value="{{$coach->avatar}}" accept="image/x-png,image/gif,image/jpeg"/>
     </div>
-    @csrf
-    @method('PUT')
+   
     <div class="mb-3  col-sm-6">
         <label for="Name" class="form-label">Name</label>
         <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp"

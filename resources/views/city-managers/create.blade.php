@@ -13,7 +13,7 @@
     <label for="avatar" class="form-label" role="button">
         <img class="profile-user-img img-fluid img-circle" src="{{asset('images/user_avatar.png')}}" alt="User profile picture">
     </label>
-    <input type="file" name="avatar" id="avatar" class="d-none" />
+    <input type="file" name="avatar" id="avatar" class="d-none" accept="image/x-png,image/gif,image/jpeg" />
   </div>
 
   <div class="mb-3 col-sm-6">
