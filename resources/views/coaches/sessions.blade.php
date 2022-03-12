@@ -2,7 +2,7 @@
 @section('content')
 <div class="text-center mydiv">
     <h1> Training Sessions</h1>
-    <a href="{{route('sessions.create')}}" class="btn btn-success btn-lg my-2">Add Session</a>
+    {{-- <a href="{{route('sessions.create')}}" class="btn btn-success btn-lg my-2">Add Session</a> --}}
 
     <table class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark" id="myTable">
         <thead>
@@ -11,14 +11,16 @@
                 <th scope="col">Name</th>
                 <th scope="col">Start-at</th>
                 <th scope="col">Finish-at</th>
+                @can('session')
                 <th scope="col">Coaches</th>
+                @endcan
                 @can('gym-managers')
                 <th>Gym</th>
                 @endcan
                 @role('Super-Admin')
                 <th>City</th>
                 @endrole
-                <th scope="col">Actions</th>
+                {{-- <th scope="col">Actions</th> --}}
             </tr>
         </thead>
         <tbody>
@@ -120,10 +122,12 @@
                     data: 'finish_at',
                     name: 'finish_at'
                 },
+                @can('session')
                 {
                     data: 'Coaches',
                     name: 'Coaches'
                 },
+                @endcan
                 @can('gym-managers')
                 {
                     data:'gym',
@@ -136,12 +140,12 @@
                     name:'city',
                 },
                 @endrole
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
+                // {
+                //     data: 'action',
+                //     name: 'action',
+                //     orderable: false,
+                //     searchable: false
+                // }
             ]
         });
     });
