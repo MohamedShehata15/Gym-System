@@ -12,18 +12,20 @@ use App\Models\SessionStaff;
 use App\Http\Requests\SessionRequest;
 use App\Models\City;
 use App\Models\Gym;
+use App\Models\GymCoach;
 use App\Models\GymManager;
 use Illuminate\Support\Facades\Auth;
 
 class SessionController extends Controller {
     public function index() {
+        $sessions = collect();
         if (Auth::user()->hasRole('Super-Admin')) {
             $sessions = Session::with('gym')->get();
         } elseif (Auth::user()->hasRole('city_manager')) {
 
             $cityId = City::where('staff_id', Auth::user()->id)->first()['id'];
             $gymIds = Gym::where('city_id', $cityId)->pluck('id');
-            $sessions = collect();
+            
             foreach ($gymIds as $gymId) {
                 $gymSessions = Session::where('gym_id', $gymId)->get();
                 foreach ($gymSessions as $gymSession) {
@@ -33,6 +35,18 @@ class SessionController extends Controller {
         } elseif (Auth::user()->hasRole('gym_manager')) {
             $gymId = GymManager::where('staff_id', Auth::user()->id)->first()['gym_id'];
             $sessions = Session::with('gym')->where('gym_id', $gymId)->get();
+        }else
+        {
+            $gymIds = GymCoach::where('staff_id', Auth::user()->id)->pluck('gym_id');
+            foreach($gymIds as $gymId)
+            {
+                $coachSessions = Session::with('gym')->where('gym_id', $gymId)->get();
+                foreach ($coachSessions as $session)
+                {
+                    $sessions->push($session);
+                }
+
+            }
         }
 
 
