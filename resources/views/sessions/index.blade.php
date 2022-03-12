@@ -241,17 +241,17 @@
                $('#day').val(day);
                $('#start').val(StartTime);
                $('#finish').val(FinishTime);
-            //    $("#coaches").empty();
+               $("#coaches").empty();
 
-            //    for (var j = 0; j< options.length; j++) {
-            //           if(jQuery.inArray(coachesid[j], selectedCoaches) !== -1){
-            //              $("#coaches").append(new Option(options[j], coachesid[j],true, true));
-            //            }
-            //           else{
-            //             $("#coaches").append(new Option(options[j], coachesid[j]));
+               for (var j = 0; j< options.length; j++) {
+                      if(jQuery.inArray(coachesid[j], selectedCoaches) !== -1){
+                         $("#coaches").append(new Option(options[j], coachesid[j],true, true));
+                       }
+                      else{
+                        $("#coaches").append(new Option(options[j], coachesid[j]));
 
-            //            }
-            //        }
+                       }
+                   }
                //show the modal
                var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
                myModal.show();

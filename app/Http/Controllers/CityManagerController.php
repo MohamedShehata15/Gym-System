@@ -57,12 +57,16 @@ class CityManagerController extends Controller
             'password' => $requestData['password'],
             'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
-            'is_baned' => 0,
             
         ]);
-        City::where('staff_id',$staffId)->first()->update([
-            'staff_id' => NULL
-        ]);
+        $oldCity = City::where('staff_id',$staffId)->first();
+        if(!empty($oldCity))
+        {
+            $oldCity->update([
+                'staff_id' => NULL
+            ]);
+        }
+       
         $city = City::find($requestData['city']);
         $city->staff_id =  $staffId;
         $city->save();
@@ -72,10 +76,11 @@ class CityManagerController extends Controller
     //----------------------- create new member -------------------------
     public function create()
     {
-        $scities = City::all();
+    
+        $cities = City::all();
         return view('city-managers.create',
     [
-        'cities' => $scities,
+        'cities' => $cities,
     ]);
     }
     public function store(CityManagerRequest $request)
@@ -95,7 +100,6 @@ class CityManagerController extends Controller
             'password' => $requestData['password'],
             'avatar' =>  $imageName,
             'national_id' => $requestData['national_id'],
-            'is_baned' => 0,
         ]);
         $cityManager->assignRole('city_manager');
         $staffMember = Staff::where('name',$requestData['name'])->first();

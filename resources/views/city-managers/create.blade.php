@@ -49,19 +49,6 @@
     </select>
   </div>
 
-  {{-- <div class="mb-3 col-sm-6" id="gymDiv">
-    <label for="gym" class="form-label">Gyms</label>
-    <select name="gym" class="form-control" id="gym">      
-    </select>
-  </div>
-   --}}
-  {{-- <div class="mb-3 col-sm-6">
-    <label for="ban" class="form-label">IsBaned</label>
-    <select name="ban" class="form-control" id="ban">
-        <option value="not_baned">0</option>
-        <option value="is_baned">1</option>
-</select>
-  </div> --}}
   <button type="submit" class="btn btn-success">Create</button>
 </form>  
 </div>
