@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('remaining_sessions')->default(0);
             $table->foreignId('gym_id')->constrained()->onDelete('cascade');
             $table->date('birth_date');
+            $table->timestamp('last_login')->nullable();
         });
     }
 

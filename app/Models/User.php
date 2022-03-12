@@ -25,7 +25,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'remaining_sessions',
         'avatar',
         'birth_date',
-        'gym_id'
+        'gym_id',
+        'email_verified_at'
     ];
 
     /**
@@ -47,7 +48,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function sessions() {
+    public function sessions()
+    {
         return $this->belongsToMany(Session::class, 'session_user', 'user_id', 'session_id');
     }
 
