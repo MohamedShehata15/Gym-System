@@ -101,7 +101,6 @@
 @section('script')
 <script type="text/javascript">
   $(function () {
-
       @if(Auth::user() -> hasRole('Super-Admin'))
       // Handle City
       $('.cities').on('change', function () {
@@ -125,7 +124,6 @@
           })
       });
       @endif
-
       @if(Auth::user()->hasRole('Super-Admin') || Auth::user()->hasRole('city_manager'))
       $('.gyms').on('change', function () {
           $.ajax({
@@ -138,7 +136,6 @@
                   $('#coaches').empty();
                   $('#coaches').append(`<option value="" disabled selected hidden>Select a Coach</option>`);
                   response.coaches.forEach(coach => {
-
                       $('#coaches').append(`<option value="${coach.id}">
                           <span>${coach.name}</span>
                       </option>`);
@@ -147,15 +144,12 @@
           })
       });
       @endif
-
       // Gyms Tags
       document.querySelector('.coachesSession .coachesSelect').addEventListener('input', e => tags(e, ".coachesTags"));
-
     // Submit the Data with Data of tags
     document.querySelector('.coachesSession').addEventListener('submit', (e) => {
         generateInputSaveTagsID(e, '.coachesSession .coachesTags', 'coaches');
     })
-
   });
     </script>
 @endsection

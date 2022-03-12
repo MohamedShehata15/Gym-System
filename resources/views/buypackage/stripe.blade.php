@@ -3,7 +3,7 @@
 @section('content')
 
 <div class=" mydiv">
-        @if (Session::has('success'))
+    @if (Session::has('success'))
     <div class="alert alert-success text-center">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
         <p>{{ Session::get('success') }}</p>
@@ -19,8 +19,8 @@
         data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
         @csrf
 
-        <div class="mb-3 col-sm-7">
-                            <label for="inputCity" class="form-label">City</label>
+            <div class="mb-3 col-sm-7">
+                <label for="inputCity" class="form-label">City</label>
                 <select id="inputCity" class="form-select form-control cities" aria-label="Default select" name="city">
                     @if(Auth::user()->hasRole('Super-Admin'))
                     <option selected disabled>Select a City</option>
@@ -36,9 +36,9 @@
                     <option value={{$city->id}}>{{$city->name}}</option>
                     @endif
                 </select>
-        </div>
+            </div>
 
-        <div class="mb-3 col-sm-7">
+            <div class="mb-3 col-sm-7">
                 <label for="inputGym" class="form-label">Gym</label>
                 <select id="inputGym" class="form-select form-control gyms" aria-label="Default select" name="gym">
 
@@ -57,11 +57,10 @@
                         <option id={{$gym->id}}>{{$gym->name}}</option>
                     @endif
                 </select>
-          
-        </div>
+            </div>
 
-        <div class="mb-3 col-sm-7">
-                 <label for="inputUserName" class="form-label">User Name</label>
+            <div class="mb-3 col-sm-7">
+                <label for="inputUserName" class="form-label">User Name</label>
                 <select id="inputUserName" class="form-select form-control users" aria-label="Default select"
                     name="user">
                     @if(Auth::user()->hasRole('gym_manager'))
@@ -75,26 +74,21 @@
                     <option selected disabled>Select a user name</option>
                     @endif
                 </select>
-        </div>
+            </div>
 
-        
-        <div class="mb-3 col-sm-7">
+            <div class="mb-3 col-sm-7">
                 <label for="inputPackage" class="form-label">Package</label>
                 <select id="inputPackage" class="form-select form-control packages " aria-label="Default select"
                     name="training_package">
                     <option selected>Select a package</option>
                 </select>
-            
-        </div>
+            </div>
 
-        
-        <div class="mb-3 col-sm-7">
+            <div class="mb-3 col-sm-7">
                 <label for="inputCardNumber" class="form-label">Card Number</label>
                 <input type="text" class="form-control card-number" id="inputCardNumber" placeholder="5105105105105100"
                     autocomplete="false">
-            
-        </div>
-        
+            </div>
         <div class="row">
             <div class="col-4">
                 <label for="inputCVC" class="form-label">CVC</label>
@@ -143,7 +137,6 @@
                 },
                 url: `http://127.0.0.1:8000/cities/${$(this).val()}/gyms`,
                 success: function (response) {
-                    console.log(response);
                     $('.gyms').empty();
                     $('.gyms').append(`<option value="" disabled selected hidden>Select a Gym</option>`);
                     if(response.gyms.length > 0) {
@@ -180,32 +173,23 @@
         @endif
 
         $('.gyms').on('change', function () {
-            getGymPackages($(this).val())
-        });
-
-        @role('gym_manager')
-        let id = {{Auth::user()->gymManger->first()->id}}
-        getGymPackages(id)
-        @endrole
-
-        function getGymPackages(gymId) {
             $.ajax({
                 type: 'get',
                 headers: {
                     'Accept': 'application/json'
                 },
-                url: `http://127.0.0.1:8000/gyms/${gymId}/packages`,
+                url: `http://127.0.0.1:8000/gyms/${$(this).val()}/packages`,
                 success: function (response) {
                     $('.packages').empty();
                     $('.packages').append(`<option value="" disabled selected hidden>Select a Package</option>`);
                     response.packages.forEach(package => {
                         $('.packages').append(`<option value="${package.id}">
-                            <span>${package.name}  $${package.price}</span>
+                            <span>${package.name}  $${package.price * 0.01}</span>
                         </option>`);
                     })
                 }
             })
-        }
+        });
 
         var $form = $(".require-validation");
 
@@ -232,7 +216,7 @@
 
             if (!$form.data('cc-on-file')) {
                 e.preventDefault();
-                Stripe.setPublishableKey($forms.data('stripe-publishable-key'));
+                Stripe.setPublishableKey($form.data('stripe-publishable-key'));
                 Stripe.createToken({
                     number: $('.card-number').val(),
                     cvc: $('.card-cvc').val(),
