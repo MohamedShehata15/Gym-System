@@ -147,6 +147,7 @@
                 },
                 url: `http://127.0.0.1:8000/cities/${$(this).val()}/gyms`,
                 success: function (response) {
+                    console.log(response);
                     $('.gyms').empty();
                     $('.gyms').append(`<option value="" disabled selected hidden>Select a Gym</option>`);
                     if(response.gyms.length > 0) {
@@ -183,12 +184,21 @@
         @endif
 
         $('.gyms').on('change', function () {
+            getGymPackages($(this).val())
+        });
+
+        @role('gym_manager')
+        let id = {{Auth::user()->gymManger->first()->id}}
+        getGymPackages(id)
+        @endrole
+
+        function getGymPackages(gymId) {
             $.ajax({
                 type: 'get',
                 headers: {
                     'Accept': 'application/json'
                 },
-                url: `http://127.0.0.1:8000/gyms/${$(this).val()}/packages`,
+                url: `http://127.0.0.1:8000/gyms/${gymId}/packages`,
                 success: function (response) {
                     $('.packages').empty();
                     $('.packages').append(`<option value="" disabled selected hidden>Select a Package</option>`);
@@ -199,7 +209,7 @@
                     })
                 }
             })
-        });
+        }
 
         var $form = $(".require-validation");
 
