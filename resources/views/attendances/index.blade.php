@@ -9,10 +9,11 @@
     <table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark">
         <thead>
             <tr class="text-white">
-            @can('gym-managers')
-            @can('city-managers')
+            
+                @role('Super-Admin')
                 <th>City</th>
-             @endcan
+                @endrole
+                @can('gym-managers')
                 <th>Gym</th>
                 @endcan
                 <th>User Name</th>
@@ -37,15 +38,13 @@
                 url: "{{ route('attendances.index') }}"
             },
             columns:[
-                @can('gym-managers')
-                @can('city-managers')
-
+                @role('Super-Admin')
                 {
                     data:'cityName',
                     name:'cityName',
                 },
-                @endcan
-
+                @endrole
+                @can('gym-managers')
                 {
                     data:'gymName',
                     name:'gymName',
