@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GymManagerRequest extends FormRequest
+class CityManagerUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,16 +23,16 @@ class GymManagerRequest extends FormRequest
      */
     public function rules()
     {
-        
+        $id = request()->all()['id'] ?? "";
         return [ 
             'name' => ['required','min:4','max:15'],
-            'email' => 'required|email|unique:staff,email,',
-            'password' => ['required','min:6','max:20'],
-            'confirm'=>['required','same:password'],
+            'email' => 'required|email|unique:staff,email,'.$id,
+            'old_password' => ['nullable'],
+            'password' => ['min:6','max:20','nullable'],
+            'confirm'=>['same:password','nullable'],
             'avatar' =>['image','mimes:jpg,png,jpeg'],
-            'national_id'=> 'required|numeric|digits:10|unique:staff,national_id,',
+            'national_id'=> 'required|numeric|digits:10|unique:staff,national_id,'.$id,
             'city' => ['required'],
-            'gym' => ['required'],
         ];
     }
     public function messages()

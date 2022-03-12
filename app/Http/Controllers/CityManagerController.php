@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Models\City;
 use App\Http\Requests\CityManagerRequest;
-
+use App\Http\Requests\CityManagerUpdateRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Input\Input;
 
 class CityManagerController extends Controller
 {
@@ -40,7 +43,7 @@ class CityManagerController extends Controller
                 
             ]);
     }
-    public function update($staffId , CityManagerRequest $request)
+    public function update($staffId , CityManagerUpdateRequest $request)
     {
         $requestData = request()->all();
         if(isset($requestData['avatar']))
@@ -51,14 +54,34 @@ class CityManagerController extends Controller
         else{
             $imageName = Staff::find($staffId)->avatar;
         }
+
+       
+        $hashedPassword = Staff::find($staffId)->password;
+        if (Hash::check($request->oldpassword , $hashedPassword)) {
+            
+                $user = Staff::find($staffId);
+                $user->password = bcrypt($request->password);
+                $user->save();
+
+           
+        }
+        else{
+          return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
+        }
+    
+
+
+
         Staff::find($staffId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
-            'password' => $requestData['password'],
             'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
             
         ]);
+    
+
+
         $oldCity = City::where('staff_id',$staffId)->first();
         if(!empty($oldCity))
         {
@@ -97,7 +120,7 @@ class CityManagerController extends Controller
         $cityManager= Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
-            'password' => $requestData['password'],
+            'password' => Hash::make($requestData['password']),
             'avatar' =>  $imageName,
             'national_id' => $requestData['national_id'],
         ]);

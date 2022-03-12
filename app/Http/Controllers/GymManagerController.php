@@ -8,6 +8,9 @@ use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymManager;
 use App\Http\Requests\GymManagerRequest;
+use App\Http\Requests\GymManagerUpdateRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class GymManagerController extends Controller
 {
@@ -54,7 +57,7 @@ class GymManagerController extends Controller
                 
             ]);
     }
-    public function update($staffId,GymManagerRequest $request)
+    public function update($staffId,GymManagerUpdateRequest $request)
     {
         $requestData = request()->all();
         if(isset($requestData['avatar']))
@@ -66,10 +69,25 @@ class GymManagerController extends Controller
         else{
             $imageName = Staff::find($staffId)->avatar;
         } 
+
+          
+        $hashedPassword = Staff::find($staffId)->password;
+        if (Hash::check($request->oldpassword , $hashedPassword)) {
+            
+                $user = Staff::find($staffId);
+                $user->password = bcrypt($request->password);
+                $user->save();
+
+           
+        }
+        else{
+          return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
+        }
+    
+
          Staff::find($staffId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
-            'password' => $requestData['password'],
             'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
@@ -109,7 +127,7 @@ class GymManagerController extends Controller
         $gymManager= Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
-            'password' => $requestData['password'],
+            'password' => Hash::make($requestData['password']),
             'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
             'is_baned' => 0,
