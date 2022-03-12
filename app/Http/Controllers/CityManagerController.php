@@ -55,7 +55,8 @@ class CityManagerController extends Controller
             $imageName = Staff::find($staffId)->avatar;
         }
 
-       
+       if(isset($request->oldpassword))
+       {
         $hashedPassword = Staff::find($staffId)->password;
         if (Hash::check($request->oldpassword , $hashedPassword)) {
             
@@ -68,6 +69,8 @@ class CityManagerController extends Controller
         else{
           return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
         }
+       }
+    
     
 
 

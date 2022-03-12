@@ -25,7 +25,8 @@ class StaffFactory extends Factory {
             'name' => $this->faker->name,
             'email' => $this->faker->email,
             'password' => Hash::make(123456),
-            'national_id' => rand(1, 20),
+            'national_id' => rand(10,100) 
+            ,
            
         ];
     }
