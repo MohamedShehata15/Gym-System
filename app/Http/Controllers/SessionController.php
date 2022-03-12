@@ -90,9 +90,11 @@ class SessionController extends Controller {
     }
 
     public function create() {
+        $coaches=Staff::role('coach');
         $cities = City::all();
         return view('sessions.create', [
             'cities' => $cities,
+            'coaches'=>$coaches
         ]);
     }
 
