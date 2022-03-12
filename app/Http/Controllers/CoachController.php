@@ -10,13 +10,15 @@ use App\Models\GymManager;
 use App\Models\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class coachController extends Controller {
     public function index() {
         if (request()->ajax()) {
             return datatables()->of(Staff::role('coach')->get())
                 ->addColumn('action', function ($data) {
-                    $button = '<a href="' . route('coaches.show', $data->id) . '" class="btn btn-info btn-sm mx-2">Edit</a>';
+                    $button = '<a href="' . route('coaches.show', $data->id) . '" class="btn btn-info btn-sm mx-2">Show</a>';
                     $button .= '<a href="javascript:void(0);" onClick = "deleteFunc(' . $data->id . ')"class="btn btn-danger btn-sm mx-2">Delete</a>';
                     return $button;
                 })
@@ -127,10 +129,9 @@ class coachController extends Controller {
         $coach = Staff::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
-            'password' => $requestData['password'],
+            'password' => Hash::make($requestData['password']),
             'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
-            'is_baned' => 0,
 
         ]);
         $coach->assignRole('coach');
@@ -224,7 +225,35 @@ class coachController extends Controller {
         }
         return view('coaches.sessions');
     }
-    public function password() {
-        return view('coaches.password');
+    public function password($staffId) {
+
+        
+        return view('coaches.password',
+    [
+        'coachId' => $staffId,
+    ]);
+    }
+
+    public function passwordUpdate(Request $request,$staffId)
+    {
+        $this->validate($request, [ 
+            'old_password' => ['nullable'],
+            'password' => ['min:6','max:20','nullable'],
+            'confirm'=>['same:password','nullable'],
+        ]);
+        
+        $hashedPassword = Staff::find($staffId)->password;
+        if (Hash::check($request->oldpassword , $hashedPassword)) {
+            
+                $user = Staff::find($staffId);
+                $user->password = bcrypt($request->password);
+                $user->save();
+
+           
+        }
+        else{
+          return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
+        }
+        return redirect()->route('coaches.show',$staffId);
     }
 }
