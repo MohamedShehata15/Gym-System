@@ -39,10 +39,15 @@ class GymManagerController extends Controller {
                     return $button;
                 })
                 ->addColumn('gym-city', function ($data) {
-                    $gymId = GymManager::where('staff_id', $data->id)->first()->gym_id;
-                    $gym = Gym::find($gymId);
+                    $gymManage = GymManager::where('staff_id', $data->id)->first();
+                    if(isset($gymManage))
+                    {
+                    $gym = Gym::find($gymManage->gym_id);
                     $city = City::find($gym->city_id);
                     return $gym->name . '-' . $city->name;
+                    }
+                    return "None";
+                    
                 })
                 ->rawColumns(['action'])->make(true);
         }
