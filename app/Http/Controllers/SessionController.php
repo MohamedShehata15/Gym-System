@@ -175,7 +175,14 @@ class SessionController extends Controller {
 
     public function update(SessionRequest $request) {
         $requestData = request()->all();
+        if (Auth::user()->hasRole('Super-Admin') || Auth::user()->hasRole('city_manager')) {
+            $gymId=$requestData['gym'];
+        }
 
+        elseif (Auth::user()->hasRole('gym_manager'))
+        {
+            $gymId = GymManager::where('staff_id', Auth::user()->id)->first()['gym_id'];
+        }
         //check if any one attend this session 
         $SomeoneAttend = SessionUser::where('session_id', '=', $requestData['id'])->exists();
         $CurrentSession = Session::find($request->id);
@@ -191,7 +198,7 @@ class SessionController extends Controller {
                 'name' => $requestData['name'],
                 'start_at' => $requestData['day'] . " " . $requestData['start'],
                 'finish_at' => $requestData['day'] . " " . $requestData['finish'],
-                 'gym_id'=>$requestData['gym']
+                 'gym_id'=>$gymId
             ]);
             $coaches = $requestData['coaches'];
             $coaches = array_values($coaches);
